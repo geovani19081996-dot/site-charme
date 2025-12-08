@@ -528,3 +528,98 @@ body {
     grid-template-columns: 1fr;
   }
 }
+/* seção produtos dinâmica */
+.secao-produtos {
+  padding: 60px 20px;
+  background: #fff5fb;
+}
+
+.secao-produtos h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.secao-produtos p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.produtos-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.produtos-filtros input,
+.produtos-filtros select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+.produtos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.produto-card {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.produto-card img {
+  max-width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.produto-card h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.produto-categoria {
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+}
+
+.produto-preco {
+  font-weight: bold;
+  color: #e91e63;
+  margin: 4px 0;
+}
+
+.produto-estoque {
+  font-size: 12px;
+  color: #444;
+  margin: 0;
+}
+
+.produto-botao {
+  margin-top: 8px;
+  display: inline-block;
+  padding: 8px 12px;
+  background: #e91e63;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.produto-botao:hover {
+  opacity: 0.9;
+}

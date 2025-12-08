@@ -1,0 +1,47 @@
+[
+  {
+    "codigo": "1001",
+    "nome": "Shampoo Hidratante 300ml",
+    "categoria": "Cabelo",
+    "preco": 29.90,
+    "estoque_loja1": 12,
+    "estoque_loja2": 8,
+    "imagem": "img/produtos/1001.png",
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "codigo": "1002",
+    "nome": "Condicionador Nutritivo 300ml",
+    "categoria": "Cabelo",
+    "preco": 31.90,
+    "estoque_loja1": 5,
+    "estoque_loja2": 3,
+    "imagem": "img/produtos/1002.png",
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "codigo": "2001",
+    "nome": "Batom Matte Vermelho Intenso",
+    "categoria": "Maquiagem",
+    "preco": 24.90,
+    "estoque_loja1": 10,
+    "estoque_loja2": 0,
+    "imagem": "img/produtos/2001.png",
+    "destaque": false,
+    "ativo": true
+  },
+  {
+    "codigo": "3001",
+    "nome": "Perfume Feminino 100ml",
+    "categoria": "Perfumaria",
+    "preco": 89.90,
+    "estoque_loja1": 2,
+    "estoque_loja2": 1,
+    "imagem": "img/produtos/3001.png",
+    "destaque": false,
+    "ativo": true
+  }
+]
+
