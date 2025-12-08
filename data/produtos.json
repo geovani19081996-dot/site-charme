@@ -1688,7 +1688,7 @@
         "unidade":  "UN",
         "preco":  54.99000000000000,
         "estoque_loja1":  1.0000,
-        "estoque_loja2":  4.0000,
+        "estoque_loja2":  3.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -2525,7 +2525,7 @@
         "unidade":  "UN",
         "preco":  17.99000000000000,
         "estoque_loja1":  0.0000,
-        "estoque_loja2":  3.0000,
+        "estoque_loja2":  2.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -7682,7 +7682,7 @@
         "unidade":  "UN",
         "preco":  85.98999999999999,
         "estoque_loja1":  0.0000,
-        "estoque_loja2":  2.0000,
+        "estoque_loja2":  1.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -7943,7 +7943,7 @@
         "unidade":  "UN",
         "preco":  23.99000000000000,
         "estoque_loja1":  0.0000,
-        "estoque_loja2":  3.0000,
+        "estoque_loja2":  2.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -9347,7 +9347,7 @@
         "unidade":  "UN",
         "preco":  22.50000000000000,
         "estoque_loja1":  0.0000,
-        "estoque_loja2":  3.0000,
+        "estoque_loja2":  2.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -10085,7 +10085,7 @@
         "unidade":  "UN",
         "preco":  20.99000000000000,
         "estoque_loja1":  0.0000,
-        "estoque_loja2":  1.0000,
+        "estoque_loja2":  0.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -14225,7 +14225,7 @@
         "unidade":  "UN",
         "preco":  73.50000000000000,
         "estoque_loja1":  0.0000,
-        "estoque_loja2":  2.0000,
+        "estoque_loja2":  1.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -16718,7 +16718,7 @@
         "unidade":  "UN",
         "preco":  36.60000000000000,
         "estoque_loja1":  2.0000,
-        "estoque_loja2":  2.0000,
+        "estoque_loja2":  0.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -17348,7 +17348,7 @@
         "unidade":  "UN",
         "preco":  49.99000000000000,
         "estoque_loja1":  2.0000,
-        "estoque_loja2":  2.0000,
+        "estoque_loja2":  0.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -18203,7 +18203,7 @@
         "unidade":  "UN",
         "preco":  54.99000000000000,
         "estoque_loja1":  3.0000,
-        "estoque_loja2":  2.0000,
+        "estoque_loja2":  0.0000,
         "categoria":  "Sem categoria"
     },
     {
@@ -18221,7 +18221,7 @@
         "unidade":  "UN",
         "preco":  54.99000000000000,
         "estoque_loja1":  2.0000,
-        "estoque_loja2":  2.0000,
+        "estoque_loja2":  0.0000,
         "categoria":  "Sem categoria"
     },
     {
