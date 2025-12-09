@@ -418,8 +418,6 @@ body {
   box-shadow: 0 0 0 3px var(--rosa-medio);
 }
 
-
-
 .equipe__info {
   flex: 1;
 }
@@ -528,6 +526,7 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
 /* seção produtos dinâmica */
 .secao-produtos {
   padding: 60px 20px;
@@ -583,6 +582,22 @@ body {
   max-height: 160px;
   object-fit: contain;
   margin-bottom: 8px;
+}
+
+/* imagem do produto dentro do card (layout novo) */
+.product-image {
+  width: 100%;
+  padding: 0 16px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.product-image img {
+  max-height: 140px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .produto-card h3 {

@@ -27,39 +27,56 @@ function montarLinkWhats(produto) {
 // cria card de produto
 function criarCard(produto) {
   const card = document.createElement("div");
-  card.className = "produto-card";
+  // mantém a classe antiga e já adiciona a nova, pra casar com o CSS
+  card.className = "produto-card product-card";
 
-  const img = document.createElement("img");
-  img.src = produto.imagem || "img/logo-charme-icon.png";
-  img.alt = produto.nome;
+  // se não tiver imagem no JSON, já cai pra placeholder.jpg
+  const imageFile =
+    produto.imagem && produto.imagem.trim() !== ""
+      ? produto.imagem.trim()
+      : "placeholder.jpg";
 
-  const nome = document.createElement("h3");
-  nome.textContent = produto.nome;
+  card.innerHTML = `
+    <div class="product-header">
+      <img
+        src="img/fio-mechas-gold.png"
+        alt="Charme Cosméticos"
+        class="card-top-image"
+      >
+    </div>
 
-  const categoria = document.createElement("p");
-  categoria.className = "produto-categoria";
-  categoria.textContent = produto.categoria;
+    <div class="product-image">
+      <img
+        src="img/produtos/${imageFile}"
+        alt="${produto.nome}"
+        onerror="this.onerror=null;this.src='img/produtos/placeholder.jpg';"
+      >
+    </div>
 
-  const preco = document.createElement("p");
-  preco.className = "produto-preco";
-  preco.textContent = formatarPreco(produto.preco);
+    <div class="product-body">
+      <h3 class="product-title">${produto.nome}</h3>
 
-  const estoque = document.createElement("p");
-  estoque.className = "produto-estoque";
-  estoque.textContent = `Loja 1: ${produto.estoque_loja1} | Loja 2: ${produto.estoque_loja2}`;
+      <p class="produto-categoria product-category">
+        ${produto.categoria || ""}
+      </p>
 
-  const botao = document.createElement("a");
-  botao.href = montarLinkWhats(produto);
-  botao.target = "_blank";
-  botao.className = "produto-botao";
-  botao.textContent = "Comprar via WhatsApp";
+      <div class="produto-preco product-price">
+        ${formatarPreco(produto.preco)}
+      </div>
 
-  card.appendChild(img);
-  card.appendChild(nome);
-  card.appendChild(categoria);
-  card.appendChild(preco);
-  card.appendChild(estoque);
-  card.appendChild(botao);
+      <p class="produto-estoque product-stock">
+        Loja 1: ${produto.estoque_loja1} | Loja 2: ${produto.estoque_loja2}
+      </p>
+
+      <a
+        href="${montarLinkWhats(produto)}"
+        target="_blank"
+        class="produto-botao whatsapp-button"
+      >
+        Comprar via WhatsApp
+      </a>
+    </div>
+  `;
 
   return card;
 }
@@ -91,7 +108,8 @@ function aplicarFiltros() {
   const filtrados = todosProdutos.filter((produto) => {
     const nomeOk = produto.nome.toLowerCase().includes(termo);
     const categoriaOk =
-      categoria === "" || produto.categoria.toLowerCase() === categoria.toLowerCase();
+      categoria === "" ||
+      (produto.categoria || "").toLowerCase() === categoria.toLowerCase();
 
     return nomeOk && categoriaOk;
   });
@@ -124,7 +142,8 @@ async function carregarProdutos() {
     renderizarProdutos(todosProdutos);
   } catch (erro) {
     console.error(erro);
-    grid.innerHTML = "<p>Erro ao carregar os produtos. Tente novamente mais tarde.</p>";
+    grid.innerHTML =
+      "<p>Erro ao carregar os produtos. Tente novamente mais tarde.</p>";
   }
 }
 
