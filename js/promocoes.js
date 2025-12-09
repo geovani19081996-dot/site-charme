@@ -1,25 +1,36 @@
-// ===============================
-//  PROMOÇÕES CHARME – PREMIUM
-//  Código 100% blindado e revisado
-// ===============================
+// =======================================================
+//  BLOCO 01 • CONFIGURAÇÃO GERAL
+//  - Constantes principais
+// =======================================================
+
+// PROMOÇÕES CHARME – PREMIUM
+// Código 100% blindado e revisado
 
 const PROMOS_JSON_URL = "data/promocoes_site.json";
 const IMG_PROMO_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
 
-// Só inicia quando REALMENTE existir a área de promoções
+// =======================================================
+//  BLOCO 02 • BOOTSTRAP DA PÁGINA
+//  - Só inicia se existir a área de promoções no HTML
+// =======================================================
+
 document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector("#promocoes-grid");
   const count = document.querySelector("#promos-count");
 
   if (!grid || !count) {
-    console.warn("⚠ Área de promoções não encontrada no HTML. Script ignorado.");
+    console.warn(
+      "⚠ Área de promoções não encontrada no HTML. Script ignorado."
+    );
     return;
   }
 
-  // ========================
-  // ESTADO GLOBAL
-  // ========================
+  // =====================================================
+  //  BLOCO 03 • ESTADO GLOBAL (state)
+  //  - Armazena dados crus, filtrados e filtros ativos
+  // =====================================================
+
   const state = {
     rawPromos: [],
     activePromos: [],
@@ -32,9 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  // ========================
-  // ELEMENTOS
-  // ========================
+  // =====================================================
+  //  BLOCO 04 • MAPA DE ELEMENTOS DO DOM
+  //  - Tudo que o JS usa no HTML
+  // =====================================================
+
   const els = {
     grid,
     count,
@@ -44,9 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
     sort: document.querySelector("#promo-sort"),
   };
 
-  // ---------------------------
-  // FUNÇÕES UTILITÁRIAS
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 05 • FUNÇÕES UTILITÁRIAS
+  //  - Conversões numéricas, datas, dinheiro, etc.
+  // =====================================================
+
   const toNumber = (v) => Number(String(v || "0").replace(",", "."));
   const todayMidnight = () => new Date().setHours(0, 0, 0, 0);
 
@@ -63,9 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return Math.ceil(ms / 86400000);
   };
 
-  // ---------------------------
-  // NORMALIZAÇÃO DOS DADOS
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 06 • NORMALIZAÇÃO DOS DADOS
+  //  - Converte o JSON bruto em objeto pronto pra tela
+  // =====================================================
+
   const normalizePromo = (raw) => {
     const precoNormal = toNumber(raw.preco_normal);
     const precoPromo = toNumber(raw.preco_promo);
@@ -109,9 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  // ---------------------------
-  // CARREGAR JSON
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 07 • CARREGAMENTO DO JSON
+  //  - Busca o arquivo promocoes_site.json e popula state
+  // =====================================================
+
   const loadPromos = async () => {
     try {
       const r = await fetch(PROMOS_JSON_URL, { cache: "no-store" });
@@ -140,9 +159,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (els.grid) els.grid.innerHTML = "";
   };
 
-  // ---------------------------
-  // CATEGORIAS DO SELECT
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 08 • CATEGORIAS DO SELECT
+  //  - Monta o <select> de categorias com base nas promos
+  // =====================================================
+
   const buildCategoryOptions = () => {
     if (!els.category) return;
 
@@ -159,13 +180,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // ---------------------------
-  // FILTROS & ORDENAÇÃO
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 09 • FILTROS & ORDENAÇÃO
+  //  - Busca, categoria e ordenação (urgência, desconto…)
+  // =====================================================
+
   const applyFilters = () => {
     let arr = [...state.activePromos];
 
-    // search
+    // Filtro de texto (buscar promoção)
     if (state.filters.search) {
       const t = state.filters.search.toLowerCase();
       arr = arr.filter((p) =>
@@ -175,17 +198,21 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
 
-    // categoria
+    // Filtro de categoria
     if (state.filters.category) {
       arr = arr.filter((p) => p.categoria === state.filters.category);
     }
 
-    // sort
+    // Ordenação
     const sort = state.filters.sort;
-    if (sort === "discountPercent") arr.sort((a, b) => b.descontoPercent - a.descontoPercent);
-    else if (sort === "discountValue") arr.sort((a, b) => b.descontoValor - a.descontoValor);
-    else if (sort === "priceAsc") arr.sort((a, b) => a.precoPromo - b.precoPromo);
-    else {
+    if (sort === "discountPercent") {
+      arr.sort((a, b) => b.descontoPercent - a.descontoPercent);
+    } else if (sort === "discountValue") {
+      arr.sort((a, b) => b.descontoValor - a.descontoValor);
+    } else if (sort === "priceAsc") {
+      arr.sort((a, b) => a.precoPromo - b.precoPromo);
+    } else {
+      // "urgency" (padrão)
       arr.sort((a, b) => {
         const ad = a.diasRestantes ?? 999;
         const bd = b.diasRestantes ?? 999;
@@ -198,9 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
     render();
   };
 
-  // ---------------------------
-  // RENDERIZAÇÃO DOS CARDS
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 10 • RENDERIZAÇÃO
+  //  - Desenha os cards na tela ou mostra estado vazio
+  // =====================================================
+
   const render = () => {
     els.grid.innerHTML = "";
     state.timers = [];
@@ -216,7 +245,9 @@ document.addEventListener("DOMContentLoaded", () => {
     els.empty.hidden = true;
 
     const qtd = state.filteredPromos.length;
-    els.count.textContent = `${qtd} promoção${qtd > 1 ? "es" : ""} ativa${qtd > 1 ? "s" : ""}`;
+    els.count.textContent = `${qtd} promoção${qtd > 1 ? "es" : ""} ativa${
+      qtd > 1 ? "s" : ""
+    }`;
 
     const fragment = document.createDocumentFragment();
 
@@ -227,14 +258,17 @@ document.addEventListener("DOMContentLoaded", () => {
     els.grid.appendChild(fragment);
   };
 
-  // ---------------------------
-  // CRIAÇÃO DOS CARDS
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 11 • CRIAÇÃO DE CARD INDIVIDUAL
+  //  - Monta o HTML de uma promoção
+  // =====================================================
+
   const makeCard = (p) => {
     const el = document.createElement("article");
     el.className = "promo-card fade-in-up";
 
-    const img = p.imagem && p.imagem.trim() !== "" ? p.imagem : "placeholder-promo.jpg";
+    const img =
+      p.imagem && p.imagem.trim() !== "" ? p.imagem : "placeholder-promo.jpg";
 
     const badge = getBadge(p);
     const prazo = getPrazo(p);
@@ -243,25 +277,49 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="promo-card__ribbon">${badge}</div>
 
       <div class="promo-card__image-wrapper">
-        <img src="${IMG_PROMO_BASE_PATH + img}" loading="lazy" class="promo-card__image" />
-        ${p.descontoPercent > 0 ? `<div class="promo-card__discount-tag">${p.descontoPercent}% OFF</div>` : ""}
+        <img src="${
+          IMG_PROMO_BASE_PATH + img
+        }" loading="lazy" class="promo-card__image" />
+        ${
+          p.descontoPercent > 0
+            ? `<div class="promo-card__discount-tag">${p.descontoPercent}% OFF</div>`
+            : ""
+        }
       </div>
 
       <div class="promo-card__content">
-        <div class="promo-card__category">${p.categoria || "Sem categoria"}</div>
+        <div class="promo-card__category">${
+          p.categoria || "Sem categoria"
+        }</div>
         <h3 class="promo-card__title">${p.nome}</h3>
 
-        <p class="promo-card__subtitle">${p.descricao_resumida || p.subcategoria || ""}</p>
+        <p class="promo-card__subtitle">${
+          p.descricao_resumida || p.subcategoria || ""
+        }</p>
 
         <div class="promo-card__prices">
           <div class="promo-card__price-main">
             <span class="promo-card__label">Por</span>
-            <span class="promo-card__price-current">${money(p.precoPromo)}</span>
+            <span class="promo-card__price-current">${money(
+              p.precoPromo
+            )}</span>
           </div>
 
           <div class="promo-card__price-extra">
-            ${p.precoNormal ? `<span class="promo-card__price-old">De ${money(p.precoNormal)}</span>` : ""}
-            ${p.descontoValor ? `<span class="promo-card__price-save">Economize ${money(p.descontoValor)}</span>` : ""}
+            ${
+              p.precoNormal
+                ? `<span class="promo-card__price-old">De ${money(
+                    p.precoNormal
+                  )}</span>`
+                : ""
+            }
+            ${
+              p.descontoValor
+                ? `<span class="promo-card__price-save">Economize ${money(
+                    p.descontoValor
+                  )}</span>`
+                : ""
+            }
           </div>
         </div>
 
@@ -283,7 +341,9 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
 
-        <a class="btn btn--whats promo-card__cta" target="_blank" href="${whats(p)}">
+        <a class="btn btn--whats promo-card__cta" target="_blank" href="${whats(
+          p
+        )}">
           Aproveitar pelo WhatsApp
         </a>
       </div>
@@ -295,9 +355,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return el;
   };
 
-  // ---------------------------
-  // MÉTODOS AUXILIARES DOS CARDS
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 12 • HELPERS DOS CARDS
+  //  - Badge, prazo, link de WhatsApp
+  // =====================================================
+
   const getBadge = (p) => {
     if (p.estoqueTotal <= 3) return "🔥 Últimas unidades";
     if (p.diasRestantes === 1) return "⏳ Só hoje";
@@ -324,9 +386,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return `https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(msg)}`;
   };
 
-  // ---------------------------
-  // TIMER GLOBAL PARA TODOS OS CARDS
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 13 • TIMER GLOBAL (CONTAGEM REGRESSIVA)
+  //  - Atualiza os textos de tempo restante
+  // =====================================================
+
   const startTimer = () => {
     if (state.timers.length === 0) return;
 
@@ -359,9 +423,11 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(tick, 60000);
   };
 
-  // ---------------------------
-  // EVENTOS DOS FILTROS
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 14 • EVENTOS DOS FILTROS
+  //  - Input de busca, categoria e ordenação
+  // =====================================================
+
   if (els.search) {
     els.search.addEventListener("input", (e) => {
       state.filters.search = e.target.value.toLowerCase();
@@ -383,8 +449,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---------------------------
-  // INICIAR
-  // ---------------------------
+  // =====================================================
+  //  BLOCO 15 • INICIALIZAÇÃO FINAL
+  //  - Dispara o carregamento das promoções
+  // =====================================================
+
   loadPromos();
 });

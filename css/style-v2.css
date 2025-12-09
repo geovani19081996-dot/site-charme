@@ -10,9 +10,14 @@
    ======================================================= */
 
 /* =======================================================
-   PALETA • tema claro
+   BLOCO 01 • FUNDAMENTOS / TEMA
+   - Paleta tema claro
+   - Tema escuro (body.dark)
+   - Reset
+   - Body base
    ======================================================= */
 
+/* PALETA • tema claro */
 :root {
   /* Cores primárias */
   --pink: #ff2d78;
@@ -42,10 +47,7 @@
   --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
 }
 
-/* =======================================================
-   TEMA ESCURO (dark mode)
-   ======================================================= */
-
+/* TEMA ESCURO (dark mode) */
 body.dark {
   --white: #151014;
   --gray-bg: #1f1820;
@@ -56,10 +58,7 @@ body.dark {
   --shadow-soft: 0 22px 50px rgba(0, 0, 0, 0.35);
 }
 
-/* =======================================================
-   RESET
-   ======================================================= */
-
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -79,7 +78,9 @@ body {
 }
 
 /* =======================================================
-   CONTÊINER GERAL
+   BLOCO 02 • ESTRUTURA GERAL
+   - Container padrão
+   - Títulos de seção
    ======================================================= */
 
 .container {
@@ -87,10 +88,6 @@ body {
   padding: 0 1.5rem;
   margin: auto;
 }
-
-/* =======================================================
-   TÍTULOS PADRONIZADOS
-   ======================================================= */
 
 .section {
   padding: 4rem 1.5rem;
@@ -112,7 +109,9 @@ body {
 }
 
 /* =======================================================
-   TOPO / MENU
+   BLOCO 03 • TOPO / MENU
+   - Logo
+   - Navegação principal
    ======================================================= */
 
 .topbar {
@@ -166,7 +165,8 @@ body {
 }
 
 /* =======================================================
-   BOTÃO DE TEMA (injetado automaticamente)
+   BLOCO 04 • BOTÃO DE TEMA (DARK/LIGHT)
+   - Injetado via JS
    ======================================================= */
 
 .theme-toggle {
@@ -183,7 +183,7 @@ body {
   justify-content: center;
   font-size: 22px;
   cursor: pointer;
-  box-shadow: 0 10px 26px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
   z-index: 999;
   transition: 0.25s;
 }
@@ -194,7 +194,7 @@ body {
 }
 
 /* =======================================================
-   HERO (Capa)
+   BLOCO 05 • HERO (CAPA / INÍCIO)
    ======================================================= */
 
 .hero {
@@ -238,7 +238,7 @@ body {
 }
 
 /* =======================================================
-   BOTÕES (gerais)
+   BLOCO 06 • BOTÕES GERAIS (reutilizados nas seções)
    ======================================================= */
 
 .btn {
@@ -281,8 +281,10 @@ body {
 .btn--whats:hover {
   background: var(--whats-hover);
 }
+
 /* =======================================================
-   SOBRE + LINHA DO TEMPO
+   BLOCO 07 • SEÇÃO "SOBRE" + LINHA DO TEMPO
+   - #sobre no HTML
    ======================================================= */
 
 .sobre__grid {
@@ -325,7 +327,8 @@ body {
 }
 
 /* =======================================================
-   LOJAS (cards simples)
+   BLOCO 08 • SEÇÃO "LOJAS"
+   - cards da matriz / filial
    ======================================================= */
 
 .cards {
@@ -370,7 +373,8 @@ body {
 }
 
 /* =======================================================
-   CATEGORIAS
+   BLOCO 09 • SEÇÃO "PRODUTOS"
+   - categorias (Cabelos, Maquiagem, etc.)
    ======================================================= */
 
 .categorias {
@@ -402,7 +406,8 @@ body {
 }
 
 /* =======================================================
-   ESSÊNCIA
+   BLOCO 10 • SEÇÃO "ESSÊNCIA"
+   - Propósito, Missão, Visão, Valores
    ======================================================= */
 
 .essencia__grid {
@@ -452,7 +457,8 @@ body {
 }
 
 /* =======================================================
-   EQUIPE / FAMÍLIA
+   BLOCO 11 • SEÇÃO "FAMÍLIA / EQUIPE"
+   - cards de pessoas (Viviane, Aparecido, etc.)
    ======================================================= */
 
 .equipe {
@@ -504,7 +510,9 @@ body {
 }
 
 /* =======================================================
-   CONTATO
+   BLOCO 12 • SEÇÃO "CONTATO"
+   - botões WhatsApp
+   - links de redes sociais
    ======================================================= */
 
 .contato__acoes {
@@ -537,7 +545,7 @@ body {
 }
 
 /* =======================================================
-   RODAPÉ
+   BLOCO 13 • RODAPÉ
    ======================================================= */
 
 .footer {
@@ -548,8 +556,9 @@ body {
 }
 
 /* =======================================================
-   VITRINE PREMIUM DE PROMOÇÕES
-   (compatível com promocoes.js atual)
+   BLOCO 14 • VITRINE PREMIUM DE PROMOÇÕES
+   - Seção #promocoes-section
+   - Compatível com promocoes.js
    ======================================================= */
 
 .secao-promocoes {
@@ -558,6 +567,7 @@ body {
   border-top: 1px solid rgba(0, 0, 0, 0.03);
 }
 
+/* Cabeçalho da seção de promoções */
 .promos-header {
   text-align: center;
   max-width: 760px;
@@ -592,7 +602,6 @@ body {
 }
 
 /* Toolbar / filtros */
-
 .promos-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -626,8 +635,7 @@ body {
   font-weight: 600;
 }
 
-/* Campos */
-
+/* Campos da toolbar */
 .promos-field {
   min-width: 180px;
 }
@@ -656,16 +664,14 @@ body {
   box-shadow: 0 0 0 2px rgba(255, 45, 120, 0.12);
 }
 
-/* Grid */
-
+/* Grid de cards */
 .promos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
 }
 
-/* Card */
-
+/* Card individual de promoção */
 .promo-card {
   position: relative;
   background: #ffffff;
@@ -685,8 +691,7 @@ body {
   box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
 }
 
-/* fit com JS: .promo-card__ribbon, etc */
-
+/* Faixa superior (ribbon) */
 .promo-card__ribbon {
   position: absolute;
   top: 0.9rem;
@@ -700,6 +705,7 @@ body {
   box-shadow: 0 8px 20px rgba(255, 59, 146, 0.35);
 }
 
+/* Imagem do produto */
 .promo-card__image-wrapper {
   width: 100%;
   padding: 0.6rem;
@@ -736,8 +742,7 @@ body {
   font-weight: 600;
 }
 
-/* Conteúdo */
-
+/* Conteúdo do card */
 .promo-card__content {
   display: flex;
   flex-direction: column;
@@ -764,7 +769,6 @@ body {
 }
 
 /* Preços */
-
 .promo-card__prices {
   margin-top: 0.4rem;
   display: flex;
@@ -807,7 +811,6 @@ body {
 }
 
 /* Meta (estoque + validade) */
-
 .promo-card__meta {
   margin-top: 0.6rem;
   display: grid;
@@ -837,8 +840,7 @@ body {
   font-weight: 600;
 }
 
-/* Chips */
-
+/* Chips auxiliares (se usados pelo JS) */
 .promo-card__badges {
   margin-top: 0.5rem;
   display: flex;
@@ -865,15 +867,13 @@ body {
 }
 
 /* CTA */
-
 .promo-card__cta {
   margin-top: 0.8rem;
   width: 100%;
   justify-content: center;
 }
 
-/* Estado vazio */
-
+/* Estado vazio da seção de promoções */
 .promos-empty {
   margin-top: 3rem;
   text-align: center;
@@ -903,7 +903,8 @@ body {
 }
 
 /* =======================================================
-   ANIMAÇÕES
+   BLOCO 15 • ANIMAÇÕES GERAIS
+   - fade-in-up usado nos cards de promoções
    ======================================================= */
 
 .fade-in-up {
@@ -924,7 +925,8 @@ body {
 }
 
 /* =======================================================
-   RESPONSIVO
+   BLOCO 16 • RESPONSIVIDADE
+   - Ajustes mobile / tablet
    ======================================================= */
 
 @media (max-width: 768px) {
