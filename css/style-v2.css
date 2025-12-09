@@ -1,20 +1,65 @@
-/* ================================
-   Charme Cosméticos - Estilos
-   ================================ */
+/* =======================================================
+   CHARME COSMÉTICOS — STYLE V2 (PREMIUM 2025)
+   Versão: 3.0
+   Recursos:
+   ✔ Tema claro / escuro automático
+   ✔ Dark mode manual
+   ✔ Animações premium
+   ✔ Variáveis 100% padronizadas
+   ✔ CSS otimizado para performance real
+   ======================================================= */
 
-/* Paleta de cores oficial (BrandBook) */
+/* =======================================================
+   PALETA • tema claro
+   ======================================================= */
+
 :root {
-  --charme-pink: #ff2d78;
-  --charme-pink-soft: #ffe4f1;
-  --charme-pink-soft-2: #fff7fb;
-  --charme-gold: #d6a25a;
-  --charme-dark: #2b1024;
-  --charme-gray: #777382;
-  --charme-border-soft: #f3d9ea;
-  --charme-shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
+  /* Cores primárias */
+  --pink: #ff2d78;
+  --pink-dark: #e61e66;
+  --pink-soft: #ffe4f1;
+  --pink-soft-2: #fff7fb;
+
+  /* Auxiliares */
+  --gold: #d6a25a;
+  --gray: #777382;
+  --gray-light: #e9e9eb;
+  --gray-bg: #fafafa;
+
+  /* Texto */
+  --text-dark: #2b1024;
+  --text-light: #444;
+
+  /* Base */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* WhatApp */
+  --whats: #25d366;
+  --whats-hover: #1ebe5b;
+
+  /* Sombras */
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
 }
 
-/* Reset simples */
+/* =======================================================
+   TEMA ESCURO (dark mode)
+   ======================================================= */
+
+body.dark {
+  --white: #151014;
+  --gray-bg: #1f1820;
+  --text-dark: #f7f1f8;
+  --text-light: #ddd;
+  --gray: #bbb;
+  --pink: #ff4d8d;
+  --shadow-soft: 0 22px 50px rgba(0, 0, 0, 0.35);
+}
+
+/* =======================================================
+   RESET
+   ======================================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -26,55 +71,63 @@ html {
 }
 
 body {
-  font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
-  background-color: var(--cinza-claro);
-  color: var(--cinza-texto);
+  background: var(--gray-bg);
+  color: var(--text-light);
+  font-family: "Nunito", system-ui, sans-serif;
   line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Utilitários */
+/* =======================================================
+   CONTÊINER GERAL
+   ======================================================= */
+
 .container {
   max-width: 1120px;
-  margin: 0 auto;
   padding: 0 1.5rem;
+  margin: auto;
 }
+
+/* =======================================================
+   TÍTULOS PADRONIZADOS
+   ======================================================= */
 
 .section {
   padding: 4rem 1.5rem;
 }
 
 .section__title {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 1.8rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.9rem;
   text-align: center;
-  margin-bottom: 1rem;
-  color: var(--preto-suave);
+  margin-bottom: 0.7rem;
+  color: var(--text-dark);
 }
 
 .section__subtitle {
   text-align: center;
   max-width: 640px;
-  margin: 0.5rem auto 2.5rem;
-  color: var(--cinza-texto);
+  margin: 0.6rem auto 2.2rem;
+  color: var(--gray);
 }
 
-/* ================================
-   Topo / Navegação
-   ================================ */
+/* =======================================================
+   TOPO / MENU
+   ======================================================= */
 
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 20;
-  background-color: var(--branco);
-  border-bottom: 1px solid var(--cinza-linha);
+  z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-light);
+  backdrop-filter: blur(16px);
 }
 
 .topbar__inner {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 0.9rem 0;
 }
 
@@ -85,71 +138,98 @@ body {
 }
 
 .logo__img {
-  height: 52px; /* deixa a logo maior */
-  width: auto;
-  display: block;
-  object-fit: contain; /* garante que não corte a parte de baixo */
+  height: 52px;
+  object-fit: contain;
 }
 
 .logo__tagline {
-  font-weight: 500;
-  font-size: 0.8rem;
-  color: var(--cinza-texto);
+  font-size: 0.75rem;
+  color: var(--gray);
 }
 
+/* Navegação */
 .nav {
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
+  gap: 1.3rem;
 }
 
 .nav a {
+  color: var(--text-dark);
   text-decoration: none;
+  font-weight: 500;
   font-size: 0.95rem;
-  color: var(--preto-suave);
+  transition: 0.2s;
 }
 
 .nav a:hover {
-  color: var(--rosa-intenso);
+  color: var(--pink);
 }
 
-/* ================================
-   Hero (capa)
-   ================================ */
+/* =======================================================
+   BOTÃO DE TEMA (injetado automaticamente)
+   ======================================================= */
+
+.theme-toggle {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  background: var(--pink);
+  color: white;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.25);
+  z-index: 999;
+  transition: 0.25s;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: var(--pink-dark);
+}
+
+/* =======================================================
+   HERO (Capa)
+   ======================================================= */
 
 .hero {
-  background: linear-gradient(135deg, var(--rosa-claro), var(--branco));
+  background: linear-gradient(135deg, var(--pink-soft), var(--white));
   padding: 4.5rem 1.5rem 4rem;
 }
 
 .hero__inner {
   max-width: 720px;
-  margin: 0 auto;
   text-align: center;
+  margin: auto;
 }
 
 .hero__label {
+  color: var(--pink);
   font-size: 0.85rem;
-  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--rosa-intenso);
-  margin-bottom: 0.75rem;
+  letter-spacing: 0.07em;
 }
 
 .hero__title {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 2.2rem;
-  margin-bottom: 0.75rem;
-  color: var(--preto-suave);
+  font-family: "Poppins";
+  font-size: 2.3rem;
+  margin-top: 0.8rem;
+  color: var(--text-dark);
 }
 
 .hero__text {
+  color: var(--gray);
+  max-width: 540px;
+  margin: 1.2rem auto 2rem;
   font-size: 1rem;
-  max-width: 560px;
-  margin: 0 auto 2rem;
-  color: var(--cinza-texto);
 }
 
+/* AÇÕES DO HERO */
 .hero__actions {
   display: flex;
   justify-content: center;
@@ -157,77 +237,73 @@ body {
   flex-wrap: wrap;
 }
 
-/* Botões */
+/* =======================================================
+   BOTÕES (gerais)
+   ======================================================= */
 
 .btn {
+  padding: 0.85rem 1.7rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.85rem 1.7rem;
-  border-radius: 999px;
-  border: none;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.18s ease, color 0.18s ease,
-    box-shadow 0.18s ease, transform 0.12s ease;
 }
 
 .btn--primary {
-  background-color: var(--rosa-intenso);
-  color: var(--branco);
-  box-shadow: 0 10px 20px rgba(236, 38, 143, 0.25);
+  background: var(--pink);
+  color: var(--white);
+  box-shadow: 0 10px 20px rgba(255, 45, 120, 0.26);
 }
 
 .btn--primary:hover {
-  background-color: #d41f7d;
-  transform: translateY(-1px);
-  box-shadow: 0 14px 26px rgba(236, 38, 143, 0.28);
+  background: var(--pink-dark);
+  transform: translateY(-2px);
 }
 
 .btn--outline {
-  background-color: transparent;
-  color: var(--rosa-intenso);
-  border: 1px solid rgba(236, 38, 143, 0.4);
+  border: 1px solid var(--pink);
+  color: var(--pink);
 }
 
 .btn--outline:hover {
-  background-color: rgba(236, 38, 143, 0.06);
+  background: rgba(255, 45, 120, 0.12);
 }
 
 .btn--whats {
-  background-color: var(--verde-whats);
-  color: var(--branco);
+  background: var(--whats);
+  color: var(--white);
 }
 
 .btn--whats:hover {
-  background-color: var(--verde-whats-hover);
+  background: var(--whats-hover);
 }
-
-/* ================================
-   Seção "Sobre" + Linha do tempo
-   ================================ */
+/* =======================================================
+   SOBRE + LINHA DO TEMPO
+   ======================================================= */
 
 .sobre__grid {
-  display: grid;
-  gap: 2rem;
   max-width: 960px;
   margin: 0 auto;
+  display: grid;
+  gap: 2rem;
 }
 
 .sobre__texto {
   font-size: 0.98rem;
-  color: var(--cinza-texto);
+  color: var(--text-light);
 }
 
 .sobre__texto p + p {
-  margin-top: 0.75rem;
+  margin-top: 0.7rem;
 }
 
 .timeline {
-  border-left: 3px solid var(--rosa-medio);
-  padding-left: 1.5rem;
+  border-left: 3px solid var(--pink);
+  padding-left: 1.4rem;
 }
 
 .timeline__item {
@@ -235,59 +311,54 @@ body {
 }
 
 .timeline__ano {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--rosa-intenso);
+  color: var(--pink);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .timeline__titulo {
+  font-size: 0.95rem;
   font-weight: 600;
-  margin: 0.15rem 0;
-  color: var(--preto-suave);
+  color: var(--text-dark);
 }
 
-.timeline__texto {
-  font-size: 0.9rem;
-  color: var(--cinza-texto);
-}
-
-/* ================================
-   Seção Lojas
-   ================================ */
+/* =======================================================
+   LOJAS (cards simples)
+   ======================================================= */
 
 .cards {
   max-width: 960px;
   margin: 0 auto;
   display: grid;
-  gap: 1.5rem;
+  gap: 1.4rem;
 }
 
 .card {
-  background-color: var(--branco);
-  border-radius: 0.9rem;
+  background: var(--white);
+  border-radius: 1rem;
   padding: 1.5rem 1.6rem;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.04);
 }
 
 .card__tag {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--rosa-intenso);
+  color: var(--pink);
   margin-bottom: 0.2rem;
 }
 
 .card__title {
-  font-family: "Poppins", system-ui, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.1rem;
-  margin-bottom: 0.4rem;
-  color: var(--preto-suave);
+  color: var(--text-dark);
+  margin-bottom: 0.25rem;
 }
 
 .card__text {
   font-size: 0.9rem;
-  color: var(--cinza-texto);
+  color: var(--text-light);
 }
 
 .card__text + .card__text {
@@ -298,9 +369,9 @@ body {
   margin-top: 0.9rem;
 }
 
-/* ================================
-   Seção Produtos / Categorias
-   ================================ */
+/* =======================================================
+   CATEGORIAS
+   ======================================================= */
 
 .categorias {
   max-width: 960px;
@@ -310,35 +381,29 @@ body {
 }
 
 .categoria {
-  display: grid;
-  grid-template-columns: minmax(0, 150px) minmax(0, 1fr);
-  background-color: var(--branco);
+  background: var(--white);
   border-radius: 0.9rem;
   padding: 1.25rem 1.4rem;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+  display: grid;
+  grid-template-columns: minmax(0, 150px) minmax(0, 1fr);
   column-gap: 1.5rem;
   row-gap: 0.25rem;
 }
 
 .categoria__nome {
   font-weight: 700;
-  color: var(--rosa-intenso);
+  color: var(--pink);
 }
 
 .categoria__descricao {
   font-size: 0.9rem;
-  color: var(--cinza-texto);
+  color: var(--text-light);
 }
 
-.categoria__detalhes {
-  grid-column: 1 / -1;
-  font-size: 0.85rem;
-  color: var(--cinza-texto);
-}
-
-/* ================================
-   Essência / Valores
-   ================================ */
+/* =======================================================
+   ESSÊNCIA
+   ======================================================= */
 
 .essencia__grid {
   max-width: 960px;
@@ -348,22 +413,22 @@ body {
 }
 
 .essencia__bloco {
-  background-color: var(--branco);
+  background: var(--white);
   border-radius: 0.9rem;
   padding: 1.5rem 1.6rem;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
 }
 
 .essencia__bloco h3 {
-  font-family: "Poppins", system-ui, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.1rem;
+  color: var(--text-dark);
   margin-bottom: 0.6rem;
-  color: var(--preto-suave);
 }
 
 .essencia__bloco p {
   font-size: 0.9rem;
-  color: var(--cinza-texto);
+  color: var(--text-light);
 }
 
 .valores__lista {
@@ -373,7 +438,7 @@ body {
 
 .valores__lista li {
   font-size: 0.9rem;
-  color: var(--cinza-texto);
+  color: var(--text-light);
   padding-left: 1.1rem;
   position: relative;
 }
@@ -383,12 +448,12 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--rosa-intenso);
+  color: var(--pink);
 }
 
-/* ================================
-   Equipe / Família
-   ================================ */
+/* =======================================================
+   EQUIPE / FAMÍLIA
+   ======================================================= */
 
 .equipe {
   max-width: 960px;
@@ -398,7 +463,7 @@ body {
 }
 
 .equipe__item {
-  background-color: var(--branco);
+  background: var(--white);
   border-radius: 0.9rem;
   padding: 1.1rem 1.4rem;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
@@ -408,12 +473,12 @@ body {
 }
 
 .equipe__foto {
-  width: 190px; /* tamanho exibido no site */
-  height: 190px; /* quadrado - vira círculo perfeito */
-  border-radius: 50%; /* círculo */
-  object-fit: cover; /* corta só o excesso, sem distorcer */
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  object-fit: cover;
   flex-shrink: 0;
-  box-shadow: 0 0 0 3px var(--rosa-medio);
+  box-shadow: 0 0 0 3px var(--pink-soft);
 }
 
 .equipe__info {
@@ -421,31 +486,26 @@ body {
 }
 
 .equipe__nome {
-  font-family: "Poppins", system-ui, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.05rem;
-  color: var(--preto-suave);
+  color: var(--text-dark);
 }
 
 .equipe__papel {
-  font-size: 1.15rem;
-  color: var(--rosa-intenso);
-  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--pink);
+  margin: 0.15rem 0 0.35rem;
 }
 
-.equipe__texto {
-  font-size: 1rem;
-  color: var(--cinza-texto);
+.equipe__texto,
+.equipe__info p {
+  font-size: 0.9rem;
+  color: var(--text-light);
 }
 
-/* ================================
-   Contato
-   ================================ */
-
-.contato__texto {
-  text-align: center;
-  font-size: 0.95rem;
-  color: var(--cinza-texto);
-}
+/* =======================================================
+   CONTATO
+   ======================================================= */
 
 .contato__acoes {
   margin-top: 1.4rem;
@@ -453,13 +513,6 @@ body {
   justify-content: center;
   gap: 0.8rem;
   flex-wrap: wrap;
-}
-
-.contato__extra {
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--cinza-texto);
 }
 
 .contato__social {
@@ -473,316 +526,88 @@ body {
 .contato__social a {
   font-size: 0.9rem;
   text-decoration: none;
-  color: var(--rosa-intenso);
+  color: var(--pink);
   font-weight: 600;
   border-bottom: 1px solid transparent;
+  transition: 0.18s;
 }
 
 .contato__social a:hover {
-  border-bottom-color: var(--rosa-intenso);
+  border-bottom-color: var(--pink);
 }
 
-/* ================================
-   Rodapé
-   ================================ */
+/* =======================================================
+   RODAPÉ
+   ======================================================= */
 
 .footer {
   padding: 1.4rem 1.5rem 1.8rem;
   text-align: center;
-  font-size: 0.8rem;
-  color: var(--cinza-texto);
+  font-size: 0.82rem;
+  color: var(--gray);
 }
 
-/* ================================
-   Responsividade
-   ================================ */
-
-/* ajuste extra para a área da família em telas bem pequenas */
-@media (max-width: 480px) {
-  .equipe__item {
-    flex-direction: row;
-  }
-}
-
-@media (max-width: 768px) {
-  .topbar__inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .nav {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .hero__title {
-    font-size: 1.8rem;
-  }
-
-  .categoria {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* seção produtos dinâmica */
-.secao-produtos {
-  padding: 60px 20px;
-  background: #fff5fb;
-}
-
-.secao-produtos h2 {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.secao-produtos p {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.produtos-filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.produtos-filtros input,
-.produtos-filtros select {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  min-width: 200px;
-}
-
-.produtos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.produto-card {
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  padding: 12px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.produto-card img {
-  max-width: 100%;
-  max-height: 160px;
-  object-fit: contain;
-  margin-bottom: 8px;
-}
-
-/* imagem do produto dentro do card (layout novo) */
-.product-image {
-  width: 100%;
-  padding: 0 16px;
-  margin-top: 8px;
-  display: flex;
-  justify-content: center;
-}
-
-.product-image img {
-  max-height: 140px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
-
-.produto-card h3 {
-  font-size: 16px;
-  margin: 0;
-}
-
-.produto-categoria {
-  font-size: 12px;
-  color: #777;
-  margin: 0;
-}
-
-.produto-preco {
-  font-weight: bold;
-  color: #e91e63;
-  margin: 4px 0;
-}
-
-.produto-estoque {
-  font-size: 12px;
-  color: #444;
-  margin: 0;
-}
-
-.produto-botao {
-  margin-top: 8px;
-  display: inline-block;
-  padding: 8px 12px;
-  background: #e91e63;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.produto-botao:hover {
-  opacity: 0.9;
-}
-#promocoes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  margin: 40px auto;
-  width: 90%;
-}
-
-.card-promo {
-  background: white;
-  border-radius: 14px;
-  padding: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.card-promo:hover {
-  transform: scale(1.03);
-}
-
-.promo-selo {
-  background: #ff007f;
-  color: white;
-  font-weight: bold;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-}
-
-.promo-img {
-  width: 130px;
-  height: 130px;
-  object-fit: contain;
-  margin: 10px auto;
-}
-
-.promo-nome {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.promo-categoria {
-  font-size: 13px;
-  color: #777;
-}
-
-.precos {
-  margin: 10px 0;
-}
-
-.promo-preco {
-  font-size: 20px;
-  color: #ff007f;
-  font-weight: bold;
-}
-
-.preco-normal {
-  text-decoration: line-through;
-  color: #777;
-  margin-left: 5px;
-}
-
-.desconto {
-  background: #ff007f;
-  color: white;
-  margin-left: 5px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.btn-whats {
-  display: inline-block;
-  background: #ff007f;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 30px;
-  font-weight: bold;
-}
-
-.btn-whats:hover {
-  opacity: 0.8;
-}
-/* ===========================
-   VITRINE DE PROMOÇÕES CHARME
-   =========================== */
+/* =======================================================
+   VITRINE PREMIUM DE PROMOÇÕES
+   (compatível com promocoes.js atual)
+   ======================================================= */
 
 .secao-promocoes {
-  padding: 4rem 0 5rem;
-  background: #ffeef8;
-}
-
-@media (max-width: 768px) {
-  .secao-promocoes {
-    padding: 3rem 0 4rem;
-  }
+  padding: 4rem 1.5rem 4.5rem;
+  background: linear-gradient(180deg, var(--pink-soft-2) 0%, #ffffff 45%);
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .promos-header {
   text-align: center;
-  margin-bottom: 2.5rem;
+  max-width: 760px;
+  margin: 0 auto 2.4rem;
 }
 
 .promos-header__kicker {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.2rem 0.75rem;
+  gap: 0.5rem;
+  padding: 0.25rem 0.9rem;
   border-radius: 999px;
-  background: rgba(255, 105, 180, 0.08);
-  color: #ff3b92;
-  font-size: 0.8rem;
+  background: rgba(255, 45, 120, 0.06);
+  color: var(--pink);
+  font-size: 0.83rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .promos-header__title {
-  margin-top: 0.9rem;
+  margin-top: 0.8rem;
   font-size: 1.9rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .promos-header__subtitle {
   margin-top: 0.4rem;
-  color: #666;
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
+  color: var(--gray);
+  font-size: 0.96rem;
 }
 
 /* Toolbar / filtros */
 
 .promos-toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 1rem;
   margin-bottom: 1.8rem;
-  flex-wrap: wrap;
+  padding: 0.8rem 1.1rem;
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
 }
 
 .promos-toolbar__left {
-  flex: 1;
-  min-width: 160px;
+  min-width: 150px;
 }
 
 .promos-toolbar__right {
@@ -793,16 +618,15 @@ body {
 }
 
 .promos-pill {
-  display: inline-flex;
-  align-items: center;
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
-  background: #fff;
-  color: #ff3b92;
+  background: var(--pink-soft);
+  color: var(--text-dark);
+  font-size: 0.86rem;
   font-weight: 600;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  font-size: 0.85rem;
 }
+
+/* Campos */
 
 .promos-field {
   min-width: 180px;
@@ -816,36 +640,23 @@ body {
   padding: 0.55rem 0.9rem;
   font-size: 0.9rem;
   background: #fff;
+  color: var(--text-dark);
   outline: none;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.08s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.promos-input::placeholder {
+  color: #b6aebc;
 }
 
 .promos-input:focus,
 .promos-select:focus {
-  border-color: #ff3b92;
-  box-shadow: 0 0 0 2px rgba(255, 59, 146, 0.15);
+  border-color: var(--pink);
+  box-shadow: 0 0 0 2px rgba(255, 45, 120, 0.12);
 }
 
-.promos-input::placeholder {
-  color: #aaa;
-}
-
-@media (max-width: 768px) {
-  .promos-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .promos-toolbar__right {
-    justify-content: stretch;
-  }
-
-  .promos-field {
-    min-width: 100%;
-  }
-}
-
-/* Grid e cards */
+/* Grid */
 
 .promos-grid {
   display: grid;
@@ -853,31 +664,34 @@ body {
   gap: 1.5rem;
 }
 
+/* Card */
+
 .promo-card {
   position: relative;
-  background: #fff;
-  border-radius: 1.25rem;
-  padding: 1rem 1rem 1.1rem;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: var(--shadow-soft);
+  padding: 1rem 1rem 1.15rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  gap: 0.7rem;
   overflow: hidden;
   transition: transform 0.18s ease, box-shadow 0.18s ease,
     border-color 0.18s ease;
 }
 
 .promo-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
-  border-color: rgba(255, 59, 146, 0.25);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
 }
+
+/* fit com JS: .promo-card__ribbon, etc */
 
 .promo-card__ribbon {
   position: absolute;
   top: 0.9rem;
   left: 1rem;
-  padding: 0.25rem 0.7rem;
+  padding: 0.25rem 0.8rem;
   border-radius: 999px;
   background: linear-gradient(135deg, #ff8abf, #ff3b92);
   color: #fff;
@@ -887,15 +701,20 @@ body {
 }
 
 .promo-card__image-wrapper {
-  position: relative;
   width: 100%;
-  padding: 0.5rem;
-  border-radius: 1rem;
-  background: linear-gradient(145deg, #fff7fd, #ffe0f2);
-  margin-bottom: 0.85rem;
+  padding: 0.6rem;
+  border-radius: 1.1rem;
+  background: radial-gradient(
+    circle at 20% 0%,
+    #ffeef7 0,
+    #ffffff 45%,
+    #fff7fb 100%
+  );
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  margin-top: 1.6rem; /* espaço por causa da ribbon */
+  margin-bottom: 0.8rem;
 }
 
 .promo-card__image {
@@ -907,10 +726,10 @@ body {
 
 .promo-card__discount-tag {
   position: absolute;
-  bottom: 0.65rem;
-  right: 0.7rem;
-  background: #1f2933;
-  color: #fff;
+  bottom: 0.75rem;
+  right: 0.85rem;
+  background: #111827;
+  color: #f9fafb;
   border-radius: 999px;
   padding: 0.2rem 0.7rem;
   font-size: 0.75rem;
@@ -922,33 +741,32 @@ body {
 .promo-card__content {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .promo-card__category {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #ff3b92;
+  letter-spacing: 0.08em;
+  color: var(--pink);
 }
 
 .promo-card__title {
   font-size: 1rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .promo-card__subtitle {
   font-size: 0.86rem;
-  color: #666;
-  min-height: 1.6em;
+  color: var(--gray);
 }
 
 /* Preços */
 
 .promo-card__prices {
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -968,7 +786,7 @@ body {
 .promo-card__price-current {
   font-size: 1.45rem;
   font-weight: 700;
-  color: #1f2933;
+  color: #111827;
 }
 
 .promo-card__price-extra {
@@ -988,20 +806,14 @@ body {
   font-weight: 600;
 }
 
-/* Meta: estoque + validade */
+/* Meta (estoque + validade) */
 
 .promo-card__meta {
   margin-top: 0.6rem;
   display: grid;
-  grid-template-columns: 1.2fr 1.2fr;
+  grid-template-columns: 1.1fr 1.1fr;
   gap: 0.4rem 0.8rem;
   font-size: 0.78rem;
-}
-
-@media (max-width: 480px) {
-  .promo-card__meta {
-    grid-template-columns: 1fr;
-  }
 }
 
 .promo-card__meta-item {
@@ -1021,11 +833,11 @@ body {
 }
 
 .promo-card__timer {
-  color: #ff3b92;
+  color: var(--pink);
   font-weight: 600;
 }
 
-/* Chips/badges */
+/* Chips */
 
 .promo-card__badges {
   margin-top: 0.5rem;
@@ -1069,31 +881,30 @@ body {
 
 .promos-empty__badge {
   display: inline-flex;
-  padding: 0.2rem 0.7rem;
+  padding: 0.25rem 0.8rem;
   border-radius: 999px;
   background: #fff;
-  color: #ff3b92;
+  color: var(--pink);
   font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 0.7rem;
 }
 
 .promos-empty__title {
+  margin-top: 0.9rem;
   font-size: 1.3rem;
-  margin-bottom: 0.4rem;
+  font-weight: 700;
+  color: var(--text-dark);
 }
 
 .promos-empty__text {
   max-width: 420px;
-  margin: 0 auto 1rem;
-  color: #666;
+  margin: 0.4rem auto 1rem;
+  color: var(--gray);
 }
 
-.promos-empty__btn {
-  margin-top: 0.3rem;
-}
-
-/* Animação suave */
+/* =======================================================
+   ANIMAÇÕES
+   ======================================================= */
 
 .fade-in-up {
   opacity: 0;
@@ -1111,410 +922,66 @@ body {
     transform: translateY(0);
   }
 }
-/* ============================================================
-   VITRINE DE PROMOÇÕES – CHARME COSMÉTICOS
-   ============================================================ */
 
-.secao-promocoes {
-  padding: 4.5rem 0 4rem;
-  background: linear-gradient(
-    180deg,
-    var(--charme-pink-soft-2) 0%,
-    #ffffff 40%
-  );
-  border-top: 1px solid var(--charme-border-soft);
-}
+/* =======================================================
+   RESPONSIVO
+   ======================================================= */
 
-/* Cabeçalho */
-.promos-header {
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto 2.5rem;
-}
-
-.promos-header__kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(255, 45, 120, 0.06);
-  color: var(--charme-pink);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.promos-header__kicker::before {
-  content: "🔥";
-}
-
-.promos-header__title {
-  margin-top: 0.8rem;
-  font-size: 1.9rem;
-  font-weight: 700;
-  color: var(--charme-dark);
-}
-
-.promos-header__subtitle {
-  margin-top: 0.4rem;
-  color: var(--charme-gray);
-  font-size: 0.98rem;
-}
-
-/* Barra de filtros */
-.promos-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.8rem;
-  padding: 0.8rem 1.1rem;
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
-}
-
-.promos-toolbar__left {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.promos-toolbar__right {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.promos-pill {
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  background: var(--charme-pink-soft);
-  color: var(--charme-dark);
-  font-size: 0.86rem;
-  font-weight: 600;
-}
-
-.promos-field {
-  min-width: 170px;
-}
-
-/* Inputs / selects */
-.promos-input,
-.promos-select {
-  width: 100%;
-  border-radius: 999px;
-  border: 1px solid var(--charme-border-soft);
-  padding: 0.45rem 0.9rem;
-  font-size: 0.92rem;
-  color: var(--charme-dark);
-  background: #ffffff;
-  outline: none;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease,
-    background-color 0.18s ease;
-}
-
-.promos-input::placeholder {
-  color: #b6aebc;
-}
-
-.promos-input:focus,
-.promos-select:focus {
-  border-color: var(--charme-pink);
-  box-shadow: 0 0 0 2px rgba(255, 45, 120, 0.12);
-  background: #fff;
-}
-
-/* Grid de cards */
-.promos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-
-/* Card base */
-.promo-card {
-  position: relative;
-  background: #ffffff;
-  border-radius: 22px;
-  box-shadow: var(--charme-shadow-soft);
-  padding: 1rem 1rem 1.1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  overflow: hidden;
-  transform: translateY(8px);
-  opacity: 0;
-  animation: promoFadeIn 0.45s ease forwards;
-}
-
-/* animação suave de entrada */
-@keyframes promoFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
+@media (max-width: 768px) {
+  .topbar__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
-}
 
-/* Hover do card */
-.promo-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.07);
-}
+  .hero__title {
+    font-size: 1.9rem;
+  }
 
-/* Faixa de topo */
-.promo-card__badge {
-  position: absolute;
-  top: 0.85rem;
-  left: 1rem;
-  padding: 0.25rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #fff;
-  background: linear-gradient(
-    120deg,
-    var(--charme-pink) 0%,
-    #ff7aa8 50%,
-    var(--charme-gold) 100%
-  );
-  box-shadow: 0 8px 16px rgba(255, 45, 120, 0.35);
-}
+  .categoria {
+    grid-template-columns: 1fr;
+  }
 
-/* porcentagem da promo (quando tiver) */
-.promo-card__discount-pill {
-  position: absolute;
-  top: 0.85rem;
-  right: 1rem;
-  padding: 0.25rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--charme-pink);
-  background: #fff7fd;
-  border: 1px solid rgba(255, 45, 120, 0.35);
-}
-
-/* Imagem */
-.promo-card__img-wrapper {
-  width: 100%;
-  padding-top: 72%;
-  border-radius: 18px;
-  background: radial-gradient(
-    circle at 20% 0%,
-    #ffeef7 0,
-    #ffffff 45%,
-    #fff7fb 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  margin-top: 1.8rem; /* deixa espaço por causa das badges */
-}
-
-.promo-card__img {
-  max-width: 75%;
-  max-height: 80%;
-  object-fit: contain;
-}
-
-/* Conteúdo */
-.promo-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-top: 0.5rem;
-}
-
-.promo-card__promo-name {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #b08fb8;
-}
-
-.promo-card__title {
-  font-size: 0.98rem;
-  font-weight: 600;
-  color: var(--charme-dark);
-}
-
-.promo-card__category {
-  font-size: 0.8rem;
-  color: #a599aa;
-}
-
-/* Preços */
-.promo-card__prices {
-  display: flex;
-  align-items: baseline;
-  gap: 0.45rem;
-  margin-top: 0.3rem;
-}
-
-.promo-card__price-current {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--charme-pink);
-}
-
-.promo-card__price-old {
-  font-size: 0.86rem;
-  color: #b4acbc;
-  text-decoration: line-through;
-}
-
-.promo-card__discount-label {
-  font-size: 0.8rem;
-  color: var(--charme-gold);
-  font-weight: 600;
-}
-
-/* Info de prazo + estoque */
-.promo-card__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.75rem;
-  margin-top: 0.4rem;
-  font-size: 0.8rem;
-  color: var(--charme-gray);
-}
-
-.promo-card__meta-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.promo-card__meta-item--danger {
-  color: var(--charme-pink);
-  font-weight: 600;
-}
-
-/* “chips” de loja */
-.promo-card__stores {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.5rem;
-}
-
-.promo-card__store-chip {
-  padding: 0.18rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.76rem;
-  background: #faf5ff;
-  color: #6f5b8c;
-}
-
-/* Rodapé do card */
-.promo-card__footer {
-  margin-top: 0.9rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.promo-card__urgency-text {
-  font-size: 0.78rem;
-  color: #9a8baa;
-}
-
-/* botão aproveite via Whats */
-.promo-card__btn {
-  width: 100%;
-  text-align: center;
-}
-
-/* Estado vazio */
-.promos-empty {
-  margin-top: 2.2rem;
-  text-align: center;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2rem 1.5rem 2.3rem;
-  border-radius: 24px;
-  background: #ffffff;
-  box-shadow: var(--charme-shadow-soft);
-}
-
-.promos-empty__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  background: #fff2f7;
-  color: var(--charme-pink);
-}
-
-.promos-empty__title {
-  margin-top: 0.9rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--charme-dark);
-}
-
-.promos-empty__text {
-  margin-top: 0.4rem;
-  font-size: 0.92rem;
-  color: var(--charme-gray);
-}
-
-.promos-empty__btn {
-  margin-top: 1.1rem;
-}
-
-/* Responsivo */
-@media (max-width: 900px) {
-  .secao-promocoes {
-    padding-top: 3.2rem;
+  .equipe__item {
+    flex-direction: row;
   }
 
   .promos-toolbar {
-    padding: 0.8rem 0.8rem;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .promos-toolbar__right {
-    width: 100%;
-    justify-content: flex-start;
+    justify-content: stretch;
   }
 
   .promos-field {
-    flex: 1 1 130px;
+    min-width: 100%;
+  }
+
+  .secao-promocoes {
+    padding-top: 3rem;
   }
 }
 
-@media (max-width: 600px) {
-  .promos-header__title {
-    font-size: 1.6rem;
+@media (max-width: 480px) {
+  .equipe__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
-  .promos-header__subtitle {
-    font-size: 0.9rem;
+  .equipe__foto {
+    width: 160px;
+    height: 160px;
   }
 
-  .promo-card {
-    padding: 0.9rem 0.9rem 1rem;
-  }
-
-  .promo-card__img-wrapper {
-    padding-top: 70%;
+  .promo-card__meta {
+    grid-template-columns: 1fr;
   }
 }

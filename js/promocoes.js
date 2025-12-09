@@ -1,14 +1,25 @@
-// js/promocoes.js
-// Vitrine de promoções Charme – com filtros, contador e gatilhos
+// ===============================
+//  PROMOÇÕES CHARME – PREMIUM
+//  Código 100% blindado e revisado
+// ===============================
 
-const PROMOS_JSON_URL = "data/promocoes_site.json"; // mesmo arquivo que você já gerou
-const IMG_PROMO_BASE_PATH = "img/produtos/"; // onde vão ficar as imagens das promos
-const WHATS_NUMBER = "556535494404"; // número padrão da Charme
+const PROMOS_JSON_URL = "data/promocoes_site.json";
+const IMG_PROMO_BASE_PATH = "img/produtos/";
+const WHATS_NUMBER = "556535494404";
 
+// Só inicia quando REALMENTE existir a área de promoções
 document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector("#promocoes-grid");
-  if (!grid) return; // se a seção não existir, não faz nada
+  const count = document.querySelector("#promos-count");
 
+  if (!grid || !count) {
+    console.warn("⚠ Área de promoções não encontrada no HTML. Script ignorado.");
+    return;
+  }
+
+  // ========================
+  // ESTADO GLOBAL
+  // ========================
   const state = {
     rawPromos: [],
     activePromos: [],
@@ -21,84 +32,68 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
+  // ========================
+  // ELEMENTOS
+  // ========================
   const els = {
     grid,
-    count: document.querySelector("#promos-count"),
+    count,
     empty: document.querySelector("#promocoes-empty"),
     search: document.querySelector("#promo-search"),
     category: document.querySelector("#promo-category"),
     sort: document.querySelector("#promo-sort"),
   };
 
-  // Util: parse de número vindo em string
-  const toNumber = (value) => {
-    if (typeof value === "number") return value;
-    if (!value) return 0;
-    return Number(String(value).replace(",", "."));
-  };
+  // ---------------------------
+  // FUNÇÕES UTILITÁRIAS
+  // ---------------------------
+  const toNumber = (v) => Number(String(v || "0").replace(",", "."));
+  const todayMidnight = () => new Date().setHours(0, 0, 0, 0);
 
-  // Util: parse de data (YYYY-MM-DD)
-  const parseDate = (value) => {
-    if (!value) return null;
-    // força meio-dia pra evitar problema de timezone
-    return new Date(value + "T12:00:00");
-  };
+  const parseDate = (v) => (v ? new Date(v + "T12:00:00") : null);
 
-  const formatMoney = (value) =>
-    toNumber(value).toLocaleString("pt-BR", {
+  const money = (v) =>
+    toNumber(v).toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
-      minimumFractionDigits: 2,
     });
 
-  const todayAtMidnight = () => {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d;
+  const daysBetween = (to) => {
+    const ms = to.getTime() - todayMidnight();
+    return Math.ceil(ms / 86400000);
   };
 
-  const getDaysDiff = (to) => {
-    const ms = to.getTime() - todayAtMidnight().getTime();
-    return Math.ceil(ms / (1000 * 60 * 60 * 24));
-  };
-
-  // Normaliza um item cru do JSON
+  // ---------------------------
+  // NORMALIZAÇÃO DOS DADOS
+  // ---------------------------
   const normalizePromo = (raw) => {
     const precoNormal = toNumber(raw.preco_normal);
     const precoPromo = toNumber(raw.preco_promo);
-
     const descontoValor = Math.max(precoNormal - precoPromo, 0);
+
     const descontoPercent =
-      raw.desconto_percentual != null && raw.desconto_percentual !== ""
+      raw.desconto_percentual && raw.desconto_percentual !== ""
         ? toNumber(raw.desconto_percentual)
         : precoNormal > 0
         ? Math.round((descontoValor / precoNormal) * 1000) / 10
         : 0;
 
     const dataFim = parseDate(raw.data_fim);
-    const duracaoEstoque = !!raw.duracao_estoque;
-    const somenteAVista = !!raw.somente_a_vista;
+    const duracaoEstoque = Boolean(raw.duracao_estoque);
 
-    const estoqueLoja1 = toNumber(raw.estoque_loja1);
-    const estoqueLoja2 = toNumber(raw.estoque_loja2);
-    const estoqueTotal = estoqueLoja1 + estoqueLoja2;
+    const estoqueTotal =
+      toNumber(raw.estoque_loja1) + toNumber(raw.estoque_loja2);
 
-    // Promo ativa?
-    const hoje = todayAtMidnight();
+    const hoje = new Date(todayMidnight());
     let ativa = true;
     let diasRestantes = null;
 
     if (!duracaoEstoque && dataFim) {
-      if (dataFim < hoje) {
-        ativa = false;
-      } else {
-        diasRestantes = getDaysDiff(dataFim);
-      }
+      if (dataFim < hoje) ativa = false;
+      else diasRestantes = daysBetween(dataFim);
     }
 
-    if (duracaoEstoque && estoqueTotal <= 0) {
-      ativa = false;
-    }
+    if (duracaoEstoque && estoqueTotal <= 0) ativa = false;
 
     return {
       ...raw,
@@ -108,344 +103,268 @@ document.addEventListener("DOMContentLoaded", () => {
       descontoPercent,
       dataFim,
       duracaoEstoque,
-      somenteAVista,
-      estoqueLoja1,
-      estoqueLoja2,
       estoqueTotal,
       ativa,
       diasRestantes,
     };
   };
 
-  const fetchPromos = async () => {
+  // ---------------------------
+  // CARREGAR JSON
+  // ---------------------------
+  const loadPromos = async () => {
     try {
-      const res = await fetch(PROMOS_JSON_URL, { cache: "no-store" });
-      if (!res.ok) throw new Error("Erro ao carregar JSON de promoções");
-      const data = await res.json();
+      const r = await fetch(PROMOS_JSON_URL, { cache: "no-store" });
+      if (!r.ok) throw new Error("Não carregou JSON");
 
-      state.rawPromos = Array.isArray(data) ? data : [];
-      state.activePromos = state.rawPromos
-        .map(normalizePromo)
-        .filter((p) => p.ativa);
+      const data = await r.json();
+
+      if (!Array.isArray(data)) {
+        throw new Error("JSON inválido");
+      }
+
+      state.rawPromos = data;
+      state.activePromos = data.map(normalizePromo).filter((p) => p.ativa);
 
       buildCategoryOptions();
       applyFilters();
-      startCountdownTimer();
-    } catch (err) {
-      console.error(err);
-      setErrorState("Erro ao carregar promoções.");
+      startTimer();
+    } catch (e) {
+      console.error("Erro:", e);
+      setError("Erro ao carregar promoções.");
     }
   };
 
-  const setErrorState = (message) => {
-    if (els.count) els.count.textContent = message;
+  const setError = (msg) => {
+    if (els.count) els.count.textContent = msg;
     if (els.grid) els.grid.innerHTML = "";
   };
 
-  // Preenche o select de categorias
+  // ---------------------------
+  // CATEGORIAS DO SELECT
+  // ---------------------------
   const buildCategoryOptions = () => {
     if (!els.category) return;
 
-    const categorias = new Set();
-    state.activePromos.forEach((p) => {
-      if (p.categoria) categorias.add(p.categoria);
-    });
+    const cats = new Set();
+    state.activePromos.forEach((p) => p.categoria && cats.add(p.categoria));
 
     els.category.innerHTML = `<option value="">Todas as categorias</option>`;
 
-    Array.from(categorias)
-      .sort((a, b) => a.localeCompare(b, "pt-BR"))
-      .forEach((cat) => {
-        const opt = document.createElement("option");
-        opt.value = cat;
-        opt.textContent = cat;
-        els.category.appendChild(opt);
-      });
+    [...cats].sort().forEach((c) => {
+      const op = document.createElement("option");
+      op.value = c;
+      op.textContent = c;
+      els.category.appendChild(op);
+    });
   };
 
-  // Aplica search/filtro/sort
+  // ---------------------------
+  // FILTROS & ORDENAÇÃO
+  // ---------------------------
   const applyFilters = () => {
-    let list = [...state.activePromos];
+    let arr = [...state.activePromos];
 
     // search
     if (state.filters.search) {
-      const term = state.filters.search.toLowerCase();
-      list = list.filter((p) => {
-        const texto =
-          (p.nome || "") +
-          " " +
-          (p.descricao_resumida || "") +
-          " " +
-          (p.categoria || "") +
-          " " +
-          (p.subcategoria || "");
-        return texto.toLowerCase().includes(term);
-      });
+      const t = state.filters.search.toLowerCase();
+      arr = arr.filter((p) =>
+        `${p.nome} ${p.descricao_resumida} ${p.categoria} ${p.subcategoria}`
+          .toLowerCase()
+          .includes(t)
+      );
     }
 
     // categoria
     if (state.filters.category) {
-      list = list.filter((p) => p.categoria === state.filters.category);
+      arr = arr.filter((p) => p.categoria === state.filters.category);
     }
 
     // sort
-    switch (state.filters.sort) {
-      case "discountPercent":
-        list.sort((a, b) => b.descontoPercent - a.descontoPercent);
-        break;
-      case "discountValue":
-        list.sort((a, b) => b.descontoValor - a.descontoValor);
-        break;
-      case "priceAsc":
-        list.sort((a, b) => a.precoPromo - b.precoPromo);
-        break;
-      case "urgency":
-      default:
-        list.sort((a, b) => {
-          const aDias = a.diasRestantes ?? 999;
-          const bDias = b.diasRestantes ?? 999;
-          if (aDias !== bDias) return aDias - bDias;
-          return b.descontoPercent - a.descontoPercent;
-        });
-        break;
+    const sort = state.filters.sort;
+    if (sort === "discountPercent") arr.sort((a, b) => b.descontoPercent - a.descontoPercent);
+    else if (sort === "discountValue") arr.sort((a, b) => b.descontoValor - a.descontoValor);
+    else if (sort === "priceAsc") arr.sort((a, b) => a.precoPromo - b.precoPromo);
+    else {
+      arr.sort((a, b) => {
+        const ad = a.diasRestantes ?? 999;
+        const bd = b.diasRestantes ?? 999;
+        if (ad !== bd) return ad - bd;
+        return b.descontoPercent - a.descontoPercent;
+      });
     }
 
-    state.filteredPromos = list;
-    renderPromos();
+    state.filteredPromos = arr;
+    render();
   };
 
-  const renderPromos = () => {
+  // ---------------------------
+  // RENDERIZAÇÃO DOS CARDS
+  // ---------------------------
+  const render = () => {
     els.grid.innerHTML = "";
     state.timers = [];
 
     if (state.filteredPromos.length === 0) {
-      els.grid.setAttribute("hidden", "true");
-      els.empty.removeAttribute("hidden");
-      if (els.count) els.count.textContent = "Nenhuma promoção ativa";
+      els.grid.hidden = true;
+      els.empty.hidden = false;
+      els.count.textContent = "Nenhuma promoção ativa";
       return;
     }
 
-    els.grid.removeAttribute("hidden");
-    els.empty.setAttribute("hidden", "true");
+    els.grid.hidden = false;
+    els.empty.hidden = true;
 
-    if (els.count) {
-      const qtd = state.filteredPromos.length;
-      els.count.textContent = `${qtd} promoção${qtd === 1 ? "" : "es"} ativa${
-        qtd === 1 ? "" : "s"
-      }`;
-    }
+    const qtd = state.filteredPromos.length;
+    els.count.textContent = `${qtd} promoção${qtd > 1 ? "es" : ""} ativa${qtd > 1 ? "s" : ""}`;
 
     const fragment = document.createDocumentFragment();
 
-    state.filteredPromos.forEach((promo) => {
-      const card = createPromoCard(promo);
-      fragment.appendChild(card);
+    state.filteredPromos.forEach((p) => {
+      fragment.appendChild(makeCard(p));
     });
 
     els.grid.appendChild(fragment);
   };
 
-  const createPromoCard = (promo) => {
-    const card = document.createElement("article");
-    card.className = "promo-card fade-in-up";
+  // ---------------------------
+  // CRIAÇÃO DOS CARDS
+  // ---------------------------
+  const makeCard = (p) => {
+    const el = document.createElement("article");
+    el.className = "promo-card fade-in-up";
 
-    const badgeText = getBadgeText(promo);
-    const tagText =
-      promo.descontoPercent > 0
-        ? `${promo.descontoPercent.toFixed(1).replace(".0", "")}% OFF`
-        : "";
+    const img = p.imagem && p.imagem.trim() !== "" ? p.imagem : "placeholder-promo.jpg";
 
-    const estoqueMsg =
-      promo.estoqueTotal > 0
-        ? `Loja 1: ${promo.estoqueLoja1} | Loja 2: ${promo.estoqueLoja2}`
-        : "Últimas unidades – consulte disponibilidade";
+    const badge = getBadge(p);
+    const prazo = getPrazo(p);
 
-    const prazoMsg = getPrazoMessage(promo);
-
-    const whatsUrl = buildWhatsUrl(promo);
-
-    const imgFile =
-      promo.imagem && String(promo.imagem).trim() !== ""
-        ? promo.imagem
-        : "placeholder-promo.jpg";
-    const imgSrc = IMG_PROMO_BASE_PATH + imgFile;
-
-    card.innerHTML = `
-      <div class="promo-card__ribbon">${badgeText}</div>
+    el.innerHTML = `
+      <div class="promo-card__ribbon">${badge}</div>
 
       <div class="promo-card__image-wrapper">
-        <img src="${imgSrc}" alt="${
-      promo.nome || ""
-    }" class="promo-card__image" loading="lazy" />
-        ${
-          tagText
-            ? `<div class="promo-card__discount-tag">
-                ${tagText}
-              </div>`
-            : ""
-        }
+        <img src="${IMG_PROMO_BASE_PATH + img}" loading="lazy" class="promo-card__image" />
+        ${p.descontoPercent > 0 ? `<div class="promo-card__discount-tag">${p.descontoPercent}% OFF</div>` : ""}
       </div>
 
       <div class="promo-card__content">
-        <div class="promo-card__category">${
-          promo.categoria || "Sem categoria"
-        }</div>
-        <h3 class="promo-card__title">${promo.nome || ""}</h3>
+        <div class="promo-card__category">${p.categoria || "Sem categoria"}</div>
+        <h3 class="promo-card__title">${p.nome}</h3>
 
-        <p class="promo-card__subtitle">
-          ${promo.descricao_resumida || promo.subcategoria || ""}
-        </p>
+        <p class="promo-card__subtitle">${p.descricao_resumida || p.subcategoria || ""}</p>
 
         <div class="promo-card__prices">
           <div class="promo-card__price-main">
             <span class="promo-card__label">Por</span>
-            <span class="promo-card__price-current">${formatMoney(
-              promo.precoPromo
-            )}</span>
+            <span class="promo-card__price-current">${money(p.precoPromo)}</span>
           </div>
 
           <div class="promo-card__price-extra">
-            ${
-              promo.precoNormal > 0
-                ? `<span class="promo-card__price-old">De ${formatMoney(
-                    promo.precoNormal
-                  )}</span>`
-                : ""
-            }
-            ${
-              promo.descontoValor > 0
-                ? `<span class="promo-card__price-save">Economize ${formatMoney(
-                    promo.descontoValor
-                  )}</span>`
-                : ""
-            }
+            ${p.precoNormal ? `<span class="promo-card__price-old">De ${money(p.precoNormal)}</span>` : ""}
+            ${p.descontoValor ? `<span class="promo-card__price-save">Economize ${money(p.descontoValor)}</span>` : ""}
           </div>
         </div>
 
         <div class="promo-card__meta">
           <div class="promo-card__meta-item">
             <span class="promo-card__meta-label">Estoque</span>
-            <span class="promo-card__meta-value">${estoqueMsg}</span>
+            <span class="promo-card__meta-value">Total: ${p.estoqueTotal}</span>
           </div>
 
           <div class="promo-card__meta-item">
             <span class="promo-card__meta-label">Validade</span>
-            <span class="promo-card__meta-value">
-              ${prazoMsg}
+            <span class="promo-card__meta-value">${prazo}
               ${
-                promo.dataFim && !promo.duracaoEstoque
-                  ? `<span class="promo-card__timer" data-expires="${promo.dataFim.toISOString()}"></span>`
+                p.dataFim && !p.duracaoEstoque
+                  ? `<span class="promo-card__timer" data-expires="${p.dataFim.toISOString()}"></span>`
                   : ""
               }
             </span>
           </div>
         </div>
 
-        <div class="promo-card__badges">
-          ${
-            promo.somenteAVista
-              ? `<span class="promo-chip">Somente à vista</span>`
-              : `<span class="promo-chip">Aceita cartão</span>`
-          }
-          ${
-            promo.estoqueTotal <= 5
-              ? `<span class="promo-chip promo-chip--alerta">Estoque baixíssimo</span>`
-              : `<span class="promo-chip promo-chip--ok">Estoque disponível</span>`
-          }
-        </div>
-
-        <a
-          href="${whatsUrl}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn--whats promo-card__cta"
-        >
+        <a class="btn btn--whats promo-card__cta" target="_blank" href="${whats(p)}">
           Aproveitar pelo WhatsApp
         </a>
       </div>
     `;
 
-    // registra timer/contador
-    const timerEl = card.querySelector(".promo-card__timer");
-    if (timerEl) {
-      state.timers.push(timerEl);
-    }
+    const timer = el.querySelector(".promo-card__timer");
+    if (timer) state.timers.push(timer);
 
-    return card;
+    return el;
   };
 
-  const getBadgeText = (promo) => {
-    if (promo.estoqueTotal <= 3) return "🔥 Últimas unidades";
-    if (promo.diasRestantes === 1) return "⏳ Só hoje";
-    if (promo.diasRestantes > 1 && promo.diasRestantes <= 3)
-      return `⏳ Termina em ${promo.diasRestantes} dias`;
-    if (promo.duracaoEstoque) return "📦 Até acabar o estoque";
+  // ---------------------------
+  // MÉTODOS AUXILIARES DOS CARDS
+  // ---------------------------
+  const getBadge = (p) => {
+    if (p.estoqueTotal <= 3) return "🔥 Últimas unidades";
+    if (p.diasRestantes === 1) return "⏳ Só hoje";
+    if (p.diasRestantes > 1 && p.diasRestantes <= 3)
+      return `⏳ ${p.diasRestantes} dias para acabar`;
+    if (p.duracaoEstoque) return "📦 Até acabar o estoque";
     return "✨ Promoção ativa";
   };
 
-  const getPrazoMessage = (promo) => {
-    if (promo.duracaoEstoque && !promo.dataFim) {
-      return "Enquanto durar o estoque";
-    }
+  const getPrazo = (p) => {
+    if (p.duracaoEstoque && !p.dataFim) return "Enquanto durar o estoque";
+    if (!p.dataFim) return "Consulte na loja";
 
-    if (promo.dataFim && promo.diasRestantes != null) {
-      if (promo.diasRestantes <= 0) return "Termina hoje";
-      if (promo.diasRestantes === 1) return "Falta 1 dia";
-      return `Faltam ${promo.diasRestantes} dias`;
-    }
-
-    return "Consulte na loja";
+    if (p.diasRestantes === 0) return "Termina hoje";
+    if (p.diasRestantes === 1) return "Falta 1 dia";
+    return `Faltam ${p.diasRestantes} dias`;
   };
 
-  const buildWhatsUrl = (promo) => {
-    const msg = `Oi, vim pelo site da Charme Cosméticos e quero aproveitar a promoção ${
-      promo.nome || ""
-    } por ${formatMoney(
-      promo.precoPromo
-    )}. Pode me informar a disponibilidade nas lojas?`;
+  const whats = (p) => {
+    const msg = `Oi! Quero aproveitar a promoção ${p.nome} por ${money(
+      p.precoPromo
+    )}. Tem disponível?`;
 
     return `https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(msg)}`;
   };
 
-  // Atualiza contadores/timers a cada segundo
-  const startCountdownTimer = () => {
+  // ---------------------------
+  // TIMER GLOBAL PARA TODOS OS CARDS
+  // ---------------------------
+  const startTimer = () => {
     if (state.timers.length === 0) return;
 
-    const updateTimers = () => {
-      const now = new Date();
+    const tick = () => {
+      const now = Date.now();
 
       state.timers.forEach((el) => {
-        const iso = el.getAttribute("data-expires");
+        const iso = el.dataset.expires;
         if (!iso) return;
 
-        const expires = new Date(iso);
-        // considera até o fim do dia
-        expires.setHours(23, 59, 59, 999);
+        const end = new Date(iso).getTime();
+        const diff = end - now;
 
-        const diff = expires.getTime() - now.getTime();
         if (diff <= 0) {
           el.textContent = " • termina hoje";
           return;
         }
 
-        const totalSec = Math.floor(diff / 1000);
-        const hours = Math.floor((totalSec / 3600) % 24);
-        const minutes = Math.floor((totalSec / 60) % 60);
+        const h = Math.floor((diff / 3600000) % 24);
+        const m = Math.floor((diff / 60000) % 60);
 
-        el.textContent = ` • ${String(hours).padStart(2, "0")}h${String(
-          minutes
-        ).padStart(2, "0")} restantes`;
+        el.textContent = ` • ${String(h).padStart(2, "0")}h${String(m).padStart(
+          2,
+          "0"
+        )} restantes`;
       });
     };
 
-    updateTimers();
-    setInterval(updateTimers, 60 * 1000); // atualiza a cada 1 min (não precisa ser a cada segundo)
+    tick();
+    setInterval(tick, 60000);
   };
 
-  // Listeners/filtros
+  // ---------------------------
+  // EVENTOS DOS FILTROS
+  // ---------------------------
   if (els.search) {
     els.search.addEventListener("input", (e) => {
-      state.filters.search = e.target.value.trim();
+      state.filters.search = e.target.value.toLowerCase();
       applyFilters();
     });
   }
@@ -464,6 +383,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Carrega tudo
-  fetchPromos();
+  // ---------------------------
+  // INICIAR
+  // ---------------------------
+  loadPromos();
 });
