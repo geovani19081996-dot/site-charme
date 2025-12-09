@@ -49,10 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const dataFim = parseDate(p.data_fim);
         if (!dataFim) return true; // se não tiver data fim, deixa passar
         // mostra somente promoções que ainda não "acabaram" (data_fim >= hoje - 1 dia)
-        return (
-          dataFim >=
-          new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())
-        );
+        return dataFim >= new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
       });
 
       if (promocoes.length === 0) {
@@ -66,8 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       statusEl.textContent = "";
     } catch (err) {
       console.error(err);
-      statusEl.textContent =
-        "Erro ao carregar promoções. Tente novamente em instantes.";
+      statusEl.textContent = "Erro ao carregar promoções. Tente novamente em instantes.";
       statusEl.classList.add("promo-status--erro");
       promoContainer.innerHTML = "";
     }

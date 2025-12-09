@@ -638,3 +638,87 @@ body {
 .produto-botao:hover {
   opacity: 0.9;
 }
+#promocoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin: 40px auto;
+    width: 90%;
+}
+
+.card-promo {
+    background: white;
+    border-radius: 14px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform .2s;
+}
+
+.card-promo:hover {
+    transform: scale(1.03);
+}
+
+.promo-selo {
+    background: #ff007f;
+    color: white;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.promo-img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    margin: 10px auto;
+}
+
+.promo-nome {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.promo-categoria {
+    font-size: 13px;
+    color: #777;
+}
+
+.precos {
+    margin: 10px 0;
+}
+
+.promo-preco {
+    font-size: 20px;
+    color: #ff007f;
+    font-weight: bold;
+}
+
+.preco-normal {
+    text-decoration: line-through;
+    color: #777;
+    margin-left: 5px;
+}
+
+.desconto {
+    background: #ff007f;
+    color: white;
+    margin-left: 5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.btn-whats {
+    display: inline-block;
+    background: #ff007f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.btn-whats:hover {
+    opacity: .8;
+}
