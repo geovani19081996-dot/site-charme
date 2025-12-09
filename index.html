@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <!-- =======================================================
+       BLOCO 01 • HEAD / META / FONTES / CSS
+       ======================================================= -->
   <head>
     <meta charset="UTF-8" />
     <title>Charme Cosméticos | Beleza acessível, com cuidado de família</title>
@@ -26,7 +29,9 @@
   </head>
 
   <body>
-    <!-- TOPBAR -->
+    <!-- =======================================================
+         BLOCO 02 • TOPO / MENU (TOPBAR)
+         ======================================================= -->
     <header class="topbar">
       <div class="container topbar__inner">
         <div class="logo">
@@ -45,10 +50,14 @@
       </div>
     </header>
 
-    <!-- MAIN -->
+    <!-- =======================================================
+         BLOCO 03 • MAIN (CONTEÚDO PRINCIPAL)
+         ======================================================= -->
     <main>
 
-      <!-- HERO -->
+      <!-- ---------------------------------------------------
+           BLOCO 03.1 • HERO (CAPA INICIAL)
+           --------------------------------------------------- -->
       <section class="hero" id="inicio">
         <div class="container hero__inner">
           <div class="hero__label">Marca de família em Lucas do Rio Verde</div>
@@ -65,7 +74,9 @@
         </div>
       </section>
 
-      <!-- SOBRE -->
+      <!-- ---------------------------------------------------
+           BLOCO 03.2 • SEÇÃO SOBRE (#sobre)
+           --------------------------------------------------- -->
       <section class="section" id="sobre">
         <h2 class="section__title">Sobre a Charme</h2>
         <p class="section__subtitle">
@@ -105,7 +116,9 @@
         </div>
       </section>
 
-      <!-- LOJAS -->
+      <!-- ---------------------------------------------------
+           BLOCO 03.3 • SEÇÃO LOJAS (#lojas)
+           --------------------------------------------------- -->
       <section class="section" id="lojas">
         <h2 class="section__title">Nossas lojas</h2>
         <p class="section__subtitle">
@@ -113,7 +126,7 @@
         </p>
 
         <div class="container cards">
-          <!-- Matriz -->
+          <!-- CARD LOJA 1 – MATRIZ -->
           <article class="card">
             <div class="card__tag">Matriz</div>
             <h3 class="card__title">Loja 1 — Jardim das Palmeiras</h3>
@@ -125,7 +138,7 @@
             </a>
           </article>
 
-          <!-- Filial -->
+          <!-- CARD LOJA 2 – FILIAL -->
           <article class="card">
             <div class="card__tag">Filial</div>
             <h3 class="card__title">Loja 2 — Cidade Nova</h3>
@@ -139,7 +152,9 @@
         </div>
       </section>
 
-      <!-- CATEGORIAS -->
+      <!-- ---------------------------------------------------
+           BLOCO 03.4 • SEÇÃO PRODUTOS / CATEGORIAS (#produtos)
+           --------------------------------------------------- -->
       <section class="section" id="produtos">
         <h2 class="section__title">O que a Charme vende</h2>
         <p class="section__subtitle">
@@ -179,6 +194,10 @@
         </div>
       </section>
 
+      <!-- ---------------------------------------------------
+           BLOCO 03.5 • SEÇÃO PROMOÇÕES PREMIUM
+           (listagem dinâmica via promocoes.js)
+           --------------------------------------------------- -->
       <!-- 🔥 PROMOÇÕES PREMIUM -->
       <section class="secao-promocoes" id="promocoes-section">
         <div class="container">
@@ -190,7 +209,7 @@
             </p>
           </header>
 
-          <!-- FILTROS -->
+          <!-- FILTROS DAS PROMOÇÕES -->
           <div class="promos-toolbar">
             <div class="promos-toolbar__left">
               <span id="promos-count" class="promos-pill">Carregando promoções...</span>
@@ -223,10 +242,10 @@
             </div>
           </div>
 
-          <!-- GRID -->
+          <!-- GRID DE CARDS DE PROMOÇÃO (JS PREENCHENDO) -->
           <div id="promocoes-grid" class="promos-grid"></div>
 
-          <!-- ESTADO VAZIO -->
+          <!-- ESTADO VAZIO (SEM PROMOÇÕES) -->
           <div id="promocoes-empty" class="promos-empty" hidden>
             <div class="promos-empty__badge">Ops...</div>
             <h3 class="promos-empty__title">Nenhuma promoção ativa no momento</h3>
@@ -245,7 +264,9 @@
         </div>
       </section>
 
-      <!-- ESSÊNCIA -->
+      <!-- ---------------------------------------------------
+           BLOCO 03.6 • SEÇÃO ESSÊNCIA (#essencia)
+           --------------------------------------------------- -->
       <section class="section" id="essencia">
         <h2 class="section__title">Essência da Charme</h2>
         <p class="section__subtitle">Não vendemos só produto — cuidamos de pessoas.</p>
@@ -280,7 +301,9 @@
         </div>
       </section>
 
-      <!-- EQUIPE -->
+      <!-- ---------------------------------------------------
+           BLOCO 03.7 • SEÇÃO FAMÍLIA / EQUIPE (#equipe)
+           --------------------------------------------------- -->
       <section class="section" id="equipe">
         <h2 class="section__title">A família por trás da Charme</h2>
 
@@ -332,7 +355,9 @@
         </div>
       </section>
 
-      <!-- CONTATO -->
+      <!-- ---------------------------------------------------
+           BLOCO 03.8 • SEÇÃO CONTATO (#contato)
+           --------------------------------------------------- -->
       <section class="section" id="contato">
         <h2 class="section__title">Fale com a gente</h2>
 
@@ -367,6 +392,9 @@
         </div>
       </section>
 
+      <!-- ---------------------------------------------------
+           BLOCO 03.9 • RODAPÉ (FOOTER)
+           --------------------------------------------------- -->
       <!-- FOOTER -->
       <footer class="footer">
         Charme Cosméticos © 2025 – Todos os direitos reservados.
@@ -374,6 +402,10 @@
 
     </main>
 
+    <!-- =======================================================
+         BLOCO 04 • SCRIPTS FINAIS
+         - Arquivos JS carregados depois do HTML
+         ======================================================= -->
     <!-- 🔥 SCRIPTS FINAIS (CARREGADOS APÓS O HTML EXISTIR) -->
     <script src="js/promocoes.js"></script>
   </body>
