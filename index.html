@@ -242,33 +242,84 @@
       </section>
 
       <!-- PROMOÇÕES DINÂMICAS (JSON) -->
-      <section class="secao-produtos" id="promocoes-bloco">
+      <!-- VITRINE DE PROMOÇÕES -->
+      <section class="secao-promocoes" id="promocoes-section">
         <div class="container">
-          <h2>Promoções ativas</h2>
-          <p>
-            Ofertas selecionadas da Charme Cosméticos. Preço bom, prazo limitado
-            e estoque real das lojas – viu, gostou, manda Whats. 💖
-          </p>
+          <header class="promos-header">
+            <div class="promos-header__kicker">
+              Ofertas selecionadas da Charme Cosméticos
+            </div>
+            <h2 class="promos-header__title">Promoções ativas</h2>
+            <p class="promos-header__subtitle">
+              Preço bom, prazo limitado e estoque real das lojas – viu, gostou,
+              manda Whats/WhatsApp.
+            </p>
+          </header>
 
-          <!-- Mensagens de status / erro / sem promo -->
-          <div id="promo-status" class="promo-status"></div>
+          <!-- Barra de filtros/filters -->
+          <div class="promos-toolbar">
+            <div class="promos-toolbar__left">
+              <span id="promos-count" class="promos-pill"
+                >Carregando promoções...</span
+              >
+            </div>
 
-          <!-- Filtros: busca + categoria (agora só em cima das promoções) -->
-          <div class="produtos-filtros">
-            <input
-              type="text"
-              id="promo-search"
-              placeholder="Buscar promoção por nome, marca ou campanha..."
-            />
-            <select id="promo-categoria">
-              <option value="">Todas as categorias</option>
-            </select>
+            <div class="promos-toolbar__right">
+              <div class="promos-field">
+                <input
+                  type="text"
+                  id="promo-search"
+                  class="promos-input"
+                  placeholder="Buscar promoção por nome..."
+                />
+              </div>
+
+              <div class="promos-field">
+                <select id="promo-category" class="promos-select">
+                  <option value="">Todas as categorias</option>
+                </select>
+              </div>
+
+              <div class="promos-field">
+                <select id="promo-sort" class="promos-select">
+                  <option value="urgency">Mais urgentes</option>
+                  <option value="discountPercent">Maior desconto %</option>
+                  <option value="discountValue">Maior desconto R$</option>
+                  <option value="priceAsc">Menor preço</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          <!-- Grade das promoções -->
-          <div id="promocoes" class="produtos-grid"></div>
+          <!-- Grid de promoções -->
+          <div id="promocoes-grid" class="promos-grid">
+            <!-- cards são injetados via JS -->
+          </div>
+
+          <!-- Estado vazio / sem promoções -->
+          <div id="promocoes-empty" class="promos-empty" hidden>
+            <div class="promos-empty__badge">Ops...</div>
+            <h3 class="promos-empty__title">
+              Nenhuma promoção ativa no momento
+            </h3>
+            <p class="promos-empty__text">
+              Estamos preparando novas ofertas. Volte amanhã ou chama a gente no
+              Whats/WhatsApp pra saber o que tá rolando nas lojas.
+            </p>
+            <a
+              href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20e%20quero%20saber%20das%20pr%C3%B3ximas%20promo%C3%A7%C3%B5es"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--whats promos-empty__btn"
+            >
+              Falar com a Charme no Whats
+            </a>
+          </div>
         </div>
       </section>
+
+      <!-- Script da vitrine de promoções -->
+      <script src="js/promocoes.js"></script>
 
       <!-- ESSÊNCIA -->
       <section class="section" id="essencia">
