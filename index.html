@@ -24,8 +24,19 @@
       rel="stylesheet"
     />
 
-    <!-- ESTILO PRINCIPAL -->
-    <link rel="stylesheet" href="css/style-v2.css?v=3" />
+    <!-- CSS BASE + HOME + PROMOÇÕES -->
+    <link rel="stylesheet" href="css/base.css?v=1" />
+    <link rel="stylesheet" href="css/home.css?v=1" />
+    <link rel="stylesheet" href="css/promocoes.css?v=1" />
+
+    <!-- Font Awesome (ícones) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
 
   <body>
@@ -35,16 +46,23 @@
     <header class="topbar">
       <div class="container topbar__inner">
         <div class="logo">
-          <img src="img/logo-charme.png" alt="Charme Cosméticos" class="logo__img" />
-          <span class="logo__tagline">Beleza acessível, com cuidado de família.</span>
+          <img
+            src="img/logo-charme.png"
+            alt="Charme Cosméticos"
+            class="logo__img"
+          />
+          <span class="logo__tagline"
+            >Beleza acessível, com cuidado de família.</span
+          >
         </div>
 
         <nav class="nav">
-          <a href="#sobre">Sobre</a>
+          <!-- Sobre / Essência / Família vão para sobre.html -->
+          <a href="sobre.html#historia">Sobre</a>
           <a href="#lojas">Lojas</a>
           <a href="#produtos">Produtos</a>
-          <a href="#essencia">Essência</a>
-          <a href="#equipe">Família</a>
+          <a href="sobre.html#essencia">Essência</a>
+          <a href="sobre.html#familia">Família</a>
           <a href="#contato">Contato</a>
         </nav>
       </div>
@@ -54,7 +72,6 @@
          BLOCO 03 • MAIN (CONTEÚDO PRINCIPAL)
          ======================================================= -->
     <main>
-
       <!-- ---------------------------------------------------
            BLOCO 03.1 • HERO (CAPA INICIAL)
            --------------------------------------------------- -->
@@ -63,35 +80,72 @@
           <div class="hero__label">Marca de família em Lucas do Rio Verde</div>
           <h1 class="hero__title">Beleza acessível, com cuidado de família.</h1>
           <p class="hero__text">
-            Duas lojas de cosméticos que nasceram do sonho de oferecer atendimento humano,
-            preço justo e produtos que deixam o dia a dia mais leve.
+            Duas lojas de cosméticos que nasceram do sonho de oferecer
+            atendimento humano, preço justo e produtos que deixam o dia a dia
+            mais leve.
           </p>
 
           <div class="hero__actions">
-            <a href="#lojas" class="btn btn--primary">Ver endereços das lojas</a>
-            <a href="#contato" class="btn btn--outline">Falar com a Charme</a>
+            <!-- Botão principal: leva pros cards de lojas -->
+            <a href="#lojas" class="btn btn--primary">
+              Ver endereços das lojas
+            </a>
+
+            <!-- Linha com ícones sociais -->
+            <div class="hero__social">
+              <span class="hero__social-label"> Preferiu falar direto? </span>
+
+              <div class="hero__social-links">
+                <!-- WhatsApp geral -->
+                <a
+                  class="hero__social-link hero__social-link--whats"
+                  href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Falar com a Charme pelo WhatsApp"
+                >
+                  <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+                <!-- Instagram oficial -->
+                <a
+                  class="hero__social-link hero__social-link--insta"
+                  href="https://www.instagram.com/charmecosmeticoslrv/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ver Instagram da Charme Cosméticos"
+                >
+                  <i class="fa-brands fa-instagram"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ---------------------------------------------------
            BLOCO 03.2 • SEÇÃO SOBRE (#sobre)
+           (resumão rápido – a história completa está em sobre.html)
            --------------------------------------------------- -->
       <section class="section" id="sobre">
         <h2 class="section__title">Sobre a Charme</h2>
         <p class="section__subtitle">
-          Projeto de família, construído com trabalho, reforma, fé e muita conversa no balcão.
+          Projeto de família, construído com trabalho, reforma, fé e muita
+          conversa no balcão.
         </p>
 
         <div class="container sobre__grid">
           <div class="sobre__texto">
-            <p>A história começa em 2015, quando a Viviane abre um CNPJ para Natura.</p>
+            <p>
+              A história começa em 2015, quando a Viviane abre um CNPJ para
+              Natura.
+            </p>
             <p>Em 2017 nasce a primeira Charme Cosméticos, atual matriz.</p>
             <p>Em 2020 chega a segunda unidade, reinaugurada em 2022.</p>
             <p>Em 2024 vem a loja 3 — grande aprendizado.</p>
             <p>
-              Hoje seguimos com duas lojas ativas e a missão clara: beleza acessível com cuidado
-              de família.
+              Hoje seguimos com duas lojas ativas e a missão clara: beleza
+              acessível com cuidado de família.
             </p>
           </div>
 
@@ -117,59 +171,59 @@
       </section>
 
       <!-- ---------------------------------------------------
-           BLOCO 03.3 • SEÇÃO LOJAS (#lojas)
-           --------------------------------------------------- -->
+         BLOCO 03.3 • SEÇÃO LOJAS (#lojas)
+         --------------------------------------------------- -->
       <section class="section" id="lojas">
         <h2 class="section__title">Nossas lojas</h2>
         <p class="section__subtitle">
-          Duas unidades pensadas para atender desde quem passa correndo até quem gosta de conversar.
+          Duas unidades pensadas para atender desde quem passa correndo até quem
+          gosta de conversar.
         </p>
 
         <div class="container cards">
-          <div class="container cards">
-  <article class="card card--matriz">
-    <div class="card__tag">Matriz</div>
-    <h3 class="card__title">Loja 1 – Jardim das Palmeiras</h3>
-    <p class="card__text">
-      Avenida Espírito Santo, 752 – S<br />
-      Jardim das Palmeiras – CEP 78462-005<br />
-      Ao lado da feira do produtor.
-    </p>
-    <p class="card__text">Horário: 08h às 18h (segunda a sábado).</p>
-    <div class="card__actions">
-      <a
-        class="btn btn--whats"
-        href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%201"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        WhatsApp Loja 1
-      </a>
-    </div>
-  </article>
+          <article class="card card--matriz">
+            <div class="card__tag">Matriz</div>
+            <h3 class="card__title">Loja 1 – Jardim das Palmeiras</h3>
+            <p class="card__text">
+              Avenida Espírito Santo, 752 – S<br />
+              Jardim das Palmeiras – CEP 78462-005<br />
+              Ao lado da feira do produtor.
+            </p>
+            <p class="card__text">Horário: 08h às 18h (segunda a sábado).</p>
+            <div class="card__actions">
+              <a
+                class="btn btn--whats"
+                href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%201"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp Loja 1
+              </a>
+            </div>
+          </article>
 
-  <article class="card card--filial">
-    <div class="card__tag">Filial</div>
-    <h3 class="card__title">Loja 2 – Cidade Nova</h3>
-    <p class="card__text">
-      Avenida Mato Grosso, 1417 – E<br />
-      Bairro Cidade Nova – CEP 78462-129<br />
-      Ao lado da Vitória Presentes.
-    </p>
-    <p class="card__text">Horário: 08h às 18h (segunda a sábado).</p>
-    <div class="card__actions">
-      <a
-        class="btn btn--whats"
-        href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%202"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        WhatsApp Loja 2
-      </a>
-    </div>
-  </article>
-</div>
-
+          <article class="card card--filial">
+            <div class="card__tag">Filial</div>
+            <h3 class="card__title">Loja 2 – Cidade Nova</h3>
+            <p class="card__text">
+              Avenida Mato Grosso, 1417 – E<br />
+              Bairro Cidade Nova – CEP 78462-129<br />
+              Ao lado da Vitória Presentes.
+            </p>
+            <p class="card__text">Horário: 08h às 18h (segunda a sábado).</p>
+            <div class="card__actions">
+              <a
+                class="btn btn--whats"
+                href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%202"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp Loja 2
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
 
       <!-- ---------------------------------------------------
            BLOCO 03.4 • SEÇÃO PRODUTOS / CATEGORIAS (#produtos)
@@ -177,38 +231,51 @@
       <section class="section" id="produtos">
         <h2 class="section__title">O que a Charme vende</h2>
         <p class="section__subtitle">
-          Mix completo para cabelo, maquiagem, unhas, pele, perfumaria e linha profissional.
+          Mix completo para cabelo, maquiagem, unhas, pele, perfumaria e linha
+          profissional.
         </p>
 
         <div class="container categorias">
           <article class="categoria">
             <div class="categoria__nome">Cabelos</div>
-            <div class="categoria__descricao">Shampoo, condicionador, máscaras, finalizadores.</div>
+            <div class="categoria__descricao">
+              Shampoo, condicionador, máscaras, finalizadores.
+            </div>
           </article>
 
           <article class="categoria">
             <div class="categoria__nome">Maquiagem</div>
-            <div class="categoria__descricao">Bases, batons, pós, sombras e mais.</div>
+            <div class="categoria__descricao">
+              Bases, batons, pós, sombras e mais.
+            </div>
           </article>
 
           <article class="categoria">
             <div class="categoria__nome">Unhas</div>
-            <div class="categoria__descricao">Esmaltes, removedores e linha manicure.</div>
+            <div class="categoria__descricao">
+              Esmaltes, removedores e linha manicure.
+            </div>
           </article>
 
           <article class="categoria">
             <div class="categoria__nome">Perfumaria</div>
-            <div class="categoria__descricao">Colônias, body splash e fragrâncias.</div>
+            <div class="categoria__descricao">
+              Colônias, body splash e fragrâncias.
+            </div>
           </article>
 
           <article class="categoria">
             <div class="categoria__nome">Skincare</div>
-            <div class="categoria__descricao">Hidratação e cuidados acessíveis.</div>
+            <div class="categoria__descricao">
+              Hidratação e cuidados acessíveis.
+            </div>
           </article>
 
           <article class="categoria">
             <div class="categoria__nome">Linha profissional</div>
-            <div class="categoria__descricao">Tamanhos profissionais e produtos de salão.</div>
+            <div class="categoria__descricao">
+              Tamanhos profissionais e produtos de salão.
+            </div>
           </article>
         </div>
       </section>
@@ -217,21 +284,25 @@
            BLOCO 03.5 • SEÇÃO PROMOÇÕES PREMIUM
            (listagem dinâmica via promocoes.js)
            --------------------------------------------------- -->
-      <!-- 🔥 PROMOÇÕES PREMIUM -->
       <section class="secao-promocoes" id="promocoes-section">
         <div class="container">
           <header class="promos-header">
-            <div class="promos-header__kicker">Ofertas selecionadas da Charme Cosméticos</div>
+            <div class="promos-header__kicker">
+              Ofertas selecionadas da Charme Cosméticos
+            </div>
             <h2 class="promos-header__title">Promoções ativas</h2>
             <p class="promos-header__subtitle">
-              Preço bom, prazo limitado e estoque real das lojas — viu, gostou, manda WhatsApp 💗.
+              Preço bom, prazo limitado e estoque real das lojas — viu, gostou,
+              manda WhatsApp 💗.
             </p>
           </header>
 
           <!-- FILTROS DAS PROMOÇÕES -->
           <div class="promos-toolbar">
             <div class="promos-toolbar__left">
-              <span id="promos-count" class="promos-pill">Carregando promoções...</span>
+              <span id="promos-count" class="promos-pill"
+                >Carregando promoções...</span
+              >
             </div>
 
             <div class="promos-toolbar__right">
@@ -267,9 +338,12 @@
           <!-- ESTADO VAZIO (SEM PROMOÇÕES) -->
           <div id="promocoes-empty" class="promos-empty" hidden>
             <div class="promos-empty__badge">Ops...</div>
-            <h3 class="promos-empty__title">Nenhuma promoção ativa no momento</h3>
+            <h3 class="promos-empty__title">
+              Nenhuma promoção ativa no momento
+            </h3>
             <p class="promos-empty__text">
-              Estamos preparando novas ofertas. Volte amanhã ou chame no WhatsApp 💬.
+              Estamos preparando novas ofertas. Volte amanhã ou chame no
+              WhatsApp 💬.
             </p>
 
             <a
@@ -285,10 +359,13 @@
 
       <!-- ---------------------------------------------------
            BLOCO 03.6 • SEÇÃO ESSÊNCIA (#essencia)
+           (resumão – versão completa em sobre.html#essencia)
            --------------------------------------------------- -->
       <section class="section" id="essencia">
         <h2 class="section__title">Essência da Charme</h2>
-        <p class="section__subtitle">Não vendemos só produto — cuidamos de pessoas.</p>
+        <p class="section__subtitle">
+          Não vendemos só produto — cuidamos de pessoas.
+        </p>
 
         <div class="container essencia__grid">
           <div class="essencia__bloco">
@@ -332,7 +409,10 @@
             <div class="equipe__info">
               <h3 class="equipe__nome">Viviane Cândida de Albues Souza</h3>
               <div class="equipe__papel">Compras e mix de produtos</div>
-              <p>Conversa com representantes, cuida do mix e entende o bolso das clientes.</p>
+              <p>
+                Conversa com representantes, cuida do mix e entende o bolso das
+                clientes.
+              </p>
             </div>
           </article>
 
@@ -341,7 +421,10 @@
             <div class="equipe__info">
               <h3 class="equipe__nome">Aparecido Francisco de Souza</h3>
               <div class="equipe__papel">Financeiro e estrutura</div>
-              <p>Cuida do prédio, reformas e contas — garantindo que tudo funcione.</p>
+              <p>
+                Cuida do prédio, reformas e contas — garantindo que tudo
+                funcione.
+              </p>
             </div>
           </article>
 
@@ -349,8 +432,11 @@
             <img src="img/Geovani.png" class="equipe__foto" />
             <div class="equipe__info">
               <h3 class="equipe__nome">Geovani Cândido de Souza</h3>
-              <div class="equipe__papel">Tecnologia & futuro da marca</div>
-              <p>O cara que quer automatizar até o café da loja. Dorme pouco, pensa muito e entrega tudo. 😎</p>
+              <div class="equipe__papel">Tecnologia &amp; futuro da marca</div>
+              <p>
+                O cara que quer automatizar até o café da loja. Dorme pouco,
+                pensa muito e entrega tudo. 😎
+              </p>
             </div>
           </article>
 
@@ -359,7 +445,10 @@
             <div class="equipe__info">
               <h3 class="equipe__nome">Tamiris (sobrenome reservado)</h3>
               <div class="equipe__papel">Organização financeira remota</div>
-              <p>O olhar frio, calculado e organizado que equilibra a família inteira.</p>
+              <p>
+                O olhar frio, calculado e organizado que equilibra a família
+                inteira.
+              </p>
             </div>
           </article>
 
@@ -367,7 +456,7 @@
             <img src="img/Samantha.png" class="equipe__foto" />
             <div class="equipe__info">
               <h3 class="equipe__nome">Samantha Bárbara Ulhmann Candido</h3>
-              <div class="equipe__papel">Inspiração & diretora de sorrisos</div>
+              <div class="equipe__papel">Inspiração &amp; diretora de sorrisos</div>
               <p>A razão de tudo isso aqui estar sendo construído.</p>
             </div>
           </article>
@@ -400,11 +489,17 @@
           </div>
 
           <div class="contato__social">
-            <a href="https://www.instagram.com/charmecosmeticoslrv/" target="_blank">
+            <a
+              href="https://www.instagram.com/charmecosmeticoslrv/"
+              target="_blank"
+            >
               Instagram @charmecosmeticoslrv
             </a>
 
-            <a href="https://www.facebook.com/charmecosmeticoslrv/" target="_blank">
+            <a
+              href="https://www.facebook.com/charmecosmeticoslrv/"
+              target="_blank"
+            >
               Facebook Charme Cosméticos LRV
             </a>
           </div>
@@ -414,18 +509,14 @@
       <!-- ---------------------------------------------------
            BLOCO 03.9 • RODAPÉ (FOOTER)
            --------------------------------------------------- -->
-      <!-- FOOTER -->
       <footer class="footer">
         Charme Cosméticos © 2025 – Todos os direitos reservados.
       </footer>
-
     </main>
 
     <!-- =======================================================
          BLOCO 04 • SCRIPTS FINAIS
-         - Arquivos JS carregados depois do HTML
          ======================================================= -->
-    <!-- 🔥 SCRIPTS FINAIS (CARREGADOS APÓS O HTML EXISTIR) -->
     <script src="js/promocoes.js"></script>
   </body>
 </html>

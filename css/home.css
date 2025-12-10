@@ -1,0 +1,407 @@
+/* =======================================================
+   CHARME COSMÉTICOS — HOME
+   Seções da página inicial:
+   - Sobre (resumo)
+   - Lojas
+   - Produtos
+   - Essência
+   - Família / equipe
+   - Contato
+   ======================================================= */
+
+/* ---------- SEÇÃO SOBRE (#sobre) ---------- */
+
+.sobre__grid {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+}
+
+.sobre__texto {
+  font-size: 0.98rem;
+  color: var(--text-light);
+}
+
+.sobre__texto p + p {
+  margin-top: 0.7rem;
+}
+
+.timeline {
+  border-left: 3px solid var(--pink);
+  padding-left: 1.4rem;
+}
+
+.timeline__item {
+  margin-bottom: 1.4rem;
+}
+
+.timeline__ano {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--pink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.timeline__titulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ---------- SEÇÃO LOJAS (#lojas) ---------- */
+
+/* Fundo com degradê leve rosa-claro */
+.section#lojas {
+  background: linear-gradient(
+    180deg,
+    var(--rosa-claro) 0%,
+    #ffffff 40%,
+    #ffffff 100%
+  );
+}
+
+/* Grid dos cards de loja */
+.cards {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+/* Card base da loja */
+.card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    rgba(253, 239, 246, 0.75) 40%,
+    #ffffff 100%
+  );
+  border-radius: 1.4rem;
+  padding: 1.6rem 1.8rem 1.7rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(236, 38, 143, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+/* Glow decorativo */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -40px auto auto -80px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(
+    circle at center,
+    rgba(236, 38, 143, 0.22),
+    transparent 60%
+  );
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Faixa vertical à esquerda */
+.card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    var(--rosa-intenso),
+    var(--rosa-medio)
+  );
+}
+
+/* Filial com degradê invertido */
+.card--filial::after {
+  background: linear-gradient(
+    to bottom,
+    var(--rosa-medio),
+    var(--rosa-intenso)
+  );
+}
+
+/* Hover */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.1);
+}
+
+/* Selo Matriz / Filial */
+.card__tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rosa-intenso);
+  background: rgba(236, 38, 143, 0.08);
+}
+
+/* Bolinha antes do texto */
+.card__tag::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--rosa-intenso);
+  box-shadow: 0 0 0 3px rgba(236, 38, 143, 0.22);
+}
+
+/* Título da loja */
+.card__title {
+  position: relative;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color: var(--preto-suave);
+}
+
+/* Textos de endereço / horário */
+.card__text {
+  position: relative;
+  font-size: 0.94rem;
+  color: var(--cinza-texto);
+}
+
+.card__text + .card__text {
+  margin-top: 0.3rem;
+}
+
+.card__text strong,
+.card__text b {
+  font-weight: 700;
+}
+
+/* Área do botão WhatsApp */
+.card__actions {
+  position: relative;
+  margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card__actions .btn--whats {
+  min-width: 210px;
+  justify-content: center;
+}
+
+/* ---------- SEÇÃO PRODUTOS (#produtos) ---------- */
+
+.categorias {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.2rem;
+}
+
+.categoria {
+  background: var(--white);
+  border-radius: 0.9rem;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+  display: grid;
+  grid-template-columns: minmax(0, 150px) minmax(0, 1fr);
+  column-gap: 1.5rem;
+  row-gap: 0.25rem;
+}
+
+.categoria__nome {
+  font-weight: 700;
+  color: var(--pink);
+}
+
+.categoria__descricao {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* ---------- SEÇÃO ESSÊNCIA (#essencia) ---------- */
+
+.essencia__grid {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.essencia__bloco {
+  background: var(--white);
+  border-radius: 0.9rem;
+  padding: 1.5rem 1.6rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+}
+
+.essencia__bloco h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.6rem;
+}
+
+.essencia__bloco p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.valores__lista {
+  list-style: none;
+  margin-top: 0.75rem;
+}
+
+.valores__lista li {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.valores__lista li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--pink);
+}
+
+/* ---------- SEÇÃO FAMÍLIA / EQUIPE (#equipe) ---------- */
+
+.equipe {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.2rem;
+}
+
+.equipe__item {
+  background: var(--white);
+  border-radius: 0.9rem;
+  padding: 1.1rem 1.4rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.equipe__foto {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--pink-soft);
+}
+
+.equipe__info {
+  flex: 1;
+}
+
+.equipe__nome {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+}
+
+.equipe__papel {
+  font-size: 0.9rem;
+  color: var(--pink);
+  margin: 0.15rem 0 0.35rem;
+}
+
+.equipe__texto,
+.equipe__info p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* ---------- SEÇÃO CONTATO (#contato) ---------- */
+
+.contato__acoes {
+  margin-top: 1.4rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.contato__social {
+  margin-top: 1.4rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.contato__social a {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--pink);
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: 0.18s;
+}
+
+.contato__social a:hover {
+  border-bottom-color: var(--pink);
+}
+
+/* ---------- RESPONSIVIDADE HOME ---------- */
+
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .card {
+    border-radius: 1.1rem;
+    padding: 1.3rem 1.4rem 1.5rem;
+  }
+
+  .card__title {
+    font-size: 1.18rem;
+  }
+
+  .card__text {
+    font-size: 0.9rem;
+  }
+
+  .categoria {
+    grid-template-columns: 1fr;
+  }
+
+  .equipe__item {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 480px) {
+  .equipe__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .equipe__foto {
+    width: 160px;
+    height: 160px;
+  }
+}

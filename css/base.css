@@ -1,0 +1,422 @@
+/* =======================================================
+   CHARME COSMÉTICOS — BASE
+   - Paleta, reset, estrutura, topo, hero, botões, footer
+   ======================================================= */
+
+/* ---------- PALETA / TEMA CLARO ---------- */
+:root {
+  /* Cores primárias */
+  --pink: #ff2d78;
+  --pink-dark: #e61e66;
+  --pink-soft: #ffe4f1;
+  --pink-soft-2: #fff7fb;
+
+  /* Auxiliares */
+  --gold: #d6a25a;
+  --gray: #777382;
+  --gray-light: #e9e9eb;
+  --gray-bg: #fafafa;
+
+  /* Texto */
+  --text-dark: #2b1024;
+  --text-light: #444;
+
+  /* Base */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* WhatsApp */
+  --whats: #25d366;
+  --whats-hover: #1ebe5b;
+
+  /* Sombras */
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
+
+  /* Aliases (nomes antigos usados em alguns blocos) */
+  --rosa-intenso: var(--pink);
+  --rosa-medio: #f7afd5;
+  --rosa-claro: #fdeff6;
+  --preto-suave: #2b1024;
+  --cinza-texto: #4a4a4a;
+  --verde-whats: var(--whats);
+}
+
+/* ---------- TEMA ESCURO (opcional) ---------- */
+body.dark {
+  --white: #151014;
+  --gray-bg: #1f1820;
+  --text-dark: #f7f1f8;
+  --text-light: #ddd;
+  --gray: #bbb;
+  --pink: #ff4d8d;
+  --shadow-soft: 0 22px 50px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--gray-bg);
+  color: var(--text-light);
+  font-family: "Nunito", system-ui, sans-serif;
+  line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* ---------- ESTRUTURA GERAL ---------- */
+.container {
+  max-width: 1120px;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
+.section {
+  padding: 4rem 1.5rem;
+}
+
+.section__title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.9rem;
+  text-align: center;
+  margin-bottom: 0.7rem;
+  color: var(--text-dark);
+}
+
+.section__subtitle {
+  text-align: center;
+  max-width: 640px;
+  margin: 0.6rem auto 2.2rem;
+  color: var(--gray);
+}
+
+/* =======================================================
+   TOPO / MENU
+   ======================================================= */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--pink-dark);
+  border-bottom: 1px solid var(--pink-dark);
+  backdrop-filter: blur(16px);
+}
+
+.topbar__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo__img {
+  height: 52px;
+  object-fit: contain;
+}
+
+.logo__tagline {
+  font-size: 0.75rem;
+  color: var(--white);
+}
+
+/* Navegação */
+.nav {
+  display: flex;
+  gap: 1.3rem;
+}
+
+.nav a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+.nav a:hover {
+  color: var(--white);
+  opacity: 0.85;
+}
+
+/* Link ativo (página atual) */
+.nav__link--active {
+  position: relative;
+}
+
+.nav__link--active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.2rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--white);
+}
+
+/* =======================================================
+   BOTÃO DE TEMA (DARK/LIGHT) — opcional
+   ======================================================= */
+
+.theme-toggle {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  background: var(--pink);
+  color: white;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  z-index: 999;
+  transition: 0.25s;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: var(--pink-dark);
+}
+
+/* =======================================================
+   HERO (CAPA)
+   ======================================================= */
+
+.hero {
+  background: linear-gradient(135deg, var(--pink-soft), var(--white));
+  padding: 4.5rem 1.5rem 4rem;
+}
+
+.hero__inner {
+  max-width: 720px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.hero__label {
+  color: var(--pink);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.hero__title {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.3rem;
+  margin-top: 0.8rem;
+  color: var(--text-dark);
+}
+
+.hero__text {
+  color: var(--gray);
+  max-width: 540px;
+  margin: 1.2rem auto 2rem;
+  font-size: 1rem;
+}
+
+/* Ações do hero */
+.hero__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Hero versão interna (sobre.html) */
+.hero--interno {
+  padding-top: 3.2rem;
+  padding-bottom: 3.2rem;
+}
+
+/* Bloco social do hero */
+.hero__social {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.hero__social-label {
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+/* Container dos ícones */
+.hero__social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Botão redondo com ícone */
+.hero__social-link {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  text-decoration: none;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+/* Ícone WhatsApp */
+.hero__social-link--whats {
+  color: var(--whats);
+}
+
+/* Ícone Instagram */
+.hero__social-link--insta {
+  color: var(--pink);
+}
+
+/* Hover (desktop) */
+.hero__social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* =======================================================
+   BOTÕES GERAIS
+   ======================================================= */
+
+.btn {
+  padding: 0.85rem 1.7rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.btn--primary {
+  background: var(--pink);
+  color: var(--white);
+  box-shadow: 0 10px 20px rgba(255, 45, 120, 0.26);
+}
+
+.btn--primary:hover {
+  background: var(--pink-dark);
+  transform: translateY(-2px);
+}
+
+.btn--outline {
+  border: 1px solid var(--pink);
+  color: var(--pink);
+  background: transparent;
+}
+
+.btn--outline:hover {
+  background: rgba(255, 45, 120, 0.12);
+}
+
+.btn--whats {
+  background: var(--whats);
+  color: var(--white);
+}
+
+.btn--whats:hover {
+  background: var(--whats-hover);
+}
+
+/* =======================================================
+   RODAPÉ
+   ======================================================= */
+
+.footer {
+  padding: 1.4rem 1.5rem 1.8rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--gray);
+}
+
+/* Footer mais completo (usado em sobre.html) */
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.footer__copy {
+  font-size: 0.82rem;
+}
+
+.footer__social {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.footer__social a {
+  color: var(--pink);
+  font-size: 1.1rem;
+}
+
+/* =======================================================
+   RESPONSIVIDADE BASE
+   ======================================================= */
+
+@media (max-width: 768px) {
+  .topbar__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .hero__title {
+    font-size: 1.9rem;
+  }
+
+  .hero__social {
+    align-items: flex-start;
+  }
+
+  .hero__social-links {
+    gap: 0.6rem;
+  }
+
+  .hero__social-link {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
