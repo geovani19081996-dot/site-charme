@@ -1,0 +1,306 @@
+/* =======================================================
+   CHARME COSMÉTICOS — QUEM SOMOS
+   Estilos compartilhados entre:
+   - index.html (blocos: #sobre, #essencia, #equipe)
+   - sobre.html (página completa Quem somos)
+   ======================================================= */
+
+/* ---------- GRIDS GENÉRICOS (USADOS EM QUEM SOMOS) ---------- */
+
+.grid {
+  display: grid;
+  gap: 1.8rem;
+}
+
+/* 2 colunas: texto + card / texto + texto */
+.grid--2cols {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: flex-start;
+}
+
+/* 3 colunas: valores */
+.grid--3cols {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* 4 colunas: família/equipe */
+.grid--4cols {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Pequeno respiro extra na seção de valores */
+.valores {
+  margin-top: 1.8rem;
+}
+
+/* =======================================================
+   HERO INTERNO (TOPO SOBRE.HTML)
+   ======================================================= */
+
+.hero--interno {
+  background: linear-gradient(180deg, var(--rosa-claro) 0%, #ffffff 40%);
+  padding-block: 4rem 3rem;
+}
+
+.hero--interno .hero__inner {
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero--interno .hero__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rosa-intenso);
+  margin-bottom: 0.75rem;
+}
+
+.hero--interno .hero__title {
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 2rem;
+  line-height: 1.25;
+  color: var(--preto-suave);
+  margin-bottom: 0.9rem;
+}
+
+.hero--interno .hero__text {
+  font-size: 1rem;
+  color: var(--cinza-texto);
+  max-width: 720px;
+  margin: 0 auto 1.6rem;
+}
+
+.hero__actions--interno {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+/* =======================================================
+   BLOCO HISTÓRIA / SEÇÃO SOBRE (#sobre)
+   ======================================================= */
+
+.sobre__grid {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+}
+
+.sobre__texto {
+  font-size: 0.98rem;
+  color: var(--text-light);
+}
+
+.sobre__texto p + p {
+  margin-top: 0.7rem;
+}
+
+/* Linha do tempo */
+
+.timeline {
+  border-left: 3px solid var(--pink);
+  padding-left: 1.4rem;
+}
+
+.timeline__item {
+  margin-bottom: 1.4rem;
+}
+
+.timeline__ano {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--pink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.timeline__titulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-top: 0.15rem;
+}
+
+.timeline__texto {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-top: 0.25rem;
+}
+
+/* Subtítulo menor (ex: Mariana, Ana...) */
+
+.section__subtitle--small {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pink);
+  margin-bottom: 0.25rem;
+}
+
+/* =======================================================
+   ESSÊNCIA / VALORES (#essencia)
+   ======================================================= */
+
+.essencia__grid {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.essencia__bloco {
+  background: var(--white);
+  border-radius: 0.9rem;
+  padding: 1.5rem 1.6rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+}
+
+.essencia__bloco h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.6rem;
+}
+
+.essencia__bloco p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* Lista de valores */
+
+.valores__lista {
+  list-style: none;
+  margin-top: 0.75rem;
+  padding-left: 0;
+}
+
+.valores__lista li {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.valores__lista li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--pink);
+}
+
+/* =======================================================
+   FAMÍLIA / EQUIPE (#equipe / #familia)
+   ======================================================= */
+
+.equipe {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.2rem;
+}
+
+.equipe__item {
+  background: var(--white);
+  border-radius: 0.9rem;
+  padding: 1.1rem 1.4rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.equipe__foto {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--pink-soft);
+}
+
+.equipe__info {
+  flex: 1;
+}
+
+.equipe__nome {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+}
+
+.equipe__papel {
+  font-size: 0.9rem;
+  color: var(--pink);
+  margin: 0.15rem 0 0.35rem;
+}
+
+.equipe__texto,
+.equipe__info p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* =======================================================
+   RESPONSIVIDADE — QUEM SOMOS
+   ======================================================= */
+
+@media (max-width: 960px) {
+  .grid--2cols {
+    grid-template-columns: 1fr;
+  }
+
+  .essencia__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .grid--3cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid--4cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .hero--interno {
+    padding-block: 3rem 2.5rem;
+  }
+
+  .hero--interno .hero__title {
+    font-size: 1.7rem;
+  }
+
+  .equipe__item {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid--3cols,
+  .grid--4cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .equipe__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .equipe__foto {
+    width: 160px;
+    height: 160px;
+  }
+}

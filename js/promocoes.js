@@ -1,19 +1,11 @@
 // =======================================================
-//  BLOCO 01 • CONFIGURAÇÃO GERAL
-//  - Constantes principais
+//  PROMOÇÕES CHARME – PREMIUM
+//  - Carrega JSON, aplica filtros, paginação e timers
 // =======================================================
-
-// PROMOÇÕES CHARME – PREMIUM
-// Código 100% blindado e revisado
 
 const PROMOS_JSON_URL = "data/promocoes_site.json";
 const IMG_PROMO_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
-
-// =======================================================
-//  BLOCO 02 • BOOTSTRAP DA PÁGINA
-//  - Só inicia se existir a área de promoções no HTML
-// =======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector("#promocoes-grid");
@@ -27,10 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =====================================================
-  //  BLOCO 03 • ESTADO GLOBAL (state)
-  //  - Armazena dados crus, filtrados e filtros ativos
+  //  ESTADO GLOBAL
   // =====================================================
-
   const state = {
     rawPromos: [],
     activePromos: [],
@@ -41,13 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
       category: "",
       sort: "urgency",
     },
+    page: 1,
+    pageSize: 4, // quantos cards por página
   };
 
   // =====================================================
-  //  BLOCO 04 • MAPA DE ELEMENTOS DO DOM
-  //  - Tudo que o JS usa no HTML
+  //  MAPA DE ELEMENTOS DO DOM
   // =====================================================
-
   const els = {
     grid,
     count,
@@ -55,15 +45,23 @@ document.addEventListener("DOMContentLoaded", () => {
     search: document.querySelector("#promo-search"),
     category: document.querySelector("#promo-category"),
     sort: document.querySelector("#promo-sort"),
+    currentFilter: document.querySelector("#promos-current-filter"),
+    pagination: document.querySelector(".promos-pagination"),
+    pageInfo: document.querySelector("#promos-page-info"),
+    prev: document.querySelector("#promos-prev"),
+    next: document.querySelector("#promos-next"),
   };
 
   // =====================================================
-  //  BLOCO 05 • FUNÇÕES UTILITÁRIAS
-  //  - Conversões numéricas, datas, dinheiro, etc.
+  //  FUNÇÕES UTILITÁRIAS
   // =====================================================
+  const toNumber = (v) => Number(String(v ?? "0").replace(",", "."));
 
-  const toNumber = (v) => Number(String(v || "0").replace(",", "."));
-  const todayMidnight = () => new Date().setHours(0, 0, 0, 0);
+  const todayMidnight = () => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d.getTime();
+  };
 
   const parseDate = (v) => (v ? new Date(v + "T12:00:00") : null);
 
@@ -78,11 +76,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return Math.ceil(ms / 86400000);
   };
 
-  // =====================================================
-  //  BLOCO 06 • NORMALIZAÇÃO DOS DADOS
-  //  - Converte o JSON bruto em objeto pronto pra tela
-  // =====================================================
+  const getTotalPages = () => {
+    const total = state.filteredPromos.length;
+    if (total === 0) return 1;
+    return Math.ceil(total / state.pageSize);
+  };
 
+  const scrollToPromosTop = () => {
+    const section = document.querySelector("#promocoes-section");
+    if (!section) return;
+
+    const rect = section.getBoundingClientRect();
+    const absoluteTop = rect.top + window.pageYOffset - 80;
+
+   // window.scrollTo({
+     // top: absoluteTop < 0 ? 0 : absoluteTop,
+      //behavior: "smooth",
+    //});
+  };
+
+  // =====================================================
+  //  NORMALIZAÇÃO DOS DADOS
+  // =====================================================
   const normalizePromo = (raw) => {
     const precoNormal = toNumber(raw.preco_normal);
     const precoPromo = toNumber(raw.preco_promo);
@@ -106,11 +121,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let diasRestantes = null;
 
     if (!duracaoEstoque && dataFim) {
-      if (dataFim < hoje) ativa = false;
-      else diasRestantes = daysBetween(dataFim);
+      if (dataFim < hoje) {
+        ativa = false;
+      } else {
+        diasRestantes = daysBetween(dataFim);
+      }
     }
 
-    if (duracaoEstoque && estoqueTotal <= 0) ativa = false;
+    if (duracaoEstoque && estoqueTotal <= 0) {
+      ativa = false;
+    }
 
     return {
       ...raw,
@@ -127,20 +147,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // =====================================================
-  //  BLOCO 07 • CARREGAMENTO DO JSON
-  //  - Busca o arquivo promocoes_site.json e popula state
+  //  CARREGAMENTO DO JSON
   // =====================================================
-
   const loadPromos = async () => {
     try {
       const r = await fetch(PROMOS_JSON_URL, { cache: "no-store" });
       if (!r.ok) throw new Error("Não carregou JSON");
 
       const data = await r.json();
-
-      if (!Array.isArray(data)) {
-        throw new Error("JSON inválido");
-      }
+      if (!Array.isArray(data)) throw new Error("JSON inválido");
 
       state.rawPromos = data;
       state.activePromos = data.map(normalizePromo).filter((p) => p.ativa);
@@ -149,26 +164,28 @@ document.addEventListener("DOMContentLoaded", () => {
       applyFilters();
       startTimer();
     } catch (e) {
-      console.error("Erro:", e);
+      console.error("Erro ao carregar promoções:", e);
       setError("Erro ao carregar promoções.");
     }
   };
 
   const setError = (msg) => {
-    if (els.count) els.count.textContent = msg;
-    if (els.grid) els.grid.innerHTML = "";
+    els.count.textContent = msg;
+    els.grid.innerHTML = "";
+    if (els.empty) els.empty.hidden = true;
+    if (els.pagination) els.pagination.hidden = true;
   };
 
   // =====================================================
-  //  BLOCO 08 • CATEGORIAS DO SELECT
-  //  - Monta o <select> de categorias com base nas promos
+  //  CATEGORIAS DO SELECT
   // =====================================================
-
   const buildCategoryOptions = () => {
     if (!els.category) return;
 
     const cats = new Set();
-    state.activePromos.forEach((p) => p.categoria && cats.add(p.categoria));
+    state.activePromos.forEach((p) => {
+      if (p.categoria) cats.add(p.categoria);
+    });
 
     els.category.innerHTML = `<option value="">Todas as categorias</option>`;
 
@@ -181,24 +198,24 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // =====================================================
-  //  BLOCO 09 • FILTROS & ORDENAÇÃO
-  //  - Busca, categoria e ordenação (urgência, desconto…)
+  //  FILTROS & ORDENAÇÃO
   // =====================================================
-
   const applyFilters = () => {
     let arr = [...state.activePromos];
 
-    // Filtro de texto (buscar promoção)
+    // Texto
     if (state.filters.search) {
       const t = state.filters.search.toLowerCase();
       arr = arr.filter((p) =>
-        `${p.nome} ${p.descricao_resumida} ${p.categoria} ${p.subcategoria}`
+        `${p.nome ?? ""} ${p.descricao_resumida ?? ""} ${p.categoria ?? ""} ${
+          p.subcategoria ?? ""
+        }`
           .toLowerCase()
           .includes(t)
       );
     }
 
-    // Filtro de categoria
+    // Categoria
     if (state.filters.category) {
       arr = arr.filter((p) => p.categoria === state.filters.category);
     }
@@ -212,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (sort === "priceAsc") {
       arr.sort((a, b) => a.precoPromo - b.precoPromo);
     } else {
-      // "urgency" (padrão)
+      // urgency (padrão)
       arr.sort((a, b) => {
         const ad = a.diasRestantes ?? 999;
         const bd = b.diasRestantes ?? 999;
@@ -222,53 +239,104 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     state.filteredPromos = arr;
+    state.page = 1;
     render();
   };
 
   // =====================================================
-  //  BLOCO 10 • RENDERIZAÇÃO
-  //  - Desenha os cards na tela ou mostra estado vazio
+  //  LABEL DO FILTRO ATUAL
   // =====================================================
+  const updateFilterLabel = () => {
+    if (!els.currentFilter) return;
 
+    let label = "Todas as categorias";
+
+    if (state.filters.category && els.category) {
+      const opt = Array.from(els.category.options).find(
+        (o) => o.value === state.filters.category
+      );
+      if (opt) label = opt.textContent.trim();
+      else label = state.filters.category;
+    }
+
+    els.currentFilter.textContent = label;
+    els.currentFilter.hidden = false;
+  };
+
+  // =====================================================
+  //  CONTROLES DE PAGINAÇÃO
+  // =====================================================
+  const updatePaginationControls = () => {
+    if (!els.pagination || !els.pageInfo || !els.prev || !els.next) return;
+
+    const total = state.filteredPromos.length;
+    const totalPages = getTotalPages();
+
+    // se couber em uma página, esconde paginação
+    els.pagination.hidden = total <= state.pageSize;
+
+    if (totalPages <= 1) {
+      els.pageInfo.textContent = "";
+    } else {
+      els.pageInfo.textContent = `Página ${state.page} de ${totalPages}`;
+    }
+
+    els.prev.disabled = state.page <= 1;
+    els.next.disabled = state.page >= totalPages;
+  };
+
+  // =====================================================
+  //  RENDERIZAÇÃO
+  // =====================================================
   const render = () => {
     els.grid.innerHTML = "";
     state.timers = [];
 
-    if (state.filteredPromos.length === 0) {
+    const total = state.filteredPromos.length;
+
+    if (total === 0) {
       els.grid.hidden = true;
-      els.empty.hidden = false;
+      if (els.empty) els.empty.hidden = false;
       els.count.textContent = "Nenhuma promoção ativa";
+      if (els.pagination) els.pagination.hidden = true;
+      if (els.currentFilter) els.currentFilter.hidden = true;
       return;
     }
 
     els.grid.hidden = false;
-    els.empty.hidden = true;
+    if (els.empty) els.empty.hidden = true;
 
-    const qtd = state.filteredPromos.length;
-    els.count.textContent = `${qtd} promoção${qtd > 1 ? "es" : ""} ativa${
-      qtd > 1 ? "s" : ""
-    }`;
+    const totalPages = getTotalPages();
+    if (state.page > totalPages) state.page = totalPages;
+
+    const start = (state.page - 1) * state.pageSize;
+    const end = start + state.pageSize;
+    const pageItems = state.filteredPromos.slice(start, end);
+
+    const qtd = pageItems.length;
+    els.count.textContent = `${qtd} de ${total} promoção${
+      total > 1 ? "es" : ""
+    } ativas`;
 
     const fragment = document.createDocumentFragment();
-
-    state.filteredPromos.forEach((p) => {
-      fragment.appendChild(makeCard(p));
-    });
-
+    pageItems.forEach((p) => fragment.appendChild(makeCard(p)));
     els.grid.appendChild(fragment);
+
+    updateFilterLabel();
+    updatePaginationControls();
   };
 
   // =====================================================
-  //  BLOCO 11 • CRIAÇÃO DE CARD INDIVIDUAL
-  //  - Monta o HTML de uma promoção
+  //  CRIAÇÃO DO CARD
   // =====================================================
-
   const makeCard = (p) => {
     const el = document.createElement("article");
     el.className = "promo-card fade-in-up";
 
     const img =
-      p.imagem && p.imagem.trim() !== "" ? p.imagem : "placeholder-promo.jpg";
+      p.imagem && String(p.imagem).trim() !== ""
+        ? p.imagem
+        : "placeholder-promo.jpg";
 
     const badge = getBadge(p);
     const prazo = getPrazo(p);
@@ -277,9 +345,13 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="promo-card__ribbon">${badge}</div>
 
       <div class="promo-card__image-wrapper">
-        <img src="${
-          IMG_PROMO_BASE_PATH + img
-        }" loading="lazy" class="promo-card__image" />
+        <img
+          src="${IMG_PROMO_BASE_PATH + img}"
+          loading="lazy"
+          alt="${p.nome}"
+          class="promo-card__image"
+          onerror="this.onerror=null;this.src='${IMG_PROMO_BASE_PATH}placeholder-promo.jpg';"
+        />
         ${
           p.descontoPercent > 0
             ? `<div class="promo-card__discount-tag">${p.descontoPercent}% OFF</div>`
@@ -331,7 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <div class="promo-card__meta-item">
             <span class="promo-card__meta-label">Validade</span>
-            <span class="promo-card__meta-value">${prazo}
+            <span class="promo-card__meta-value">
+              ${prazo}
               ${
                 p.dataFim && !p.duracaoEstoque
                   ? `<span class="promo-card__timer" data-expires="${p.dataFim.toISOString()}"></span>`
@@ -356,10 +429,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // =====================================================
-  //  BLOCO 12 • HELPERS DOS CARDS
-  //  - Badge, prazo, link de WhatsApp
+  //  HELPERS DOS CARDS
   // =====================================================
-
   const getBadge = (p) => {
     if (p.estoqueTotal <= 3) return "🔥 Últimas unidades";
     if (p.diasRestantes === 1) return "⏳ Só hoje";
@@ -382,15 +453,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const msg = `Oi! Quero aproveitar a promoção ${p.nome} por ${money(
       p.precoPromo
     )}. Tem disponível?`;
-
     return `https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(msg)}`;
   };
 
   // =====================================================
-  //  BLOCO 13 • TIMER GLOBAL (CONTAGEM REGRESSIVA)
-  //  - Atualiza os textos de tempo restante
+  //  TIMER GLOBAL
   // =====================================================
-
   const startTimer = () => {
     if (state.timers.length === 0) return;
 
@@ -424,10 +492,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // =====================================================
-  //  BLOCO 14 • EVENTOS DOS FILTROS
-  //  - Input de busca, categoria e ordenação
+  //  EVENTOS
   // =====================================================
-
   if (els.search) {
     els.search.addEventListener("input", (e) => {
       state.filters.search = e.target.value.toLowerCase();
@@ -449,10 +515,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =====================================================
-  //  BLOCO 15 • INICIALIZAÇÃO FINAL
-  //  - Dispara o carregamento das promoções
-  // =====================================================
+  if (els.prev) {
+    els.prev.addEventListener("click", () => {
+      if (state.page <= 1) return;
+      state.page -= 1;
+      render();
+      scrollToPromosTop();
+    });
+  }
 
+  if (els.next) {
+    els.next.addEventListener("click", () => {
+      const totalPages = getTotalPages();
+      if (state.page >= totalPages) return;
+      state.page += 1;
+      render();
+      scrollToPromosTop();
+    });
+  }
+
+  // =====================================================
+  //  START
+  // =====================================================
   loadPromos();
 });

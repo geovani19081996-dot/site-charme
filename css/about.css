@@ -3,35 +3,35 @@
    Layout específico da página sobre.html
    ======================================================= */
 
-/* Grids genéricos */
+/* Grids genéricos 
 
 .grid {
   display: grid;
   gap: 1.8rem;
 }
 
-/* 2 colunas: texto + card */
+/* 2 colunas: texto + card 
 .grid--2cols {
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   align-items: flex-start;
 }
 
-/* 3 colunas: valores */
+/* 3 colunas: valores 
 .grid--3cols {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* 4 colunas: família */
+/* 4 colunas: família 
 .grid--4cols {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-/* Pequeno respiro extra na seção de valores */
+/* Pequeno respiro extra na seção de valores 
 .valores {
   margin-top: 1.8rem;
 }
 
-/* Responsividade */
+/* Responsividade 
 @media (max-width: 960px) {
   .grid--2cols {
     grid-template-columns: 1fr;

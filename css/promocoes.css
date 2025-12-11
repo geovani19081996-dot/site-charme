@@ -1,422 +1,657 @@
-/* =======================================================
-   CHARME COSMÉTICOS — BASE
-   - Paleta, reset, estrutura, topo, hero, botões, footer
-   ======================================================= */
+/* =========================================================
+   PROMOÇÕES CHARME – PREMIUM
+   Estilos da seção de promoções (cards, filtros, paginação)
+   ========================================================= */
 
-/* ---------- PALETA / TEMA CLARO ---------- */
-:root {
-  /* Cores primárias */
-  --pink: #ff2d78;
-  --pink-dark: #e61e66;
-  --pink-soft: #ffe4f1;
-  --pink-soft-2: #fff7fb;
-
-  /* Auxiliares */
-  --gold: #d6a25a;
-  --gray: #777382;
-  --gray-light: #e9e9eb;
-  --gray-bg: #fafafa;
-
-  /* Texto */
-  --text-dark: #2b1024;
-  --text-light: #444;
-
-  /* Base */
-  --white: #ffffff;
-  --black: #000000;
-
-  /* WhatsApp */
-  --whats: #25d366;
-  --whats-hover: #1ebe5b;
-
-  /* Sombras */
-  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
-
-  /* Aliases (nomes antigos usados em alguns blocos) */
-  --rosa-intenso: var(--pink);
-  --rosa-medio: #f7afd5;
-  --rosa-claro: #fdeff6;
-  --preto-suave: #2b1024;
-  --cinza-texto: #4a4a4a;
-  --verde-whats: var(--whats);
-}
-
-/* ---------- TEMA ESCURO (opcional) ---------- */
-body.dark {
-  --white: #151014;
-  --gray-bg: #1f1820;
-  --text-dark: #f7f1f8;
-  --text-light: #ddd;
-  --gray: #bbb;
-  --pink: #ff4d8d;
-  --shadow-soft: 0 22px 50px rgba(0, 0, 0, 0.35);
-}
-
-/* ---------- RESET ---------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--gray-bg);
-  color: var(--text-light);
-  font-family: "Nunito", system-ui, sans-serif;
-  line-height: 1.6;
-  transition: background 0.4s ease, color 0.4s ease;
-}
-
-/* ---------- ESTRUTURA GERAL ---------- */
-.container {
-  max-width: 1120px;
-  padding: 0 1.5rem;
+/* Limita a largura SÓ da seção de promoções */
+.secao-promocoes .container {
+  max-width: 1280px;
   margin: 0 auto;
 }
 
-.section {
-  padding: 4rem 1.5rem;
+/* Fundo da seção */
+.secao-promocoes {
+  padding: 1px 0 1px;
+  background: linear-gradient(180deg, #ffe7f3 0%, #ffe7f3 40%, #ffeef8 100%);
 }
 
-.section__title {
-  font-family: "Poppins", sans-serif;
+/* Cabeçalho */
+.promos-header {
+  text-align: center;
+  margin-bottom: 1px;
+}
+
+.promos-header__kicker {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ec268f;
+  font-weight: 600;
+  margin-bottom: 1px;
+}
+/*promoçôes ativas*/ 
+
+.promos-header__title {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   font-size: 1.9rem;
-  text-align: center;
-  margin-bottom: 0.7rem;
-  color: var(--text-dark);
+  line-height: 1
+  margin-bottom: 1px;
+  color: #2b0c27;
 }
 
-.section__subtitle {
-  text-align: center;
-  max-width: 640px;
-  margin: 0.6rem auto 2.2rem;
-  color: var(--gray);
-}
-
-/* =======================================================
-   TOPO / MENU
-   ======================================================= */
-
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--pink-dark);
-  border-bottom: 1px solid var(--pink-dark);
-  backdrop-filter: blur(16px);
-}
-
-.topbar__inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.9rem 0;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.logo__img {
-  height: 52px;
-  object-fit: contain;
-}
-
-.logo__tagline {
-  font-size: 0.75rem;
-  color: var(--white);
-}
-
-/* Navegação */
-.nav {
-  display: flex;
-  gap: 1.3rem;
-}
-
-.nav a {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 500;
+.promos-header__subtitle {
+  max-width: 1000px;
+  margin: 0 auto;
   font-size: 0.95rem;
-  transition: 0.2s;
+  color: #6b5c6b;
+}
+/* =========================================================
+   TOOLBAR (contador + busca + filtros) – compacta
+   Altura e fonte alinhadas com o botão "Aproveitar pelo WhatsApp"
+   ========================================================= */
+
+.promos-toolbar {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1px;
+  flex-wrap: wrap;
 }
 
-.nav a:hover {
-  color: var(--white);
-  opacity: 0.85;
+.promos-toolbar__left {
+  flex: 0 0 auto;
 }
 
-/* Link ativo (página atual) */
-.nav__link--active {
+.promos-toolbar__right {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1px;
+  flex-wrap: wrap;
+}
+
+/* Pílula com contador de promoções */
+.promos-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 10px;              /* altura bem próxima do botão */
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+  font-size: 0.8rem;              /* mesmo “peso” visual do botão */
+  font-weight: 600;
+  color: #444;
+}
+
+/* Campo “Todas as categorias / CABELOS” */
+.promos-current-filter {
+  margin-top: 1px;
+  margin-bottom: 5px;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 10px;              /* altura menor pra encaixar na seção */
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ec268f;
+}
+
+/* “Caixinha” que envolve cada input/select */
+.promos-field {
   position: relative;
 }
 
-.nav__link--active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.2rem;
-  height: 2px;
+/* Input de busca */
+.promos-input {
+  height: 28px;                   /* bem próximo da altura do botão WhatsApp */
+  min-width: 400px;
+  padding: 0 1px;
   border-radius: 999px;
-  background: var(--white);
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-size: 0.8rem;              /* mesma família visual do botão */
+  color: #333;
+  outline: none;
+  font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 }
 
-/* =======================================================
-   BOTÃO DE TEMA (DARK/LIGHT) — opcional
-   ======================================================= */
+/* Selects */
+.promos-select {
+  height: 28px;                   /* mesma altura do input */
+  min-width: 200px;
+  padding: 0 3px 0 2px;
+  border-radius: 999px;
+  border: none;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  font-size: 0.8rem;
+  color: #333;
+  outline: none;
+  font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 
-.theme-toggle {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  background: var(--pink);
-  color: white;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* setinha fake do select */
+.promos-field::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid #ec268f;
+  border-bottom: 2px solid #ec268f;
+  transform: translateY(-55%) rotate(45deg);
+  pointer-events: none;
+}
+
+.promos-field:first-child::after {
+  /* não mostra seta no campo de busca */
+  content: none;
+}
+
+/* Responsivo toolbar */
+@media (max-width: 768px) {
+  .promos-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .promos-toolbar__left,
+  .promos-toolbar__right {
+    width: 100%;
+  }
+
+  .promos-field {
+    width: 100%;
+  }
+
+  .promos-input,
+  .promos-select {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   GRID DE CARDS
+   ========================================================= */
+
+.promos-grid {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  align-items: stretch;
+}
+
+@media (max-width: 960px) {
+  .promos-grid {
+    gap: 0.1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .promos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Estado vazio (sem promoções) */
+.promos-empty {
+  margin-top: 32px;
+  padding: 32px 24px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.promos-empty__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffe4f0;
+  color: #ec268f;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 8px;
+}
+
+.promos-empty__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #2b0c27;
+}
+
+.promos-empty__text {
+  font-size: 0.9rem;
+  color: #6b5c6b;
+  margin-bottom: 16px;
+}
+
+/* =========================================================
+   PAGINAÇÃO
+   ========================================================= */
+
+.promos-pagination {
+  margin-top: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  gap: 4px;
+}
+
+.promos-page-btn {
+  border: none;
+  border-radius: 1280px;
+  padding: 2px 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
-  z-index: 999;
-  transition: 0.25s;
+  background: #ffffff;
+  color: #ec268f;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease, color 0.15s ease;
+  font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-4px) scale(1.05);
-  background: var(--pink-dark);
+.promos-page-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #ec268f;
+  color: #ffffff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
 }
 
-/* =======================================================
-   HERO (CAPA)
-   ======================================================= */
-
-.hero {
-  background: linear-gradient(135deg, var(--pink-soft), var(--white));
-  padding: 4.5rem 1.5rem 4rem;
+.promos-page-btn:disabled {
+  opacity: 0.1;
+  cursor: default;
+  box-shadow: none;
 }
 
-.hero__inner {
-  max-width: 720px;
-  text-align: center;
-  margin: 0 auto;
+.promos-page-info {
+  font-size: 0.7rem;
+  color: #6b5c6b;
 }
 
-.hero__label {
-  color: var(--pink);
-  font-size: 0.85rem;
+/* =========================================================
+   CARD DE PROMOÇÃO – MAIS 25% MENOR (~45% do primeirão)
+   ========================================================= */
+
+.promo-card {
+  position: relative;
+  border-radius: 10px;              /* antes 18 */
+  padding: 16px 45px 10px;            /* antes 11 11 13 */
+  background: radial-gradient(circle at top left, #ffeef8 0, #ffffff 55%);
+  box-shadow: 0 px 1px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;                         /* antes 8 */
+}
+
+/* animação */
+.fade-in-up {
+  animation: fadeInUp 0.28s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* faixa superior (Até acabar o estoque / Só hoje...) */
+.promo-card__ribbon {
+  position: absolute;
+  top: 1px;                         /* antes 10 */
+  left: 10px;                       /* antes 14 */
+  padding: 1px 30px;                /* antes 4px 12px */
+  border-radius: 999px;
+  font-size: 0.6rem;                /* antes 0.68rem */
+  font-weight: 600;
+  background: linear-gradient(90deg, #ff7abd, #ec268f);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1000px 100px rgba(236, 38, 143, 0.35);
+}
+
+/* área da imagem */
+.promo-card__image-wrapper {
+  margin-top: 1px;                 /* antes 20 */
+  margin-bottom: 1px;               /* antes 6 */
+  border-radius: 20px;              /* antes 18 */
+  background: radial-gradient(circle at top center, #ffeef8 0, #ffd7f0 45%);
+  min-height: 1px;                 /* antes 100 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* imagem em si */
+.promo-card__image {
+  max-height: 260px;                 /* antes 100 */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* selo de desconto (34.1% OFF) */
+.promo-card__discount-tag {
+  position: absolute;
+  right: 5px;                      /* antes 12 */
+  bottom: 2px;                      /* antes 8 */
+  padding: 1px 3px;                 /* antes 4px 9px */
+  border-radius: 999px;
+  background: #101020;
+  color: #ffffff;
+  font-size: 0.6rem;                /* antes 0.68rem */
+  font-weight: 600;
+}
+
+/* bloco de conteúdo (textos) */
+.promo-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;                         /* antes 7 */
+  flex: 100000000;
+}
+
+.promo-card__category {
+  font-size: 0.7rem;               /* antes 0.7rem */
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.03Rem;
+  font-weight: 700;
+  color: #ec268f;
 }
 
-.hero__title {
-  font-family: "Poppins", sans-serif;
-  font-size: 2.3rem;
-  margin-top: 0.8rem;
-  color: var(--text-dark);
+.promo-card__title {
+  font-size: 0.7rem;                /* antes 0.88rem */
+  line-height: 1;
+  font-weight: 700;
+  color: #2b0c27;
 }
 
-.hero__text {
-  color: var(--gray);
-  max-width: 540px;
-  margin: 1.2rem auto 2rem;
+.promo-card__subtitle {
+  font-size: 0.53rem;               /* antes 0.74rem */
+  color: #6b5c6b;
+}
+
+/* preços */
+.promo-card__prices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.01px;
+}
+
+.promo-card__price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.promo-card__label {
+  font-size: 0.2 rem;                /* antes 0.68rem */
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #777;
+}
+
+.promo-card__price-current {
+  font-size: 0.9rem;               /* antes 1.05rem */
+  font-weight: 700;
+  color: #00a54f;
+}
+
+.promo-card__price-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;                         /* antes 5px */
+  font-size: 0.60rem;               /* antes 0.72rem */
+}
+
+.promo-card__price-old {
+  text-decoration: line-through;
+  color: #a3a3a3;
+}
+
+.promo-card__price-save {
+  color: #00a54f;
+  font-weight: 600;
+}
+
+/* metas (estoque / validade) */
+.promo-card__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1px;
+  margin-top: 1px;
+  font-size: 0.6rem;               /* antes 0.7rem */
+}
+
+.promo-card__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.promo-card__meta-label {
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #a3a3a3;
+}
+
+.promo-card__meta-value {
+  color: #555;
+}
+
+/* contador de horas (se usar) */
+.promo-card__timer {
+  font-size: 0.7rem;               /* antes 0.7rem */
+  color: #ec268f;
+}
+
+/* botão principal */
+.promo-card__cta {
+  margin-top: 0.1px;                  /* antes 6px */
+  width: 100%;
+}
+
+/* botão WhatsApp dentro do card */
+.promo-card .btn.btn--whats {
+  padding: 1px 1px;                /* antes 7px 18px */
+  font-size: 0.78rem;               /* antes 0.8rem */
+  width: 100%;
+  justify-content: center;
+}
+
+/* =========================================================
+   BLOCO FINAL • CONTATO + RODAPÉ
+   ========================================================= */
+
+.section-contact-final {
+  background: var(--rosa-claro);
+  padding: 40px 0 40px;
+  margin-top: 4px;
+}
+
+.contact-final {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 3px 4px;
+  border-radius: 32px;
+  background: var(--branco);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  gap: 1px;
+  align-items: center;
+}
+
+.contact-final__left,
+.contact-final__right {
+  flex: 1;
+}
+
+.contact-final__kicker {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rosa-intenso);
+  margin-bottom: 1px;
+}
+
+.contact-final__title {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.3;
+  margin-bottom: 1px;
+  color: var(--cinza-texto);
+}
+
+.contact-final__text {
+  font-size: 0.40rem;
+  color: var(--cinza-texto);
+  margin-bottom: 1px;
+}
+
+.contact-final__info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  color: var(--cinza-texto);
+}
+
+.contact-final__info li + li {
+  margin-top: 1px;
+}
+
+/* Lado direito – botões e redes */
+
+.contact-final__whats-label {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cinza-texto);
+  margin-bottom: 1px;
+}
+
+.contact-final__whats-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  margin-bottom: 1px;
+}
+
+.contact-final__btn {
+  min-width: 1px;
+  justify-content: center;
+}
+
+.contact-final__social {
+  margin-top: 1px;
   font-size: 1rem;
 }
 
-/* Ações do hero */
-.hero__actions {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+.contact-final__social-label {
+  display: block;
+  margin-bottom: 1px;
+  color: var(--cinza-texto);
 }
 
-/* Hero versão interna (sobre.html) */
-.hero--interno {
-  padding-top: 3.2rem;
-  padding-bottom: 3.2rem;
-}
-
-/* Bloco social do hero */
-.hero__social {
-  margin-top: 0.9rem;
+.contact-final__social-links {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 1px;
 }
 
-.hero__social-label {
-  font-size: 0.85rem;
-  color: var(--gray);
-}
-
-/* Container dos ícones */
-.hero__social-links {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Botão redondo com ícone */
-.hero__social-link {
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
+.contact-final__social-links a {
+  color: var(--rosa-intenso);
   text-decoration: none;
-  background: #ffffff;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
-/* Ícone WhatsApp */
-.hero__social-link--whats {
-  color: var(--whats);
+.contact-final__social-links a:hover {
+  text-decoration: underline;
 }
 
-/* Ícone Instagram */
-.hero__social-link--insta {
-  color: var(--pink);
-}
-
-/* Hover (desktop) */
-.hero__social-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
-}
-
-/* =======================================================
-   BOTÕES GERAIS
-   ======================================================= */
-
-.btn {
-  padding: 0.85rem 1.7rem;
-  border-radius: 999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-}
-
-.btn--primary {
-  background: var(--pink);
-  color: var(--white);
-  box-shadow: 0 10px 20px rgba(255, 45, 120, 0.26);
-}
-
-.btn--primary:hover {
-  background: var(--pink-dark);
-  transform: translateY(-2px);
-}
-
-.btn--outline {
-  border: 1px solid var(--pink);
-  color: var(--pink);
-  background: transparent;
-}
-
-.btn--outline:hover {
-  background: rgba(255, 45, 120, 0.12);
-}
-
-.btn--whats {
-  background: var(--whats);
-  color: var(--white);
-}
-
-.btn--whats:hover {
-  background: var(--whats-hover);
-}
-
-/* =======================================================
-   RODAPÉ
-   ======================================================= */
+/* Footer enxuto */
 
 .footer {
-  padding: 1.4rem 1.5rem 1.8rem;
-  text-align: center;
-  font-size: 0.82rem;
-  color: var(--gray);
+  background: #ffffff;
+  border-top: 1px solid var(--rosa-claro);
+  padding: 1px 0 1px;
+  font-size: 0.85rem;
+  color: var(--cinza-texto);
 }
 
-/* Footer mais completo (usado em sobre.html) */
 .footer__inner {
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 1px;
+  text-align: center;
 }
 
-.footer__copy {
-  font-size: 0.82rem;
+.footer__brand {
+  font-weight: 600;
 }
 
-.footer__social {
-  display: flex;
-  gap: 0.75rem;
+.footer__tiny {
+  font-size: 0.78rem;
+  opacity: 0.7;
 }
 
-.footer__social a {
-  color: var(--pink);
-  font-size: 1.1rem;
-}
+/* Responsivo */
 
-/* =======================================================
-   RESPONSIVIDADE BASE
-   ======================================================= */
-
-@media (max-width: 768px) {
-  .topbar__inner {
+@media (max-width: 900px) {
+  .contact-final {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    padding: 24px 20px;
+    border-radius: 24px;
   }
 
-  .nav {
-    flex-wrap: wrap;
-    gap: 0.75rem;
+  .contact-final__title {
+    font-size: 1.5rem;
   }
 
-  .hero__title {
-    font-size: 1.9rem;
+  .contact-final__whats-group {
+    justify-content: center;
   }
 
-  .hero__social {
-    align-items: flex-start;
-  }
-
-  .hero__social-links {
-    gap: 0.6rem;
-  }
-
-  .hero__social-link {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 480px) {
   .footer__inner {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    padding: 0 16px;
   }
 }

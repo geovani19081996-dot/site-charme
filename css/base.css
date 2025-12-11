@@ -10,7 +10,9 @@
   --pink-dark: #e61e66;
   --pink-soft: #ffe4f1;
   --pink-soft-2: #fff7fb;
-
+ /*Altura aproximada do header/menu em pixels*/
+  --header-height: 80px;
+ 
   /* Auxiliares */
   --gold: #d6a25a;
   --gray: #777382;
@@ -73,8 +75,8 @@ body {
 
 /* ---------- ESTRUTURA GERAL ---------- */
 .container {
-  max-width: 1120px;
-  padding: 0 1.5rem;
+  max-width: 1280px;
+  padding: 0 3.0rem;
   margin: 0 auto;
 }
 
@@ -313,6 +315,12 @@ body {
   justify-content: center;
   border: none;
 }
+/* Icon inside button / Ícone dentro do botão */
+.btn i {
+  font-size: 1.1rem;
+  margin-right: 0.45rem;
+  line-height: 0;
+}
 
 .btn--primary {
   background: var(--pink);
@@ -419,4 +427,12 @@ body {
     align-items: center;
     text-align: center;
   }
+}
+#inicio,
+#lojas,
+#produtos,
+#promocoes,
+#quem-somos,
+#contato {
+  scroll-margin-top: var(--header-height);
 }

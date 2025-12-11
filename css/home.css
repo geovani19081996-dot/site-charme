@@ -1,54 +1,13 @@
 /* =======================================================
    CHARME COSMÉTICOS — HOME
    Seções da página inicial:
-   - Sobre (resumo)
+   - Início
    - Lojas
    - Produtos
-   - Essência
-   - Família / equipe
+   - Quem somos (essência, valores, equipe)
    - Contato
    ======================================================= */
 
-/* ---------- SEÇÃO SOBRE (#sobre) ---------- */
-
-.sobre__grid {
-  max-width: 960px;
-  margin: 0 auto;
-  display: grid;
-  gap: 2rem;
-}
-
-.sobre__texto {
-  font-size: 0.98rem;
-  color: var(--text-light);
-}
-
-.sobre__texto p + p {
-  margin-top: 0.7rem;
-}
-
-.timeline {
-  border-left: 3px solid var(--pink);
-  padding-left: 1.4rem;
-}
-
-.timeline__item {
-  margin-bottom: 1.4rem;
-}
-
-.timeline__ano {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--pink);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.timeline__titulo {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-dark);
-}
 
 /* ---------- SEÇÃO LOJAS (#lojas) ---------- */
 
@@ -203,6 +162,66 @@
   min-width: 210px;
   justify-content: center;
 }
+/* Versão com dois botões lado a lado */
+.card__actions--double {
+  gap: 0.75rem;
+}
+
+/* Foto da fachada da loja dentro do card */
+.card__image {
+  position: relative;
+  margin: -0.4rem -0.4rem 1rem; /* puxa a foto um pouco para as bordas */
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background: var(--rosa-claro);
+}
+
+.card__image img {
+  width: 100%;
+  height: 190px;           /* altura fixa pra todas ficarem padronizadas */
+  object-fit: cover;       /* cover/preencher cortando excesso sem distorcer */
+  display: block;
+}
+
+/* Endereço clicável, mas com cara de texto normal */
+.card__address-link {
+  color: inherit;          /* inherit/herda a cor do texto do card */
+  text-decoration: none;
+}
+
+.card__address-link:hover {
+  color: var(--rosa-intenso);
+  text-decoration: underline;
+}
+
+/* Dois botões lado a lado: WhatsApp + Ver no mapa */
+.card__actions--double {
+  gap: 0.75rem;
+}
+/* Link do endereço com cara de texto normal */
+.card__address-link {
+  color: inherit;          /* inherit/herda cor do texto do card */
+  text-decoration: none;
+}
+
+.card__address-link:hover {
+  color: var(--rosa-intenso);
+  text-decoration: underline;
+}
+/* Mapa embed/embutido dentro do card de loja */
+.card__map {
+  position: relative;
+  margin-top: 0.9rem;
+  border-radius: 1.1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+.card__map iframe {
+  width: 100%;
+  height: 190px;   /* altura fixa pra todos ficarem iguais */
+  border: 0;
+}
 
 /* ---------- SEÇÃO PRODUTOS (#produtos) ---------- */
 
@@ -210,7 +229,8 @@
   max-width: 960px;
   margin: 0 auto;
   display: grid;
-  gap: 1.2rem;
+  gap: 0.4rem;
+  width: 100%;
 }
 
 .categoria {
@@ -403,5 +423,368 @@
   .equipe__foto {
     width: 160px;
     height: 160px;
+  }
+}
+/* =========================================
+   INDICADOR DO FILTRO ATUAL
+   ========================================= */
+.promos-current-filter {
+  margin: 1rem 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cinza-texto);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* =========================================
+   PAGINAÇÃO (PRÓXIMA / ANTERIOR)
+   ========================================= */
+.promos-pagination {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.promos-page-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--rosa-intenso);
+  color: var(--branco);
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(236, 38, 143, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.promos-page-btn:hover:not([disabled]) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(236, 38, 143, 0.45);
+}
+
+.promos-page-btn[disabled] {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
+
+.promos-page-info {
+  font-size: 0.85rem;
+  color: var(--cinza-texto);
+}
+
+/* =========================================
+   MOBILE – CARDS DESLIZANDO PRO LADO
+   ========================================= */
+@media (max-width: 768px) {
+  .promos-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 0 4px 16px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .promo-card {
+    flex: 0 0 80%;
+    max-width: 340px;
+    scroll-snap-align: start;
+  }
+}
+/* Extras da área final: botão único + ícones sociais */
+
+.contact-final__whats-group--single {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-final__btn--main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.contact-final__btn--main i {
+  font-size: 1.1rem;
+}
+
+.contact-final__hint {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--cinza-texto);
+  opacity: 0.85;
+}
+
+/* Social em formato de "pílula" com ícone */
+
+.contact-final__social-links--icons {
+  flex-direction: row;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.contact-final__social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--rosa-claro);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.contact-final__social-link i {
+  font-size: 1rem;
+}
+
+.contact-final__social-link--insta {
+  color: #e1306c;
+}
+
+.contact-final__social-link--face {
+  color: #1877f2;
+}
+
+.contact-final__social-link:hover {
+  background: #ffe3f1;
+  text-decoration: none;
+}
+
+/* Mobile/responsivo */
+
+@media (max-width: 900px) {
+  .contact-final__whats-group--single {
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-final__hint {
+    text-align: center;
+  }
+
+  .contact-final__social-links--icons {
+    justify-content: center;
+  }
+}
+/* =========================================
+   BLOCO CONTATO FINAL - CHARME PREMIUM
+   ========================================= */
+
+.contact-final {
+  padding: 4rem 0 3rem;
+}
+
+.contact-final__card {
+  background: radial-gradient(circle at top left, #fdeff6 0, #ffffff 45%, #ffe5f3 100%);
+  border-radius: 32px;
+  box-shadow: 0 18px 40px rgba(236, 38, 143, 0.12);
+  padding: 3rem 3.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.contact-final__left,
+.contact-final__right {
+  min-width: 0;
+}
+
+/* Eyebrow / selo de texto pequeno em cima do título */
+.contact-final__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rosa-intenso);
+  margin-bottom: 0.75rem;
+}
+
+.contact-final__title {
+  font-size: 1.9rem;
+  line-height: 1.3;
+  margin: 0 0 0.75rem;
+  color: var(--cinza-texto);
+}
+
+.contact-final__subtitle {
+  margin: 0 0 1.5rem;
+  color: var(--cinza-texto);
+  font-size: 0.98rem;
+}
+
+/* Lista de benefícios */
+.contact-final__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem;
+  color: var(--cinza-texto);
+  font-size: 0.95rem;
+}
+
+.contact-final__list li + li {
+  margin-top: 0.35rem;
+}
+
+/* Mini estatísticas */
+/* Mini estatísticas */
+.contact-final__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* força 3 cards lado a lado no desktop */
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.contact-final__stat {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.contact-final__stat-number {
+  display: block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--rosa-intenso);
+}
+
+.contact-final__stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--cinza-texto);
+}
+
+/* Horários */
+.contact-final__hours {
+  border-top: 1px dashed rgba(0, 0, 0, 0.06);
+  padding-top: 1.3rem;
+}
+
+.contact-final__hours-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--cinza-texto);
+}
+
+.contact-final__hours-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  color: var(--cinza-texto);
+}
+
+.contact-final__hours-list li + li {
+  margin-top: 0.2rem;
+}
+
+.contact-final__hours-note {
+  font-size: 0.8rem;
+  color: var(--cinza-texto);
+  margin: 0;
+}
+
+/* Coluna direita */
+.contact-final__right-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cinza-texto);
+  margin: 0 0 0.9rem;
+}
+
+.contact-final__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.6rem;
+}
+
+.contact-final__btn {
+  flex: 1 1 180px;
+  text-align: center;
+}
+
+/* Social */
+.contact-final__social-label {
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+  color: var(--cinza-texto);
+}
+
+.contact-final__social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.contact-final__social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--cinza-texto);
+  text-decoration: none;
+}
+
+.contact-final__social-link i {
+  font-size: 1rem;
+  color: var(--rosa-intenso);
+}
+
+/* Confiança + assinatura */
+.contact-final__trust {
+  font-size: 0.78rem;
+  color: var(--cinza-texto);
+  margin-bottom: 0.6rem;
+}
+
+.contact-final__signature {
+  font-size: 0.78rem;
+  color: var(--cinza-texto);
+  opacity: 0.9;
+}
+
+/* Responsivo */
+@media (max-width: 960px) {
+  .contact-final__card {
+    grid-template-columns: 1fr;
+    padding: 2.5rem 1.75rem;
+  }
+
+  .contact-final__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-final {
+    padding-top: 3rem;
+  }
+
+  .contact-final__card {
+    padding: 2.2rem 1.3rem;
+    border-radius: 24px;
+  }
+
+  .contact-final__title {
+    font-size: 1.6rem;
+  }
+
+  .contact-final__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-final__buttons {
+    flex-direction: column;
   }
 }
