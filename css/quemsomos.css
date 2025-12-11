@@ -304,3 +304,64 @@
     height: 160px;
   }
 }
+/* =======================================================
+   BLOCO "POR QUE A CHARME EXISTE"
+   ======================================================= */
+
+.section--why {
+  background: var(--white);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  max-width: 1040px;
+  margin: 2.3rem auto 0;
+}
+
+.why-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 1.7rem 1.8rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(236, 38, 143, 0.08);
+}
+
+.why-card__label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--pink);
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+}
+
+.why-card__text {
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.why-card__list {
+  margin-top: 0.8rem;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.why-card__list li + li {
+  margin-top: 0.35rem;
+}
+
+/* Responsivo/responsive */
+@media (max-width: 960px) {
+  .why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+}
