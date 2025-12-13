@@ -22,14 +22,14 @@ function getStock(p, store) {
 }
 
 function getBasePrice(p, store) {
-  // Se tiver preco_lojaX usa; senão usa preco
+  // Se tiver preco_lojaX usa; senÃ£o usa preco
   if (store === "1" && p.preco_loja1 != null) return p.preco_loja1;
   if (store === "2" && p.preco_loja2 != null) return p.preco_loja2;
   return p.preco || 0;
 }
 
 function getFinalPrice(p, store) {
-  // Promo sobrescreve preço se existir pro código
+  // Promo sobrescreve preÃ§o se existir pro cÃ³digo
   const pr = promoMap.get(p.codigo);
   if (!pr) return getBasePrice(p, store);
   return pr.precoPromo;
@@ -51,16 +51,16 @@ async function loadJson(url) {
 
 async function boot() {
   const metaTag = document.getElementById("metaTag");
-  metaTag.textContent = "Carregando produtos…";
+  metaTag.textContent = "Carregando produtosâ€¦";
 
   // Produtos (privado)
   produtos = await loadJson(PRODUCTS_URL);
 
-  // Promoções (público) – só pra preço promo
+  // PromoÃ§Ãµes (pÃºblico) â€“ sÃ³ pra preÃ§o promo
   try {
     const promos = await loadJson(PROMOS_URL);
     // promocoes_site.json tem itens repetidos por empresa
-    // vamos mapear menor precoPromo por codigo (por segurança)
+    // vamos mapear menor precoPromo por codigo (por seguranÃ§a)
     for (const it of promos) {
       const codigo = Number(it.codigo_produto || it.pro_codigo || it.codigo || it.PRO_CODIGO || it[9]);
       const precoPromo = Number(it.preco_promo ?? it.prom_valor ?? it.PROM_VALOR ?? it.valor_promo ?? 0);
@@ -72,8 +72,8 @@ async function boot() {
       }
     }
   } catch (e) {
-    // Promo é opcional; orçamento continua
-    console.warn("Promoções não carregadas:", e);
+    // Promo Ã© opcional; orÃ§amento continua
+    console.warn("PromoÃ§Ãµes nÃ£o carregadas:", e);
   }
 
   metaTag.textContent = `Produtos: ${produtos.length} | Promos: ${promoMap.size}`;
@@ -141,11 +141,11 @@ function render() {
         <img class="pimg" src="${imgSrc(p)}" onerror="this.src='${PLACEHOLDER}'" />
         <div style="flex:1">
           <div style="font-weight:700">${p.nome}</div>
-          <div class="muted">Código: ${p.codigo} • Unidade: ${p.unidade || "UN"}</div>
+          <div class="muted">CÃ³digo: ${p.codigo} â€¢ Unidade: ${p.unidade || "UN"}</div>
           <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;gap:8px">
             <div>
               <div style="font-weight:800">${moneyBR(price)}</div>
-              ${hasPromo(p.codigo) ? `<div class="muted">Promoção ativa</div>` : `<div class="muted">Preço normal</div>`}
+              ${hasPromo(p.codigo) ? `<div class="muted">PromoÃ§Ã£o ativa</div>` : `<div class="muted">PreÃ§o normal</div>`}
             </div>
             <div style="text-align:right">
               <div class="muted">Estoque</div>
@@ -220,7 +220,7 @@ function renderCart() {
         <img class="pimg" src="${imgSrc(p)}" onerror="this.src='${PLACEHOLDER}'" />
         <div style="flex:1">
           <div style="font-weight:700">${p.nome}</div>
-          <div class="muted">#${p.codigo} • ${moneyBR(price)} • estoque: ${getStock(p, store)}</div>
+          <div class="muted">#${p.codigo} â€¢ ${moneyBR(price)} â€¢ estoque: ${getStock(p, store)}</div>
 
           <div class="qty" style="margin-top:8px">
             <button data-m="${codigo}">-</button>
@@ -244,7 +244,7 @@ function renderCart() {
     });
   }
 
-  meta.textContent = `Loja ${store} • Itens: ${items}`;
+  meta.textContent = `Loja ${store} â€¢ Itens: ${items}`;
   document.getElementById("total").textContent = moneyBR(total);
 }
 
@@ -268,7 +268,7 @@ function buildQuoteText() {
   }
 
   const header = [
-    `*Orçamento Charme*`,
+    `*OrÃ§amento Charme*`,
     `Loja: ${store}`,
     nome ? `Cliente: ${nome}` : null,
     fone ? `Telefone: ${fone}` : null,
@@ -314,11 +314,11 @@ function applyLinkIfAny() {
       if (p) cart.set(p.codigo, { qty: Number(it.q || 1), ref: p });
     }
   } catch (e) {
-    console.warn("Link inválido:", e);
+    console.warn("Link invÃ¡lido:", e);
   }
 }
 
 boot().catch(err => {
   console.error(err);
-  alert("Erro carregando orçamento. Veja o console.");
+  alert("Erro carregando orÃ§amento. Veja o console.");
 });
