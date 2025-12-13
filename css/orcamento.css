@@ -1,0 +1,21 @@
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
+.grow{flex:1}
+.side{width:360px;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.pitem{display:flex;gap:10px;align-items:flex-start}
+.pimg{width:64px;height:64px;border-radius:10px;object-fit:cover;background:#f5f5f5}
+.muted{opacity:.75;font-size:.92rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn2{padding:10px 12px;border-radius:12px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.btn2.primary{background:#EC268F;color:#fff;border-color:#EC268F}
+.btn2.danger{background:#fff0f0;border-color:#ffd0d0}
+.qty{display:flex;gap:6px;align-items:center}
+.qty button{width:32px;height:32px;border-radius:10px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.qty input{width:54px;padding:8px;border-radius:10px;border:1px solid #ddd;text-align:center}
+.line{display:flex;justify-content:space-between;gap:10px}
+.hr{height:1px;background:#eee;margin:10px 0}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;background:#FDEFF6;color:#EC268F;font-weight:600;font-size:.8rem}
