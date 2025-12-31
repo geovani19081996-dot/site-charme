@@ -1020,16 +1020,6 @@
         "imagem":  "344.jpg"
     },
     {
-        "codigo":  346,
-        "nome":  "ESM JU FULL CHEIA DE MANIAS 7,5 ML IMPALA",
-        "unidade":  "UN",
-        "preco_loja1":  6.99,
-        "preco_loja2":  6.99,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "346.jpg"
-    },
-    {
         "codigo":  348,
         "nome":  "ESM JU FULL SABE QUE E GOSTOSA  IMPALA",
         "unidade":  "UN",
@@ -3710,16 +3700,6 @@
         "imagem":  "1238.jpg"
     },
     {
-        "codigo":  1239,
-        "nome":  "OXIGENADA AMETISTA 40VOL 100ML YAMA",
-        "unidade":  "UN",
-        "preco_loja1":  7.5,
-        "preco_loja2":  7.5,
-        "estoque_loja1":  0,
-        "estoque_loja2":  1,
-        "imagem":  "1239.jpg"
-    },
-    {
         "codigo":  1241,
         "nome":  "OXIGENADA AMETISTA 40VOL 900ML YAMA",
         "unidade":  "UN",
@@ -4240,16 +4220,6 @@
         "imagem":  "1342.jpg"
     },
     {
-        "codigo":  1343,
-        "nome":  "EMBALAGEM ESTERILIZAÇAO 9X16CM 20UND 1270 SANTA CLARA",
-        "unidade":  "UN",
-        "preco_loja1":  12.99,
-        "preco_loja2":  12.99,
-        "estoque_loja1":  1,
-        "estoque_loja2":  0,
-        "imagem":  "1343.jpg"
-    },
-    {
         "codigo":  1348,
         "nome":  "FAIXA EM HELANCA PARA CABELO 1517 SANTA CLARA",
         "unidade":  "UN",
@@ -4588,16 +4558,6 @@
         "estoque_loja1":  14,
         "estoque_loja2":  3,
         "imagem":  "1452.jpg"
-    },
-    {
-        "codigo":  1453,
-        "nome":  "LUVA HIGIENICA MANICURE DESCARTAVEL NEW LANCE",
-        "unidade":  "UN",
-        "preco_loja1":  1,
-        "preco_loja2":  1,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "1453.jpg"
     },
     {
         "codigo":  1456,
@@ -7470,16 +7430,6 @@
         "imagem":  "2627.jpg"
     },
     {
-        "codigo":  2630,
-        "nome":  "PINCA INOX PRETA PONTA DIAGONAL COD 1173 SANTA CLARA",
-        "unidade":  "UN",
-        "preco_loja1":  12.99,
-        "preco_loja2":  12.99,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "2630.jpg"
-    },
-    {
         "codigo":  2631,
         "nome":  "OLEO ROSA MOSQUETA 10ML DERMACREAM",
         "unidade":  "UN",
@@ -7658,16 +7608,6 @@
         "estoque_loja1":  5,
         "estoque_loja2":  4,
         "imagem":  "2689.jpg"
-    },
-    {
-        "codigo":  2694,
-        "nome":  "ESM JU FULL MENINA BONITA IMPALA",
-        "unidade":  "UN",
-        "preco_loja1":  6.99,
-        "preco_loja2":  6.99,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "2694.jpg"
     },
     {
         "codigo":  2696,
@@ -11840,16 +11780,6 @@
         "imagem":  "4382.jpg"
     },
     {
-        "codigo":  4405,
-        "nome":  "ESM NATURAL POP ROSE 8ML RISQUE",
-        "unidade":  "UN",
-        "preco_loja1":  6.99,
-        "preco_loja2":  6.99,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "4405.jpg"
-    },
-    {
         "codigo":  4417,
         "nome":  "TONALIZANTE COLOR EXPRESS FUN PINK SHOW 100ML SALON LINE",
         "unidade":  "UN",
@@ -13870,16 +13800,6 @@
         "imagem":  "5279.jpg"
     },
     {
-        "codigo":  5283,
-        "nome":  "ESM MODA3 ADMIRE 7,5ML IMPALA",
-        "unidade":  "UN",
-        "preco_loja1":  6.5,
-        "preco_loja2":  6.5,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "5283.jpg"
-    },
-    {
         "codigo":  5288,
         "nome":  "ESM MODA3 PRIMOR 7,5ML IMPALA",
         "unidade":  "UN",
@@ -13888,16 +13808,6 @@
         "estoque_loja1":  4,
         "estoque_loja2":  3,
         "imagem":  "5288.jpg"
-    },
-    {
-        "codigo":  5289,
-        "nome":  "ESM MODA3 DESCOMPLICADO 7,5 ML IMPALA",
-        "unidade":  "UN",
-        "preco_loja1":  6.5,
-        "preco_loja2":  6.5,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "5289.jpg"
     },
     {
         "codigo":  5296,
@@ -14011,7 +13921,7 @@
     },
     {
         "codigo":  5321,
-        "nome":  "NINA SUPER SOFT COR T1B/30 ZHANG",
+        "nome":  "NINA COR T1B/30 ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -16341,7 +16251,7 @@
     },
     {
         "codigo":  5945,
-        "nome":  "SPRAY KARINA EXTRA FORTE 400ML",
+        "nome":  "HAIR SPRAY KARINA EXTRA FORTE 400ML",
         "unidade":  "UN",
         "preco_loja1":  45.99,
         "preco_loja2":  45.99,
@@ -16440,16 +16350,6 @@
         "imagem":  "5956.jpg"
     },
     {
-        "codigo":  5957,
-        "nome":  "ELIXIR BC BLEND 7 OLEOS 40ML BEAUTYCOLOR",
-        "unidade":  "UN",
-        "preco_loja1":  29.5,
-        "preco_loja2":  29.5,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "5957.jpg"
-    },
-    {
         "codigo":  5959,
         "nome":  "COL ARGAN E COCO 66.26 MARSALA BEAUTYCOLOR",
         "unidade":  "UN",
@@ -16531,7 +16431,7 @@
     },
     {
         "codigo":  5976,
-        "nome":  "COLOR INTENSY 000SSS REFORCADOR 967 50G AMEND",
+        "nome":  "COLOR INTENSY 000SSS REFORCADOR 50G AMEND",
         "unidade":  "UN",
         "preco_loja1":  39.99,
         "preco_loja2":  39.99,
@@ -20921,7 +20821,7 @@
     },
     {
         "codigo":  7037,
-        "nome":  "LAPIS DELINEADOR DE SOBRANCELHAS UNIVERSAL EXPRESSAO FACIAL",
+        "nome":  "LAPIS DELINEADOR DE SOBRANCELHAS UNIVERSAL EXPRESSAO FACIAL AGORA",
         "unidade":  "UN",
         "preco_loja1":  24,
         "preco_loja2":  24,
@@ -24171,7 +24071,7 @@
     },
     {
         "codigo":  7566,
-        "nome":  "NINA SUPER SOFT COR 1 ZHANG",
+        "nome":  "NINA COR 1 ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -24181,7 +24081,7 @@
     },
     {
         "codigo":  7567,
-        "nome":  "NINA SUPER SOFT COR 2 ZHANG",
+        "nome":  "NINA COR 2 ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -24191,7 +24091,7 @@
     },
     {
         "codigo":  7568,
-        "nome":  "NINA SUPER SOFT COR R1-3/118 CHEREY",
+        "nome":  "NINA COR R1-3/118 CHEREY",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -24598,16 +24498,6 @@
         "estoque_loja1":  1,
         "estoque_loja2":  0,
         "imagem":  "7610.jpg"
-    },
-    {
-        "codigo":  7612,
-        "nome":  "BANHO DE BRILHO VIUVA NEGRA 300ML KAMALEAO",
-        "unidade":  "UN",
-        "preco_loja1":  51.99,
-        "preco_loja2":  51.99,
-        "estoque_loja1":  1,
-        "estoque_loja2":  0,
-        "imagem":  "7612.jpg"
     },
     {
         "codigo":  7613,
@@ -26090,16 +25980,6 @@
         "imagem":  "7813.jpg"
     },
     {
-        "codigo":  7816,
-        "nome":  "OXIGENADA COLOR INTENSY 10VOL 75ML AMEND",
-        "unidade":  "UN",
-        "preco_loja1":  14.5,
-        "preco_loja2":  14.5,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "7816.jpg"
-    },
-    {
         "codigo":  7817,
         "nome":  "OXIGENADA COLOR INTENSY 20VOL 75ML AMEND",
         "unidade":  "UN",
@@ -26128,16 +26008,6 @@
         "estoque_loja1":  0,
         "estoque_loja2":  0,
         "imagem":  "7819.jpg"
-    },
-    {
-        "codigo":  7823,
-        "nome":  "KIT TRUE HUE 240ML/280ML SENSCIENCE ALFAPARF",
-        "unidade":  "UN",
-        "preco_loja1":  200,
-        "preco_loja2":  200,
-        "estoque_loja1":  1,
-        "estoque_loja2":  0,
-        "imagem":  "7823.jpg"
     },
     {
         "codigo":  7824,
@@ -27531,7 +27401,7 @@
     },
     {
         "codigo":  7985,
-        "nome":  "ESM GEL BASE INTENSO 15 ML REAL LOVE",
+        "nome":  "ESM BASE EM GEL BLINDADA 15 ML REAL LOVE",
         "unidade":  "UN",
         "preco_loja1":  39.99,
         "preco_loja2":  39.99,
@@ -28638,16 +28508,6 @@
         "estoque_loja1":  4,
         "estoque_loja2":  3,
         "imagem":  "8125.jpg"
-    },
-    {
-        "codigo":  8129,
-        "nome":  "ESM VOLTEI TODAS POR UMA 8ML RISQUE",
-        "unidade":  "UN",
-        "preco_loja1":  6.99,
-        "preco_loja2":  6.99,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "8129.jpg"
     },
     {
         "codigo":  8131,
@@ -31251,7 +31111,7 @@
     },
     {
         "codigo":  8465,
-        "nome":  "ESM CREM GUERRA DO ARCO IRIS RISQUE",
+        "nome":  "ESM CREM GUERREIRA DO ARCO IRIS RISQUE",
         "unidade":  "UN",
         "preco_loja1":  6.99,
         "preco_loja2":  6.99,
@@ -31501,7 +31361,7 @@
     },
     {
         "codigo":  8498,
-        "nome":  "ESM GEL BASE DO ESMALTE 12ML REAL LOVE",
+        "nome":  "ESM BASE DO ESMALTE EM GEL 12ML REAL LOVE",
         "unidade":  "UN",
         "preco_loja1":  27.99,
         "preco_loja2":  27.99,
@@ -31940,16 +31800,6 @@
         "imagem":  "8558.jpg"
     },
     {
-        "codigo":  8559,
-        "nome":  "DESMAIA FIOS SERUM 180ML HEADLINE BEAUTYCOLOR",
-        "unidade":  "UN",
-        "preco_loja1":  57.99,
-        "preco_loja2":  57.99,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "8559.jpg"
-    },
-    {
         "codigo":  8560,
         "nome":  "ELIXIR FLUIDO USO OBRIGATORIO 150ML BEAUTYCOLOR",
         "unidade":  "UN",
@@ -32261,7 +32111,7 @@
     },
     {
         "codigo":  8600,
-        "nome":  "MASCARA ANTI-FRIZZ ISIS TALITA",
+        "nome":  "MASCARA ANTI-FRIZZ ISIS CABELO TALITA",
         "unidade":  "UN",
         "preco_loja1":  19.99,
         "preco_loja2":  19.99,
@@ -32621,7 +32471,7 @@
     },
     {
         "codigo":  8648,
-        "nome":  "ESM TOP COAT INCOL 8,5ML BLANT",
+        "nome":  "ESM TOP COAT HIPOALERGENICO 8,5ML BLANT",
         "unidade":  "UN",
         "preco_loja1":  16.99,
         "preco_loja2":  16.99,
@@ -33461,7 +33311,7 @@
     },
     {
         "codigo":  8747,
-        "nome":  "ESM GEL BASE DO ESM LINHA LIGHT 8ML REAL LOVE",
+        "nome":  "ESM BASE DO ESMALTE EM GEL LINHA LIGHT 8ML REAL LOVE",
         "unidade":  "UN",
         "preco_loja1":  24.99,
         "preco_loja2":  24.99,
@@ -33831,7 +33681,7 @@
     },
     {
         "codigo":  8787,
-        "nome":  "MAQ LIP GLOW HB6501/02  RUBY ROSE TALITA",
+        "nome":  "MAQ LIP GLOW HB6501/02 RUBY ROSE TALITA",
         "unidade":  "UN",
         "preco_loja1":  19.99,
         "preco_loja2":  19.99,
@@ -34211,7 +34061,7 @@
     },
     {
         "codigo":  8829,
-        "nome":  "SPRAY SILHOUETTE FIXACAO FORTE 500ML SCHWARZKIPF IGORA",
+        "nome":  "HAIR SPRAY SILHOUETTE FIXACAO FORTE 500ML SCHWARZKIPF IGORA",
         "unidade":  "UN",
         "preco_loja1":  125.99,
         "preco_loja2":  125.99,
@@ -34591,7 +34441,7 @@
     },
     {
         "codigo":  8871,
-        "nome":  "NINA SOFTEX COR F2/99J ZHANG",
+        "nome":  "NINA COR F2/99J ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -34601,7 +34451,7 @@
     },
     {
         "codigo":  8872,
-        "nome":  "NINA SUPER SOFTEX COR 8 ZHANG",
+        "nome":  "NINA COR 8 ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -34611,7 +34461,7 @@
     },
     {
         "codigo":  8873,
-        "nome":  "NINA BREED LOVE COR T1B/30 ZHANG",
+        "nome":  "NINA COR T1B/30 ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -34621,7 +34471,7 @@
     },
     {
         "codigo":  8874,
-        "nome":  "NINA SUPER SOFTEX COR T1B/27 ZHANG",
+        "nome":  "NINA COR T1B/27 ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -34631,7 +34481,7 @@
     },
     {
         "codigo":  8875,
-        "nome":  "NINA SUPER SOFTEX COR T1B/118 ZHANG",
+        "nome":  "NINA COR T1B/118 ZHANG",
         "unidade":  "UN",
         "preco_loja1":  39,
         "preco_loja2":  39,
@@ -35968,26 +35818,6 @@
         "estoque_loja1":  0,
         "estoque_loja2":  0,
         "imagem":  "9010.jpg"
-    },
-    {
-        "codigo":  9011,
-        "nome":  "ESM MARATONANDO GLIT FLOCADO TOP 10 IMPALA",
-        "unidade":  "UN",
-        "preco_loja1":  7.5,
-        "preco_loja2":  7.5,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "9011.jpg"
-    },
-    {
-        "codigo":  9012,
-        "nome":  "ESM MARATONANDO AMA UM K-DRAMA IMPALA",
-        "unidade":  "UN",
-        "preco_loja1":  7.5,
-        "preco_loja2":  7.5,
-        "estoque_loja1":  0,
-        "estoque_loja2":  0,
-        "imagem":  "9012.jpg"
     },
     {
         "codigo":  9013,
@@ -39571,7 +39401,7 @@
     },
     {
         "codigo":  9383,
-        "nome":  "ESM CREM POV MINHA VIBE IMPALA",
+        "nome":  "ESM POV CREM MINHA VIBE IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39581,7 +39411,7 @@
     },
     {
         "codigo":  9384,
-        "nome":  "ESM CREM POV FOR YOU PAGE IMPALA",
+        "nome":  "ESM POV CREM FOR YOU PAGE IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39591,7 +39421,7 @@
     },
     {
         "codigo":  9385,
-        "nome":  "ESM CREM POV LOOK DO DIA IMPALA",
+        "nome":  "ESM POV CREM LOOK DO DIA IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39601,7 +39431,7 @@
     },
     {
         "codigo":  9386,
-        "nome":  "ESM PEROLADO POV CLEAN GIRL IMPALA",
+        "nome":  "ESM POV PEROLADO CLEAN GIRL IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39611,7 +39441,7 @@
     },
     {
         "codigo":  9387,
-        "nome":  "ESM CREM POV ENTREGOU TUDO IMPALA",
+        "nome":  "ESM POV CREM ENTREGOU TUDO IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39621,7 +39451,7 @@
     },
     {
         "codigo":  9388,
-        "nome":  "ESM PEROLADO POV GLOW UP IMPALA",
+        "nome":  "ESM POV PEROLADO GLOW UP IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39631,7 +39461,7 @@
     },
     {
         "codigo":  9389,
-        "nome":  "ESM CREM POV MEU DUMP IMPALA",
+        "nome":  "ESM POV CREM MEU DUMP IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39641,7 +39471,7 @@
     },
     {
         "codigo":  9390,
-        "nome":  "ESM CREM POV ARRUME-SE COMIGO IMPALA",
+        "nome":  "ESM POV CREM ARRUME-SE COMIGO IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39661,7 +39491,7 @@
     },
     {
         "codigo":  9392,
-        "nome":  "ESM CREM POV DAILY VLOG IMPALA",
+        "nome":  "ESM POV CREM DAILY VLOG IMPALA",
         "unidade":  "UN",
         "preco_loja1":  7.5,
         "preco_loja2":  7.5,
@@ -39701,7 +39531,7 @@
     },
     {
         "codigo":  9396,
-        "nome":  "ESCOVA THERMAL CERAMIC AMARELA 60MM MARCO BONI",
+        "nome":  "ESCOVA THERMAL CERAMIC AMARELA 60MM 7967T MARCO BONI",
         "unidade":  "UN",
         "preco_loja1":  89.99,
         "preco_loja2":  89.99,
