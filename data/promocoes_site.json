@@ -659,7 +659,7 @@
         "somente_a_vista":  false,
         "dias_restantes":  null,
         "codigo":  7037,
-        "nome":  "LAPIS DELINEADOR DE SOBRANCELHAS UNIVERSAL EXPRESSAO FACIAL",
+        "nome":  "LAPIS DELINEADOR DE SOBRANCELHAS UNIVERSAL EXPRESSAO FACIAL TESTE",
         "descricao_resumida":  "",
         "unidade":  "UN",
         "preco_normal":  24,
@@ -855,7 +855,7 @@
         "preco_promo":  10,
         "desconto_percentual":  16.7,
         "estoque_loja1":  0,
-        "estoque_loja2":  4,
+        "estoque_loja2":  3,
         "categoria":  "MAQUIAGENS",
         "subcategoria":  "LABIOS/ BOCA",
         "imagem":  "7045.jpg"
@@ -939,7 +939,7 @@
         "preco_promo":  10,
         "desconto_percentual":  41.1,
         "estoque_loja1":  0,
-        "estoque_loja2":  2,
+        "estoque_loja2":  1,
         "categoria":  "MAQUIAGENS",
         "subcategoria":  "LABIOS/ BOCA",
         "imagem":  "7052.jpg"
