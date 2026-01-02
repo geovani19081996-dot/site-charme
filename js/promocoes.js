@@ -7,6 +7,65 @@ const PROMOS_JSON_URL = "data/promocoes_site.json";
 const IMG_PROMO_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
 
+const DATA_BASES = resolveDataBases();
+const PROMOS_JSON_URLS = buildDataUrls(PROMOS_JSON_URL, PROMOS_JSON_URL);
+
+function normalizeBases(list) {
+  const out = [];
+  for (const raw of list || []) {
+    const base = typeof raw === "string" ? raw.trim().replace(/\/+$/, "") : "";
+    if (base === "") {
+      if (!out.includes("")) out.push("");
+      continue;
+    }
+    if (!out.includes(base)) out.push(base);
+  }
+  return out.length ? out : [""];
+}
+
+function resolveDataBases() {
+  const manualList = window.CHARME_DATA_BASES;
+  if (Array.isArray(manualList) && manualList.length) {
+    return normalizeBases(manualList);
+  }
+
+  const manual = window.CHARME_LIVE_URL;
+  if (typeof manual === "string" && manual.trim()) {
+    return normalizeBases([manual, ""]);
+  }
+
+  const host = window.location.hostname || "";
+  const isLocal = host === "127.0.0.1" || host === "localhost";
+  const localLive = "http://127.0.0.1:8787";
+  const remoteLive = "https://live-data.charmecosmeticos.com";
+  return normalizeBases(isLocal ? [localLive, remoteLive, ""] : [remoteLive, ""]);
+}
+
+function buildDataUrls(relPath, absPath) {
+  return DATA_BASES.map((base) => (base ? `${base}/${absPath}` : relPath));
+}
+
+async function fetchJsonWithFallback(urls) {
+  const list = Array.isArray(urls) ? urls : [urls];
+  let lastError = null;
+
+  for (const url of list) {
+    try {
+      const controller = window.AbortController ? new AbortController() : null;
+      const timer = controller ? setTimeout(() => controller.abort(), 3000) : null;
+      const r = await fetch(url, { cache: "no-store", signal: controller ? controller.signal : undefined });
+      if (timer) clearTimeout(timer);
+
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return await r.json();
+    } catch (err) {
+      lastError = err;
+    }
+  }
+
+  throw lastError || new Error("No data source");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector("#promocoes-grid");
   const count = document.querySelector("#promos-count");
@@ -151,10 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =====================================================
   const loadPromos = async () => {
     try {
-      const r = await fetch(PROMOS_JSON_URL, { cache: "no-store" });
-      if (!r.ok) throw new Error("Não carregou JSON");
-
-      const data = await r.json();
+      const data = await fetchJsonWithFallback(PROMOS_JSON_URLS);
       if (!Array.isArray(data)) throw new Error("JSON inválido");
 
       state.rawPromos = data;

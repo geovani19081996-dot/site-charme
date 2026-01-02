@@ -1,0 +1,54 @@
+/* Live avisos bar */
+.avisos-bar {
+  background: linear-gradient(90deg, var(--pink), var(--pink-dark));
+  color: var(--white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.avisos-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  padding: 0.6rem 0;
+  font-size: 0.95rem;
+}
+
+.avisos-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.avisos-item__badge {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.avisos-item__title {
+  font-weight: 600;
+}
+
+.avisos-item__message {
+  opacity: 0.9;
+}
+
+.avisos-item--warning {
+  background: rgba(255, 214, 138, 0.25);
+}
+
+.avisos-item--urgent {
+  background: rgba(255, 140, 140, 0.25);
+}
+
+@media (max-width: 720px) {
+  .avisos-bar__inner {
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+}
