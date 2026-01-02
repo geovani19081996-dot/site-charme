@@ -67,6 +67,34 @@ async function fetchJsonWithFallback(urls) {
   throw lastError || new Error("No data source");
 }
 
+const IMG_FALLBACK = "img/placeholder-promo.svg";
+
+function buildImageCandidates(name) {
+  const urls = [];
+  if (name) {
+    for (const base of DATA_BASES) {
+      if (base) urls.push(`${base}/${IMG_PROD_BASE_PATH}${name}`);
+    }
+    urls.push(`${IMG_PROD_BASE_PATH}${name}`);
+  }
+  urls.push(IMG_FALLBACK);
+  return urls;
+}
+
+function applyImageFallback(imgEl, name) {
+  const urls = buildImageCandidates(name);
+  let idx = 0;
+  const loadNext = () => {
+    if (idx >= urls.length) {
+      imgEl.onerror = null;
+      return;
+    }
+    imgEl.src = urls[idx++];
+  };
+  imgEl.onerror = loadNext;
+  loadNext();
+}
+
 function toNumber(v) {
   return Number(String(v ?? "0").replace(",", "."));
 }
@@ -152,8 +180,7 @@ function renderList(list) {
 
     card.innerHTML = `
       ${badge}
-      <img class="vitrine-card__image" src="${IMG_PROD_BASE_PATH + p.imagem}" alt="${p.nome}" loading="lazy"
-        onerror="this.onerror=null;this.src='img/placeholder-promo.svg';" />
+      <img class="vitrine-card__image" src="img/placeholder-promo.svg" alt="${p.nome}" loading="lazy" />
       <div class="vitrine-card__content">
         <div class="vitrine-card__meta">COD ${p.codigo}</div>
         <h3 class="vitrine-card__title">${p.nome}</h3>
@@ -162,6 +189,9 @@ function renderList(list) {
         <a class="btn btn--whats vitrine-card__cta" target="_blank" href="${buildWhatsLink(p)}">Consultar no WhatsApp</a>
       </div>
     `;
+
+    const imgEl = card.querySelector(".vitrine-card__image");
+    if (imgEl) applyImageFallback(imgEl, p.imagem);
 
     fragment.appendChild(card);
   });

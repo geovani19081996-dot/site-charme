@@ -67,6 +67,34 @@ async function fetchJsonWithFallback(urls) {
   throw lastError || new Error("No data source");
 }
 
+const IMG_FALLBACK = `${IMG_PROMO_BASE_PATH}placeholder-promo.jpg`;
+
+function buildImageCandidates(name) {
+  const urls = [];
+  if (name && name !== "placeholder-promo.jpg") {
+    for (const base of DATA_BASES) {
+      if (base) urls.push(`${base}/${IMG_PROMO_BASE_PATH}${name}`);
+    }
+    urls.push(`${IMG_PROMO_BASE_PATH}${name}`);
+  }
+  urls.push(IMG_FALLBACK);
+  return urls;
+}
+
+function applyImageFallback(imgEl, name) {
+  const urls = buildImageCandidates(name);
+  let idx = 0;
+  const loadNext = () => {
+    if (idx >= urls.length) {
+      imgEl.onerror = null;
+      return;
+    }
+    imgEl.src = urls[idx++];
+  };
+  imgEl.onerror = loadNext;
+  loadNext();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector("#promocoes-grid");
   const count = document.querySelector("#promos-count");
@@ -414,11 +442,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="promo-card__image-wrapper">
         <img
-          src="${IMG_PROMO_BASE_PATH + img}"
+          src="${IMG_PROMO_BASE_PATH}placeholder-promo.jpg"
           loading="lazy"
           alt="${p.nome}"
           class="promo-card__image"
-          onerror="this.onerror=null;this.src='${IMG_PROMO_BASE_PATH}placeholder-promo.jpg';"
         />
         ${
           p.descontoPercent > 0
@@ -489,6 +516,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </a>
       </div>
     `;
+
+    const imgEl = el.querySelector(".promo-card__image");
+    if (imgEl) applyImageFallback(imgEl, img);
 
     const timer = el.querySelector(".promo-card__timer");
     if (timer) state.timers.push(timer);
