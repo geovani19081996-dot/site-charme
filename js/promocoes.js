@@ -6,6 +6,7 @@
 const PROMOS_JSON_URL = "data/promocoes_site.json";
 const IMG_PROMO_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
+const FETCH_TIMEOUT_MS = 8000;
 const REFRESH_MS = 15000;
 
 const DATA_BASES = resolveDataBases();
@@ -53,7 +54,7 @@ async function fetchJsonWithFallback(urls) {
   for (const url of list) {
     try {
       const controller = window.AbortController ? new AbortController() : null;
-      const timer = controller ? setTimeout(() => controller.abort(), 3000) : null;
+      const timer = controller ? setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS) : null;
       const r = await fetch(url, { cache: "no-store", signal: controller ? controller.signal : undefined });
       if (timer) clearTimeout(timer);
 
@@ -95,7 +96,7 @@ function applyImageFallback(imgEl, name) {
   loadNext();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+const boot = () => {
   const grid = document.querySelector("#promocoes-grid");
   const count = document.querySelector("#promos-count");
 
@@ -643,4 +644,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // =====================================================
   loadPromos();
   scheduleRefresh();
-});
+};
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
+
