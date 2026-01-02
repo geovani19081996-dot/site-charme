@@ -3,11 +3,12 @@
 //  - Carrega JSON, aplica filtros, paginação e timers
 // =======================================================
 
+(function () {
 const PROMOS_JSON_URL = "data/promocoes_site.json";
 const IMG_PROMO_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
 const FETCH_TIMEOUT_MS = 8000;
-const REFRESH_MS = 15000;
+const PROMO_REFRESH_MS = 15000;
 
 const DATA_BASES = resolveDataBases();
 const PROMOS_JSON_URLS = buildDataUrls(PROMOS_JSON_URL, PROMOS_JSON_URL);
@@ -591,9 +592,9 @@ const boot = () => {
   };
 
   const scheduleRefresh = () => {
-    if (REFRESH_MS < 5000) return;
+    if (PROMO_REFRESH_MS < 5000) return;
     if (refreshHandle) return;
-    refreshHandle = setInterval(loadPromos, REFRESH_MS);
+    refreshHandle = setInterval(loadPromos, PROMO_REFRESH_MS);
   };
 
   // =====================================================
@@ -651,4 +652,5 @@ if (document.readyState === "loading") {
 } else {
   boot();
 }
+})();
 

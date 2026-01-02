@@ -2,11 +2,12 @@
 // CHARME | VITRINE AO VIVO (produtos.json)
 // =======================================================
 
+(function () {
 const PROD_JSON_URL = "data/private/produtos.json";
 const IMG_PROD_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
 const FETCH_TIMEOUT_MS = 8000;
-const REFRESH_MS = 15000;
+const VITRINE_REFRESH_MS = 15000;
 const MAX_ITEMS = 12;
 const LOW_STOCK_LIMIT = 5;
 
@@ -212,8 +213,8 @@ async function loadVitrine() {
 }
 
 function scheduleRefresh() {
-  if (REFRESH_MS < 5000) return;
-  setInterval(() => loadVitrine(), REFRESH_MS);
+  if (VITRINE_REFRESH_MS < 5000) return;
+  setInterval(() => loadVitrine(), VITRINE_REFRESH_MS);
 }
 
 const boot = () => {
@@ -226,4 +227,5 @@ if (document.readyState === "loading") {
 } else {
   boot();
 }
+})();
 
