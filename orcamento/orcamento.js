@@ -4,6 +4,66 @@ const PRODUCTS_URL = "../data/private/produtos.json";
 const PROMOS_URL   = "../data/promocoes_site.json";
 const PLACEHOLDER  = "../img/placeholder-promo.svg";
 
+const DATA_BASES = resolveDataBases();
+const PRODUCTS_URLS = buildDataUrls(PRODUCTS_URL, "data/private/produtos.json");
+const PROMOS_URLS = buildDataUrls(PROMOS_URL, "data/promocoes_site.json");
+
+function normalizeBases(list) {
+  const out = [];
+  for (const raw of list || []) {
+    const base = typeof raw === "string" ? raw.trim().replace(/\/+$/, "") : "";
+    if (base === "") {
+      if (!out.includes("")) out.push("");
+      continue;
+    }
+    if (!out.includes(base)) out.push(base);
+  }
+  return out.length ? out : [""];
+}
+
+function resolveDataBases() {
+  const manualList = window.CHARME_DATA_BASES;
+  if (Array.isArray(manualList) && manualList.length) {
+    return normalizeBases(manualList);
+  }
+
+  const manual = window.CHARME_LIVE_URL;
+  if (typeof manual === "string" && manual.trim()) {
+    return normalizeBases([manual, ""]);
+  }
+
+  const host = window.location.hostname || "";
+  const isLocal = host === "127.0.0.1" || host === "localhost";
+  const localLive = "http://127.0.0.1:8787";
+  const remoteLive = "https://live-data.charmecosmeticos.com";
+  return normalizeBases(isLocal ? [localLive, remoteLive, ""] : [remoteLive, ""]);
+}
+
+function buildDataUrls(relPath, absPath) {
+  return DATA_BASES.map((base) => (base ? `${base}/${absPath}` : relPath));
+}
+
+async function fetchJsonWithFallback(urls) {
+  const list = Array.isArray(urls) ? urls : [urls];
+  let lastError = null;
+
+  for (const url of list) {
+    try {
+      const controller = window.AbortController ? new AbortController() : null;
+      const timer = controller ? setTimeout(() => controller.abort(), 3000) : null;
+      const r = await fetch(url, { cache: "no-store", signal: controller ? controller.signal : undefined });
+      if (timer) clearTimeout(timer);
+
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return await r.json();
+    } catch (err) {
+      lastError = err;
+    }
+  }
+
+  throw lastError || new Error("No data source");
+}
+
 // State
 let produtos = [];
 let promoMap = new Map(); // codigo -> { precoPromo, empresas: {1:{},2:{}} }
@@ -43,10 +103,8 @@ function imgSrc(p) {
   return `../img/produtos/${p.imagem || (p.codigo + ".jpg")}`;
 }
 
-async function loadJson(url) {
-  const r = await fetch(url, { cache: "no-store" });
-  if (!r.ok) throw new Error(`Falha ao carregar ${url} (${r.status})`);
-  return await r.json();
+async function loadJson(urls) {
+  return await fetchJsonWithFallback(urls);
 }
 
 async function boot() {
@@ -54,11 +112,11 @@ async function boot() {
   metaTag.textContent = "Carregando produtosâ€¦";
 
   // Produtos (privado)
-  produtos = await loadJson(PRODUCTS_URL);
+  produtos = await loadJson(PRODUCTS_URLS);
 
   // PromoÃ§Ãµes (pÃºblico) â€“ sÃ³ pra preÃ§o promo
   try {
-    const promos = await loadJson(PROMOS_URL);
+    const promos = await loadJson(PROMOS_URLS);
     // promocoes_site.json tem itens repetidos por empresa
     // vamos mapear menor precoPromo por codigo (por seguranÃ§a)
     for (const it of promos) {

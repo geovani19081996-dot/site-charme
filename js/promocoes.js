@@ -6,6 +6,7 @@
 const PROMOS_JSON_URL = "data/promocoes_site.json";
 const IMG_PROMO_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
+const REFRESH_MS = 15000;
 
 const DATA_BASES = resolveDataBases();
 const PROMOS_JSON_URLS = buildDataUrls(PROMOS_JSON_URL, PROMOS_JSON_URL);
@@ -93,6 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
     page: 1,
     pageSize: 4, // quantos cards por página
   };
+
+  let timerStarted = false;
+  let refreshHandle = null;
 
   // =====================================================
   //  MAPA DE ELEMENTOS DO DOM
@@ -218,7 +222,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       buildCategoryOptions();
       applyFilters();
-      startTimer();
+      if (!timerStarted) {
+        startTimer();
+        timerStarted = true;
+      }
     } catch (e) {
       console.error("Erro ao carregar promoções:", e);
       setError("Erro ao carregar promoções.");
@@ -238,6 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const buildCategoryOptions = () => {
     if (!els.category) return;
 
+    const selected = state.filters.category;
     const cats = new Set();
     state.activePromos.forEach((p) => {
       if (p.categoria) cats.add(p.categoria);
@@ -251,6 +259,10 @@ document.addEventListener("DOMContentLoaded", () => {
       op.textContent = c;
       els.category.appendChild(op);
     });
+
+    if (selected) {
+      els.category.value = selected;
+    }
   };
 
   // =====================================================
@@ -547,6 +559,12 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(tick, 60000);
   };
 
+  const scheduleRefresh = () => {
+    if (REFRESH_MS < 5000) return;
+    if (refreshHandle) return;
+    refreshHandle = setInterval(loadPromos, REFRESH_MS);
+  };
+
   // =====================================================
   //  EVENTOS
   // =====================================================
@@ -594,4 +612,5 @@ document.addEventListener("DOMContentLoaded", () => {
   //  START
   // =====================================================
   loadPromos();
+  scheduleRefresh();
 });
