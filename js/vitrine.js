@@ -107,6 +107,19 @@ function toNumber(v) {
   return Number(String(v ?? "0").replace(",", "."));
 }
 
+function normalizeImageName(value) {
+  return String(value || "").trim();
+}
+
+function isValidImageName(value) {
+  const name = normalizeImageName(value);
+  if (!name) return false;
+  const lower = name.toLowerCase();
+  if (lower.includes("placeholder")) return false;
+  if (lower === IMG_FALLBACK.toLowerCase()) return false;
+  return true;
+}
+
 function parseDateOnly(value) {
   if (!value) return null;
   if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
@@ -169,6 +182,8 @@ function normalizeItem(raw, snapshot, nowMs) {
   const codAtual = Number(raw.cod_atualizacao || 0);
   const price = pickPrice(raw);
   const codigo = raw.codigo;
+  const imageName = normalizeImageName(raw.imagem);
+  const imageOk = isValidImageName(imageName);
 
   const dtRaw = raw.dt_cadastro || raw.DT_CADASTRO || "";
   const dtCadastro = parseDateOnly(dtRaw);
@@ -195,16 +210,17 @@ function normalizeItem(raw, snapshot, nowMs) {
   return {
     codigo,
     nome: raw.nome || "",
-    imagem: raw.imagem || "",
+    imagem: imageName,
     preco: price,
     estoque_total: total,
     estoque_loja1: estoque1,
     estoque_loja2: estoque2,
     cod_atualizacao: codAtual,
     dt_cadastro: dtCadastro ? dtCadastro.toISOString().slice(0, 10) : "",
-    low_stock: total > 0 && total <= LOW_STOCK_LIMIT,
+    low_stock: total > 0 && total <= LOW_STOCK_LIMIT && price > 0 && imageOk,
     novo,
     reposicao,
+    image_ok: imageOk,
   };
 }
 
@@ -214,7 +230,8 @@ function buildList(items) {
   const normalized = (items || [])
     .map((raw) => normalizeItem(raw, snapshot, nowMs))
     .filter((p) => p.nome && p.codigo)
-    .filter((p) => p.estoque_total > 0);
+    .filter((p) => p.estoque_total > 0)
+    .filter((p) => p.preco > 0 && p.image_ok);
 
   normalized.sort((a, b) => {
     if (a.cod_atualizacao !== b.cod_atualizacao) return b.cod_atualizacao - a.cod_atualizacao;
@@ -222,9 +239,19 @@ function buildList(items) {
   });
 
   const priority = normalized.filter((p) => p.novo || p.reposicao);
-  const rest = normalized.filter((p) => !(p.novo || p.reposicao));
+  const lowStock = normalized.filter(
+    (p) => p.low_stock && !(p.novo || p.reposicao)
+  );
+  const rest = normalized.filter(
+    (p) => !(p.novo || p.reposicao) && !p.low_stock
+  );
 
   const result = priority.slice(0, MAX_ITEMS);
+  if (result.length < MAX_ITEMS) {
+    result.push(
+      ...lowStock.slice(0, Math.min(LOW_STOCK_MAX_BADGES, MAX_ITEMS - result.length))
+    );
+  }
   if (result.length < MAX_ITEMS) {
     result.push(...rest.slice(0, MAX_ITEMS - result.length));
   }
