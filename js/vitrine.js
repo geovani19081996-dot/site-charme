@@ -189,9 +189,12 @@ function normalizeItem(raw, snapshot, nowMs) {
     precoBaixouRaw === "1" ||
     String(precoBaixouRaw || "").toLowerCase() === "true";
   const precoBaixouData = String(raw.preco_baixou_data || "").trim();
+  const precoBaixouDt = parseDateOnly(precoBaixouData);
+  const precoBaixouMs = precoBaixouDt ? precoBaixouDt.getTime() : 0;
 
   const dtRaw = raw.dt_cadastro || raw.DT_CADASTRO || "";
   const dtCadastro = parseDateOnly(dtRaw);
+  const dtCadastroMs = dtCadastro ? dtCadastro.getTime() : 0;
   const novo = isNovo(dtCadastro, nowMs);
 
   const prev = snapshot[codigo] || {};
@@ -220,11 +223,13 @@ function normalizeItem(raw, snapshot, nowMs) {
     estoque_loja2: estoque2,
     cod_atualizacao: codAtual,
     dt_cadastro: dtCadastro ? dtCadastro.toISOString().slice(0, 10) : "",
+    dt_cadastro_ms: dtCadastroMs,
     low_stock: total > 0 && total <= LOW_STOCK_LIMIT && price > 0 && imageOk,
     novo,
     reposicao,
     preco_baixou: precoBaixou,
     preco_baixou_data: precoBaixouData,
+    preco_baixou_ms: precoBaixouMs,
     image_ok: imageOk,
   };
 }
@@ -248,8 +253,16 @@ function buildList(items) {
     (p) => !(p.novo || p.reposicao || p.preco_baixou) && !p.low_stock
   );
 
+  const badgeRank = (p) => (p.novo ? 0 : p.reposicao ? 1 : p.preco_baixou ? 2 : 3);
   priority.sort((a, b) => {
-    if (a.cod_atualizacao !== b.cod_atualizacao) return b.cod_atualizacao - a.cod_atualizacao;
+    const rank = badgeRank(a) - badgeRank(b);
+    if (rank !== 0) return rank;
+    if (a.novo || b.novo) {
+      return (b.dt_cadastro_ms || 0) - (a.dt_cadastro_ms || 0);
+    }
+    if (a.preco_baixou || b.preco_baixou) {
+      return (b.preco_baixou_ms || 0) - (a.preco_baixou_ms || 0);
+    }
     return a.nome.localeCompare(b.nome);
   });
 
