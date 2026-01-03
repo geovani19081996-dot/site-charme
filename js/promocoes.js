@@ -1,4 +1,4 @@
-// =======================================================
+﻿// =======================================================
 //  PROMOÇÕES CHARME – PREMIUM
 //  - Carrega JSON, aplica filtros, paginação e timers
 // =======================================================
@@ -127,6 +127,7 @@ const boot = () => {
 
   let timerStarted = false;
   let refreshHandle = null;
+  let lastRenderKey = "";
 
   // =====================================================
   //  MAPA DE ELEMENTOS DO DOM
@@ -251,7 +252,7 @@ const boot = () => {
       state.activePromos = data.map(normalizePromo).filter((p) => p.ativa);
 
       buildCategoryOptions();
-      applyFilters();
+      applyFilters({ resetPage: false, reason: "refresh" });
       if (!timerStarted) {
         startTimer();
         timerStarted = true;
@@ -298,16 +299,17 @@ const boot = () => {
   // =====================================================
   //  FILTROS & ORDENAÇÃO
   // =====================================================
-  const applyFilters = () => {
+  const applyFilters = (opts = {}) => {
+    const resetPage = opts.resetPage !== undefined ? opts.resetPage : true;
+    const reason = opts.reason || "user";
+
     let arr = [...state.activePromos];
 
     // Texto
     if (state.filters.search) {
       const t = state.filters.search.toLowerCase();
       arr = arr.filter((p) =>
-        `${p.nome ?? ""} ${p.descricao_resumida ?? ""} ${p.categoria ?? ""} ${
-          p.subcategoria ?? ""
-        }`
+        `${p.nome ?? ""} ${p.descricao_resumida ?? ""} ${p.categoria ?? ""} ${p.subcategoria ?? ""}`
           .toLowerCase()
           .includes(t)
       );
@@ -337,8 +339,16 @@ const boot = () => {
     }
 
     state.filteredPromos = arr;
-    state.page = 1;
-    render();
+
+    if (resetPage) {
+      state.page = 1;
+    } else {
+      const totalPages = Math.max(1, Math.ceil(arr.length / state.pageSize));
+      if (state.page > totalPages) state.page = totalPages;
+      if (state.page < 1) state.page = 1;
+    }
+
+    render({ reason });
   };
 
   // =====================================================
@@ -386,13 +396,14 @@ const boot = () => {
   // =====================================================
   //  RENDERIZAÇÃO
   // =====================================================
-  const render = () => {
-    els.grid.innerHTML = "";
-    state.timers = [];
-
+  const render = (opts = {}) => {
+    const reason = opts.reason || "user";
     const total = state.filteredPromos.length;
 
     if (total === 0) {
+      lastRenderKey = `EMPTY|${state.filters.search}|${state.filters.category}|${state.filters.sort}`;
+      els.grid.innerHTML = "";
+      state.timers = [];
       els.grid.hidden = true;
       if (els.empty) els.empty.hidden = false;
       els.count.textContent = "Nenhuma promoção ativa";
@@ -411,10 +422,27 @@ const boot = () => {
     const end = start + state.pageSize;
     const pageItems = state.filteredPromos.slice(start, end);
 
+    const pageKey =
+      `${state.page}|${total}|` +
+      pageItems
+        .map((p) => `${p.codigo}:${p.precoPromo}:${p.estoqueTotal}:${p.diasRestantes ?? ""}:${p.descontoPercent ?? ""}`)
+        .join(",");
+
+    if (reason === "refresh" && pageKey === lastRenderKey) {
+      const qtd = pageItems.length;
+      els.count.textContent = `${qtd} de ${total} promoção${total > 1 ? "es" : ""} ativas`;
+      updateFilterLabel();
+      updatePaginationControls();
+      return;
+    }
+
+    lastRenderKey = pageKey;
+
+    els.grid.innerHTML = "";
+    state.timers = [];
+
     const qtd = pageItems.length;
-    els.count.textContent = `${qtd} de ${total} promoção${
-      total > 1 ? "es" : ""
-    } ativas`;
+    els.count.textContent = `${qtd} de ${total} promoção${total > 1 ? "es" : ""} ativas`;
 
     const fragment = document.createDocumentFragment();
     pageItems.forEach((p) => fragment.appendChild(makeCard(p)));
@@ -603,21 +631,21 @@ const boot = () => {
   if (els.search) {
     els.search.addEventListener("input", (e) => {
       state.filters.search = e.target.value.toLowerCase();
-      applyFilters();
+      applyFilters({ resetPage: true, reason: "user" });
     });
   }
 
   if (els.category) {
     els.category.addEventListener("change", (e) => {
       state.filters.category = e.target.value;
-      applyFilters();
+      applyFilters({ resetPage: true, reason: "user" });
     });
   }
 
   if (els.sort) {
     els.sort.addEventListener("change", (e) => {
       state.filters.sort = e.target.value;
-      applyFilters();
+      applyFilters({ resetPage: true, reason: "user" });
     });
   }
 
@@ -653,4 +681,5 @@ if (document.readyState === "loading") {
   boot();
 }
 })();
+
 

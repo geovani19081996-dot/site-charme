@@ -9,7 +9,11 @@ const WHATS_NUMBER = "556535494404";
 const FETCH_TIMEOUT_MS = 8000;
 const VITRINE_REFRESH_MS = 15000;
 const MAX_ITEMS = 12;
-const LOW_STOCK_LIMIT = 5;
+const LOW_STOCK_LIMIT = 3;
+const NOVO_DIAS = 5;
+const RESTOCK_MIN_TOTAL = 3;
+const RESTOCK_KEEP_MS = 6 * 60 * 60 * 1000;
+const SNAPSHOT_KEY = "charme_vitrine_snapshot_v1";
 
 const DATA_BASES = resolveDataBases();
 const PROD_URLS = buildDataUrls(PROD_JSON_URL, PROD_JSON_URL);
@@ -101,6 +105,49 @@ function toNumber(v) {
   return Number(String(v ?? "0").replace(",", "."));
 }
 
+function parseDateOnly(value) {
+  if (!value) return null;
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
+  const s = String(value).trim();
+  if (!s) return null;
+  let iso = s;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    iso = `${s}T00:00:00`;
+  } else if (/^\d{4}-\d{2}-\d{2} /.test(s)) {
+    iso = s.replace(" ", "T");
+  }
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d;
+}
+
+function isNovo(dt, nowMs) {
+  if (!dt) return false;
+  const diff = nowMs - dt.getTime();
+  return diff >= 0 && diff <= NOVO_DIAS * 86400000;
+}
+
+function loadSnapshot() {
+  try {
+    if (!window.localStorage) return {};
+    const raw = localStorage.getItem(SNAPSHOT_KEY);
+    if (!raw) return {};
+    const data = JSON.parse(raw);
+    return data && typeof data === "object" ? data : {};
+  } catch (err) {
+    return {};
+  }
+}
+
+function saveSnapshot(snapshot) {
+  try {
+    if (!window.localStorage) return;
+    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(snapshot));
+  } catch (err) {
+    // ignore
+  }
+}
+
 function pickPrice(item) {
   const p1 = toNumber(item.preco_loja1);
   const p2 = toNumber(item.preco_loja2);
@@ -113,15 +160,33 @@ function formatMoney(v) {
   return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
-function normalizeItem(raw) {
+function normalizeItem(raw, snapshot, nowMs) {
   const estoque1 = toNumber(raw.estoque_loja1);
   const estoque2 = toNumber(raw.estoque_loja2);
   const total = estoque1 + estoque2;
   const codAtual = Number(raw.cod_atualizacao || 0);
   const price = pickPrice(raw);
+  const codigo = raw.codigo;
+
+  const dtRaw = raw.dt_cadastro || raw.DT_CADASTRO || "";
+  const dtCadastro = parseDateOnly(dtRaw);
+  const novo = isNovo(dtCadastro, nowMs);
+
+  const prev = snapshot[codigo] || {};
+  const prevStock = typeof prev.stock === "number" ? prev.stock : null;
+  let restockUntil = typeof prev.restockUntil === "number" ? prev.restockUntil : 0;
+  if (prevStock !== null && prevStock <= 0 && total >= RESTOCK_MIN_TOTAL) {
+    restockUntil = nowMs + RESTOCK_KEEP_MS;
+  }
+  const reposicao = restockUntil > nowMs && total >= RESTOCK_MIN_TOTAL;
+
+  snapshot[codigo] = {
+    stock: total,
+    restockUntil: reposicao ? restockUntil : 0,
+  };
 
   return {
-    codigo: raw.codigo,
+    codigo,
     nome: raw.nome || "",
     imagem: raw.imagem || "",
     preco: price,
@@ -129,23 +194,35 @@ function normalizeItem(raw) {
     estoque_loja1: estoque1,
     estoque_loja2: estoque2,
     cod_atualizacao: codAtual,
+    dt_cadastro: dtCadastro ? dtCadastro.toISOString().slice(0, 10) : "",
     low_stock: total > 0 && total <= LOW_STOCK_LIMIT,
+    novo,
+    reposicao,
   };
 }
 
 function buildList(items) {
+  const snapshot = loadSnapshot();
+  const nowMs = Date.now();
   const normalized = (items || [])
-    .map(normalizeItem)
+    .map((raw) => normalizeItem(raw, snapshot, nowMs))
     .filter((p) => p.nome && p.codigo);
 
   normalized.sort((a, b) => {
     if (a.cod_atualizacao !== b.cod_atualizacao) return b.cod_atualizacao - a.cod_atualizacao;
-    if (a.low_stock !== b.low_stock) return a.low_stock ? -1 : 1;
-    if (a.estoque_total !== b.estoque_total) return a.estoque_total - b.estoque_total;
     return a.nome.localeCompare(b.nome);
   });
 
-  return normalized.slice(0, MAX_ITEMS);
+  const priority = normalized.filter((p) => p.novo || p.reposicao || p.low_stock);
+  const fallback = normalized.filter((p) => !(p.novo || p.reposicao || p.low_stock));
+
+  const result = priority.slice(0, MAX_ITEMS);
+  if (result.length < MAX_ITEMS) {
+    result.push(...fallback.slice(0, MAX_ITEMS - result.length));
+  }
+
+  saveSnapshot(snapshot);
+  return result;
 }
 
 function buildWhatsLink(item) {
@@ -169,14 +246,21 @@ function renderList(list) {
   }
 
   empty.hidden = true;
-  if (count) count.textContent = `${list.length} produtos atualizados ao vivo`;
+  if (count) count.textContent = `${list.length} novidades para você.`;
 
   const fragment = document.createDocumentFragment();
   list.forEach((p) => {
     const card = document.createElement("article");
     card.className = "vitrine-card";
 
-    const badge = p.low_stock ? `<span class="vitrine-card__badge">Ultimas unidades</span>` : "";
+    let badge = "";
+    if (p.low_stock) {
+      badge = `<span class="vitrine-card__badge">Últimas unidades</span>`;
+    } else if (p.novo) {
+      badge = `<span class="vitrine-card__badge">Chegou agora</span>`;
+    } else if (p.reposicao) {
+      badge = `<span class="vitrine-card__badge vitrine-card__badge--restock">Reposição</span>`;
+    }
     const price = p.preco > 0 ? formatMoney(p.preco) : "Consulte";
     const estoqueText = p.estoque_total > 0 ? `Estoque total: ${p.estoque_total}` : "Sem estoque";
 
