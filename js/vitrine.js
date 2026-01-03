@@ -9,9 +9,11 @@ const WHATS_NUMBER = "556535494404";
 const FETCH_TIMEOUT_MS = 8000;
 const VITRINE_REFRESH_MS = 15000;
 const MAX_ITEMS = 12;
-const LOW_STOCK_LIMIT = 3;
+const LOW_STOCK_LIMIT = 2;
+const LOW_STOCK_MAX_BADGES = 3;
 const NOVO_DIAS = 5;
-const RESTOCK_MIN_TOTAL = 3;
+const RESTOCK_MIN_TOTAL = 5;
+const RESTOCK_DELTA_MIN = 5;
 const RESTOCK_KEEP_MS = 6 * 60 * 60 * 1000;
 const SNAPSHOT_KEY = "charme_vitrine_snapshot_v1";
 
@@ -175,7 +177,12 @@ function normalizeItem(raw, snapshot, nowMs) {
   const prev = snapshot[codigo] || {};
   const prevStock = typeof prev.stock === "number" ? prev.stock : null;
   let restockUntil = typeof prev.restockUntil === "number" ? prev.restockUntil : 0;
-  if (prevStock !== null && prevStock <= 0 && total >= RESTOCK_MIN_TOTAL) {
+  if (
+    prevStock !== null &&
+    prevStock <= LOW_STOCK_LIMIT &&
+    total >= RESTOCK_MIN_TOTAL &&
+    total - prevStock >= RESTOCK_DELTA_MIN
+  ) {
     restockUntil = nowMs + RESTOCK_KEEP_MS;
   }
   const reposicao = restockUntil > nowMs && total >= RESTOCK_MIN_TOTAL;
@@ -206,19 +213,20 @@ function buildList(items) {
   const nowMs = Date.now();
   const normalized = (items || [])
     .map((raw) => normalizeItem(raw, snapshot, nowMs))
-    .filter((p) => p.nome && p.codigo);
+    .filter((p) => p.nome && p.codigo)
+    .filter((p) => p.estoque_total > 0);
 
   normalized.sort((a, b) => {
     if (a.cod_atualizacao !== b.cod_atualizacao) return b.cod_atualizacao - a.cod_atualizacao;
     return a.nome.localeCompare(b.nome);
   });
 
-  const priority = normalized.filter((p) => p.novo || p.reposicao || p.low_stock);
-  const fallback = normalized.filter((p) => !(p.novo || p.reposicao || p.low_stock));
+  const priority = normalized.filter((p) => p.novo || p.reposicao);
+  const rest = normalized.filter((p) => !(p.novo || p.reposicao));
 
   const result = priority.slice(0, MAX_ITEMS);
   if (result.length < MAX_ITEMS) {
-    result.push(...fallback.slice(0, MAX_ITEMS - result.length));
+    result.push(...rest.slice(0, MAX_ITEMS - result.length));
   }
 
   saveSnapshot(snapshot);
@@ -249,17 +257,19 @@ function renderList(list) {
   if (count) count.textContent = `${list.length} novidades para você.`;
 
   const fragment = document.createDocumentFragment();
+  let lowShown = 0;
   list.forEach((p) => {
     const card = document.createElement("article");
     card.className = "vitrine-card";
 
     let badge = "";
-    if (p.low_stock) {
-      badge = `<span class="vitrine-card__badge">Últimas unidades</span>`;
-    } else if (p.novo) {
+    if (p.novo) {
       badge = `<span class="vitrine-card__badge">Chegou agora</span>`;
     } else if (p.reposicao) {
       badge = `<span class="vitrine-card__badge vitrine-card__badge--restock">Reposição</span>`;
+    } else if (p.low_stock && lowShown < LOW_STOCK_MAX_BADGES) {
+      badge = `<span class="vitrine-card__badge">Últimas unidades</span>`;
+      lowShown += 1;
     }
     const price = p.preco > 0 ? formatMoney(p.preco) : "Consulte";
     const estoqueText = p.estoque_total > 0 ? `Estoque total: ${p.estoque_total}` : "Sem estoque";

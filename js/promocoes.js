@@ -422,10 +422,18 @@ const boot = () => {
     const end = start + state.pageSize;
     const pageItems = state.filteredPromos.slice(start, end);
 
+    const keyText = (s) => String(s || "").replace(/\s+/g, " ").trim().slice(0, 40);
+
     const pageKey =
       `${state.page}|${total}|` +
       pageItems
-        .map((p) => `${p.codigo}:${p.precoPromo}:${p.estoqueTotal}:${p.diasRestantes ?? ""}:${p.descontoPercent ?? ""}`)
+        .map((p) => {
+          const nome = keyText(p.nome);
+          const desc = keyText(p.descricao_resumida);
+          const cat = keyText(p.categoria);
+          const img = keyText(p.imagem);
+          return `${p.codigo}:${p.precoPromo}:${p.precoNormal}:${p.estoqueTotal}:${p.diasRestantes ?? ""}:${p.descontoPercent ?? ""}:${img}:${nome}:${desc}:${cat}`;
+        })
         .join(",");
 
     if (reason === "refresh" && pageKey === lastRenderKey) {
