@@ -1,7 +1,8 @@
 // Charme site content loader (live data)
+(function () {
 const CONTENT_JSON_URL = "data/site_content.json";
 const AVISOS_JSON_URL = "data/avisos_site.json";
-const REFRESH_MS = 15000;
+const CONTENT_REFRESH_MS = 15000;
 
 function normalizeBases(list) {
   const out = [];
@@ -329,11 +330,11 @@ async function loadAvisos() {
 }
 
 function scheduleRefresh() {
-  if (REFRESH_MS < 5000) return;
+  if (CONTENT_REFRESH_MS < 5000) return;
   setInterval(() => {
     loadContent();
     loadAvisos();
-  }, REFRESH_MS);
+  }, CONTENT_REFRESH_MS);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -341,3 +342,4 @@ document.addEventListener("DOMContentLoaded", () => {
   loadAvisos();
   scheduleRefresh();
 });
+})();
