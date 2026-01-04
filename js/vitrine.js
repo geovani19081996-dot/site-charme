@@ -5,6 +5,8 @@
 (function () {
 const VITRINE_JSON_URL = "data/private/vitrine.json";
 const PROD_JSON_URL = "data/private/produtos.json";
+const LIVE_DATA_BASE = "https://live-data.charmecosmeticos.com";
+const LOCAL_LIVE_BASE = "http://127.0.0.1:8787";
 const IMG_PROD_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
 const FETCH_TIMEOUT_MS = 8000;
@@ -14,10 +16,9 @@ const LOW_STOCK_LIMIT = 2;
 const LOW_STOCK_MAX_BADGES = 3;
 const NOVO_DIAS = 7;
 let lastRenderKey = "";
+let liveDataDisabled = false;
 
 const DATA_BASES = resolveDataBases();
-const VITRINE_URLS = buildDataUrls(VITRINE_JSON_URL, VITRINE_JSON_URL);
-const PROD_URLS = buildDataUrls(PROD_JSON_URL, PROD_JSON_URL);
 
 function normalizeBases(list) {
   const out = [];
@@ -45,13 +46,22 @@ function resolveDataBases() {
 
   const host = window.location.hostname || "";
   const isLocal = host === "127.0.0.1" || host === "localhost";
-  const localLive = "http://127.0.0.1:8787";
-  const remoteLive = "https://live-data.charmecosmeticos.com";
+  const localLive = LOCAL_LIVE_BASE;
+  const remoteLive = LIVE_DATA_BASE;
   return normalizeBases(isLocal ? [localLive, remoteLive, ""] : [remoteLive, ""]);
 }
 
-function buildDataUrls(relPath, absPath) {
-  return DATA_BASES.map((base) => (base ? `${base}/${absPath}` : relPath));
+function buildDataUrls(relPath, absPath, localOnly) {
+  const bases = localOnly ? [""] : DATA_BASES;
+  return bases.map((base) => (base ? `${base}/${absPath}` : relPath));
+}
+
+function getDataUrls(relPath, absPath) {
+  return buildDataUrls(relPath, absPath, liveDataDisabled);
+}
+
+function isLiveDataUrl(url) {
+  return typeof url === "string" && url.startsWith(LIVE_DATA_BASE);
 }
 
 async function fetchJsonWithFallback(urls) {
@@ -67,6 +77,9 @@ async function fetchJsonWithFallback(urls) {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return await r.json();
     } catch (err) {
+      if (isLiveDataUrl(url)) {
+        liveDataDisabled = true;
+      }
       lastError = err;
     }
   }
@@ -362,9 +375,9 @@ async function loadVitrine() {
   try {
     let data;
     try {
-      data = await fetchJsonWithFallback(VITRINE_URLS);
+      data = await fetchJsonWithFallback(getDataUrls(VITRINE_JSON_URL, VITRINE_JSON_URL));
     } catch (err) {
-      data = await fetchJsonWithFallback(PROD_URLS);
+      data = await fetchJsonWithFallback(getDataUrls(PROD_JSON_URL, PROD_JSON_URL));
     }
     if (!Array.isArray(data)) throw new Error("JSON invalido");
     const list = buildList(data);
