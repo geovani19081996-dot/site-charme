@@ -128,6 +128,14 @@
   color: var(--text-dark);
 }
 
+.vitrine-card__taxonomy {
+  font-size: 0.78rem;
+  color: #4A4A4A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .vitrine-card__price {
   font-size: 1.1rem;
   font-weight: 700;

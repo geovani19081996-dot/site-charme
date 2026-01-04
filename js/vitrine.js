@@ -3,6 +3,7 @@
 // =======================================================
 
 (function () {
+const VITRINE_JSON_URL = "data/private/vitrine.json";
 const PROD_JSON_URL = "data/private/produtos.json";
 const IMG_PROD_BASE_PATH = "img/produtos/";
 const WHATS_NUMBER = "556535494404";
@@ -12,10 +13,10 @@ const MAX_ITEMS = 8;
 const LOW_STOCK_LIMIT = 2;
 const LOW_STOCK_MAX_BADGES = 3;
 const NOVO_DIAS = 7;
-const SNAPSHOT_KEY = "charme_vitrine_snapshot_v1";
 let lastRenderKey = "";
 
 const DATA_BASES = resolveDataBases();
+const VITRINE_URLS = buildDataUrls(VITRINE_JSON_URL, VITRINE_JSON_URL);
 const PROD_URLS = buildDataUrls(PROD_JSON_URL, PROD_JSON_URL);
 
 function normalizeBases(list) {
@@ -105,6 +106,14 @@ function toNumber(v) {
   return Number(String(v ?? "0").replace(",", "."));
 }
 
+function toBool(v) {
+  if (v === true) return true;
+  if (v === false) return false;
+  if (v === 1 || v === "1") return true;
+  const s = String(v ?? "").trim().toLowerCase();
+  return s === "true";
+}
+
 function normalizeImageName(value) {
   return String(value || "").trim();
 }
@@ -140,27 +149,6 @@ function isNovo(dt, nowMs) {
   return diff >= 0 && diff <= NOVO_DIAS * 86400000;
 }
 
-function loadSnapshot() {
-  try {
-    if (!window.localStorage) return {};
-    const raw = localStorage.getItem(SNAPSHOT_KEY);
-    if (!raw) return {};
-    const data = JSON.parse(raw);
-    return data && typeof data === "object" ? data : {};
-  } catch (err) {
-    return {};
-  }
-}
-
-function saveSnapshot(snapshot) {
-  try {
-    if (!window.localStorage) return;
-    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(snapshot));
-  } catch (err) {
-    // ignore
-  }
-}
-
 function pickPrice(item) {
   const p1 = toNumber(item.preco_loja1);
   const p2 = toNumber(item.preco_loja2);
@@ -173,7 +161,7 @@ function formatMoney(v) {
   return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
-function normalizeItem(raw, snapshot, nowMs) {
+function normalizeItem(raw, nowMs) {
   const estoque1 = toNumber(raw.estoque_loja1);
   const estoque2 = toNumber(raw.estoque_loja2);
   const total = estoque1 + estoque2;
@@ -181,13 +169,12 @@ function normalizeItem(raw, snapshot, nowMs) {
   const price = pickPrice(raw);
   const codigo = raw.codigo;
   const imageName = normalizeImageName(raw.imagem);
-  const imageOk = isValidImageName(imageName);
+  const rawImagemOk = raw.imagem_ok;
+  const imagemOk = rawImagemOk == null ? isValidImageName(imageName) : toBool(rawImagemOk);
   const precoBaixouRaw = raw.preco_baixou;
-  const precoBaixou =
-    precoBaixouRaw === true ||
-    precoBaixouRaw === 1 ||
-    precoBaixouRaw === "1" ||
-    String(precoBaixouRaw || "").toLowerCase() === "true";
+  const precoBaixou = toBool(precoBaixouRaw);
+  const reposicaoRaw = raw.reposicao;
+  const reposicao = toBool(reposicaoRaw);
   const precoBaixouData = String(raw.preco_baixou_data || "").trim();
   const precoBaixouDt = parseDateOnly(precoBaixouData);
   const precoBaixouMs = precoBaixouDt ? precoBaixouDt.getTime() : 0;
@@ -197,25 +184,19 @@ function normalizeItem(raw, snapshot, nowMs) {
   const dtCadastroMs = dtCadastro ? dtCadastro.getTime() : 0;
   const novo = isNovo(dtCadastro, nowMs);
 
-  const prev = snapshot[codigo] || {};
-  const prevStock = typeof prev.stock === "number" ? prev.stock : null;
-  let reposicaoAtiva = Boolean(prev.reposicao_ativa);
-  if (prevStock !== null && prevStock <= 0 && total > 0) {
-    reposicaoAtiva = true;
-  }
-  if (total <= 0) {
-    reposicaoAtiva = false;
-  }
-  const reposicao = reposicaoAtiva && total >= 1;
-
-  snapshot[codigo] = {
-    stock: total,
-    reposicao_ativa: reposicao ? true : false,
-  };
+  const reposicaoData = String(raw.reposicao_data || "").trim();
+  const descricaoResumida = String(raw.descricao_resumida || "").trim() || String(raw.nome || "").trim();
+  const categoria = String(raw.categoria || "").trim();
+  const subcategoria = String(raw.subcategoria || "").trim();
+  const marca = String(raw.marca || "").trim();
 
   return {
     codigo,
     nome: raw.nome || "",
+    descricao_resumida: descricaoResumida,
+    categoria,
+    subcategoria,
+    marca,
     imagem: imageName,
     preco: price,
     estoque_total: total,
@@ -224,24 +205,24 @@ function normalizeItem(raw, snapshot, nowMs) {
     cod_atualizacao: codAtual,
     dt_cadastro: dtCadastro ? dtCadastro.toISOString().slice(0, 10) : "",
     dt_cadastro_ms: dtCadastroMs,
-    low_stock: total > 0 && total <= LOW_STOCK_LIMIT && price > 0 && imageOk,
+    low_stock: total > 0 && total <= LOW_STOCK_LIMIT && price > 0 && imagemOk,
     novo,
     reposicao,
+    reposicao_data: reposicaoData,
     preco_baixou: precoBaixou,
     preco_baixou_data: precoBaixouData,
     preco_baixou_ms: precoBaixouMs,
-    image_ok: imageOk,
+    imagem_ok: imagemOk,
   };
 }
 
 function buildList(items) {
-  const snapshot = loadSnapshot();
   const nowMs = Date.now();
   const normalized = (items || [])
-    .map((raw) => normalizeItem(raw, snapshot, nowMs))
+    .map((raw) => normalizeItem(raw, nowMs))
     .filter((p) => p.nome && p.codigo)
     .filter((p) => p.estoque_total > 0)
-    .filter((p) => p.preco > 0 && p.image_ok);
+    .filter((p) => p.preco > 0 && p.imagem_ok);
 
   const priority = normalized.filter(
     (p) => p.novo || p.reposicao || p.preco_baixou
@@ -287,8 +268,15 @@ function buildList(items) {
     result.push(...rest.slice(0, MAX_ITEMS - result.length));
   }
 
-  saveSnapshot(snapshot);
   return result;
+}
+
+function buildMetaLine(item) {
+  const parts = [];
+  if (item.categoria) parts.push(item.categoria);
+  if (item.subcategoria) parts.push(item.subcategoria);
+  if (item.marca) parts.push(item.marca);
+  return parts.join(" &bull; ");
 }
 
 function buildWhatsLink(item) {
@@ -342,6 +330,7 @@ function renderList(list) {
     }
     const price = p.preco > 0 ? formatMoney(p.preco) : "Consulte";
     const estoqueText = p.estoque_total > 0 ? `Estoque total: ${p.estoque_total}` : "Sem estoque";
+    const taxonomy = buildMetaLine(p);
 
     card.innerHTML = `
       ${badge}
@@ -349,6 +338,7 @@ function renderList(list) {
       <div class="vitrine-card__content">
         <div class="vitrine-card__meta">COD ${p.codigo}</div>
         <h3 class="vitrine-card__title">${p.nome}</h3>
+        ${taxonomy ? `<div class="vitrine-card__taxonomy">${taxonomy}</div>` : ""}
         <div class="vitrine-card__price">${price}</div>
         <div class="vitrine-card__stock">${estoqueText}</div>
         <a class="btn btn--whats vitrine-card__cta" target="_blank" href="${buildWhatsLink(p)}">Consultar no WhatsApp</a>
@@ -357,6 +347,10 @@ function renderList(list) {
 
     const imgEl = card.querySelector(".vitrine-card__image");
     if (imgEl) applyImageFallback(imgEl, p.imagem);
+    const titleEl = card.querySelector(".vitrine-card__title");
+    if (titleEl && p.descricao_resumida) {
+      titleEl.title = p.descricao_resumida;
+    }
 
     fragment.appendChild(card);
   });
@@ -366,7 +360,12 @@ function renderList(list) {
 
 async function loadVitrine() {
   try {
-    const data = await fetchJsonWithFallback(PROD_URLS);
+    let data;
+    try {
+      data = await fetchJsonWithFallback(VITRINE_URLS);
+    } catch (err) {
+      data = await fetchJsonWithFallback(PROD_URLS);
+    }
     if (!Array.isArray(data)) throw new Error("JSON invalido");
     const list = buildList(data);
     renderList(list);
