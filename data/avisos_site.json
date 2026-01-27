@@ -1,4 +1,18 @@
 {
-  "updated_at": "2025-12-29T00:00:00",
-  "items": []
+  "items": [
+    {
+      "titulo": "AVISO TESTE (painel)",
+      "start": "2026-01-26T15:38:45",
+      "ativo": true,
+      "inicio": "2026-01-26T15:38:45",
+      "enabled": true,
+      "id": "teste-001",
+      "texto": "Se você está vendo isso no site, o pipeline de avisos funciona. 🎯",
+      "message": "Se você está vendo isso no site, o pipeline de avisos funciona. 🎯",
+      "fim": "2026-01-28T15:38:45",
+      "end": "2026-01-28T15:38:45",
+      "title": "AVISO TESTE (painel)"
+    }
+  ],
+  "updated_at": "2026-01-26T15:38:45"
 }
