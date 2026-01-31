@@ -13,6 +13,125 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- JSON-LD (Schema.org) — Dados estruturados para SEO local -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://charmecosmeticos.com/#org",
+            "name": "Charme Cosméticos",
+            "url": "https://charmecosmeticos.com/",
+            "logo": "https://charmecosmeticos.com/img/logo-charme.png",
+            "sameAs": [
+              "https://www.instagram.com/charmecosmeticoslrv/",
+              "https://www.facebook.com/charmecosmeticoslrv/"
+            ],
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "telephone": "+55-65-3549-4404",
+                "areaServed": "BR",
+                "availableLanguage": ["pt-BR"],
+                "url": "https://wa.me/556535494404"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://charmecosmeticos.com/#website",
+            "url": "https://charmecosmeticos.com/",
+            "name": "Charme Cosméticos",
+            "publisher": { "@id": "https://charmecosmeticos.com/#org" },
+            "inLanguage": "pt-BR"
+          },
+          {
+            "@type": "Store",
+            "@id": "https://charmecosmeticos.com/#loja-jardim-das-palmeiras",
+            "name": "Charme Cosméticos – Loja Jardim das Palmeiras",
+            "url": "https://charmecosmeticos.com/#lojas",
+            "telephone": "+55-65-3549-4404",
+            "priceRange": "$$",
+            "parentOrganization": { "@id": "https://charmecosmeticos.com/#org" },
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Av. Espírito Santo, 752-S - Jardim das Palmeiras",
+              "addressLocality": "Lucas do Rio Verde",
+              "addressRegion": "MT",
+              "postalCode": "78455-000",
+              "addressCountry": "BR"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": -13.0831042,
+              "longitude": -55.9123232
+            },
+            "hasMap": "https://www.google.com/maps/dir//Charme+Cosm%C3%A9ticos+%E2%80%93+Loja+Jardim+das+Palmeiras+-+Av.+Esp%C3%ADrito+Santo,+752-S+-+Jardim+das+Palmeiras,+Lucas+do+Rio+Verde+-+MT,+78455-000/@-13.0781448,-55.9194736,16z/data=!4m9!4m8!1m0!1m5!1m1!1s0x93a0f31b60150887:0x774ec7ae45160142!2m2!1d-55.9123232!2d-13.0831042!3e0?entry=ttu&g_ep=EgoyMDI1MTIwOC4wIKXMDSoASAFQAw%3D%3D",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "opens": "08:00",
+                "closes": "11:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "opens": "13:00",
+                "closes": "18:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Saturday"],
+                "opens": "08:00",
+                "closes": "12:00"
+              }
+            ]
+          },
+          {
+            "@type": "Store",
+            "@id": "https://charmecosmeticos.com/#loja-cidade-nova",
+            "name": "Charme Cosméticos – Loja Cidade Nova",
+            "url": "https://charmecosmeticos.com/#lojas",
+            "telephone": "+55-65-3549-4404",
+            "priceRange": "$$",
+            "parentOrganization": { "@id": "https://charmecosmeticos.com/#org" },
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Av. Mato Grosso, 1417-E - Cidade Nova",
+              "addressLocality": "Lucas do Rio Verde",
+              "addressRegion": "MT",
+              "postalCode": "78455-000",
+              "addressCountry": "BR"
+            },
+            "hasMap": "https://www.google.com/maps?s=web&rlz=1C1CHZN_pt-BRBR997BR997&lqi=ChFjaGFybWUgY29zbWV0aWNvc0iZk9bglLWAgAhaGxAAEAEYABgBIhFjaGFybWUgY29zbWV0aWNvc5IBD2Nvc21ldGljc19zdG9yZQ&vet=12ahUKEwj6_en7xLSRAxVTK7kGHQWBF4kQ1YkKegQIMBAB..i&cs=0&um=1&ie=UTF-8&fb=1&gl=br&sa=X&geocode=KdHBSeun86CTMROzV1D-R3OC&daddr=Av.+Mato+Grosso,+1417+E+-+Cidade+Nova,+Lucas+do+Rio+Verde+-+MT,+78455-000",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "opens": "08:00",
+                "closes": "11:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "opens": "13:00",
+                "closes": "18:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Saturday"],
+                "opens": "08:00",
+                "closes": "12:00"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/logo-charme-icon.png" />
 
