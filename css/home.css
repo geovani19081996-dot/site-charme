@@ -1,33 +1,13 @@
 /* =======================================================
    CHARME COSMÉTICOS — HOME.CSS
    Página inicial (index.html):
+   - Início (#inicio)
    - Lojas (#lojas)
    - Produtos (#produtos)
-   - Essência (#essencia)
-   - Equipe (#equipe)
-   - Contato (bloco final)
-   Observação: este arquivo inclui também estilos auxiliares
-   usados por cards/contato e alguns componentes reaproveitados.
+   - Vitrine (#vitrine)
+   - Promoções (#promocoes)
+   - Contato (#contato)
    ======================================================= */
-
-/* =======================================================
-   COMPAT: aliases de variáveis (pra não quebrar CSS antigo)
-   ======================================================= */
-:root {
-  /* antigos -> novos (base.css) */
-  --rosa-intenso: var(--pink);
-  --rosa-medio: var(--pink-mid);
-  --rosa-claro: var(--pink-light);
-  --dourado: var(--gold);
-
-  /* alguns arquivos usam nomes diferentes */
-  --branco: var(--white);
-  --cinza-texto: var(--text);
-  --preto-suave: var(--text-strong);
-
-  --pink-soft: rgba(236, 38, 143, 0.12);
-  --pink-soft-2: #fdeff6;
-}
 
 /* =======================================================
    ALINHAMENTO (títulos fora do .container no index.html)
@@ -38,9 +18,104 @@
 .section#produtos > .section__subtitle {
   width: 100%;
   max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
   padding-inline: var(--container-pad);
+}
+
+/* =======================================================
+   RITMO GERAL DA HOME (menos “vazio estranho”)
+   ======================================================= */
+
+/* Ajusta a transição do hero para a próxima seção sem mexer no HTML */
+#inicio {
+  padding-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.section#lojas,
+.section#produtos,
+#vitrine,
+#promocoes,
+#contato {
+  padding-top: clamp(2.25rem, 4vw, 3.75rem);
+  padding-bottom: clamp(2.5rem, 4.5vw, 4.25rem);
+}
+
+/* =======================================================
+   HERO (#inicio) — premium acessível (sem exagero)
+   ======================================================= */
+
+#inicio .hero__inner {
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  display: grid;
+  gap: 1.25rem;
+}
+
+#inicio .hero__title {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+  margin: 0;
+  font-size: clamp(2.05rem, 4.6vw, 3.05rem);
+  color: var(--text-strong);
+}
+
+#inicio .hero__text {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--text);
+  opacity: 0.92;
+}
+
+#inicio .hero__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+#inicio .hero__social {
+  margin-top: 0.25rem;
+}
+
+#inicio .hero__social p {
+  margin: 0.4rem 0 0.35rem;
+  font-size: 0.92rem;
+  color: var(--text);
+  opacity: 0.8;
+}
+
+#inicio .hero__social-links {
+  display: inline-flex;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+#inicio .hero__social-links a {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: var(--rosa-intenso);
+  background: rgba(236, 38, 143, 0.08);
+  border: 1px solid rgba(236, 38, 143, 0.18);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+#inicio .hero__social-links a:hover {
+  transform: translateY(-1px);
+  background: rgba(236, 38, 143, 0.12);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* =======================================================
@@ -48,37 +123,46 @@
    ======================================================= */
 
 .section#lojas {
-  background: linear-gradient(180deg, #fff, #fdeff6 55%, #fff 100%);
+  background: linear-gradient(180deg, #fff, var(--rosa-claro) 55%, #fff 100%);
 }
 
-/* cards grid */
+/* grid */
 .section#lojas .cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.6rem;
   max-width: 960px;
-  margin: 0 auto;
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
 }
 
 /* card */
 .section#lojas .card {
   position: relative;
-  background: var(--white);
-  border-radius: 1.2rem;
-  padding: 1.4rem 1.6rem 1.6rem;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  background: var(--branco);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.25rem 1.35rem;
+  box-shadow: var(--shadow-soft);
   border: 1px solid rgba(0, 0, 0, 0.06);
   overflow: hidden;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .section#lojas .card::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0 0 auto 0;
   height: 6px;
-  width: 100%;
-  background: linear-gradient(90deg, var(--pink), var(--pink-dark));
+  background: linear-gradient(90deg, var(--rosa-intenso), var(--pink-dark));
+}
+
+.section#lojas .card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-strong);
+  border-color: rgba(236, 38, 143, 0.18);
 }
 
 .section#lojas .card__tag {
@@ -87,45 +171,46 @@
   gap: 8px;
   padding: 6px 12px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 900;
-  color: var(--pink);
+  color: var(--rosa-intenso);
   background: rgba(236, 38, 143, 0.08);
   border: 1px solid rgba(236, 38, 143, 0.18);
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .section#lojas .card__title {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 1.25rem;
-  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin: 0 0 0.95rem;
   color: var(--text-strong);
-  line-height: 1.25;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
-/* map block */
+/* mapa */
 .section#lojas .card__map {
-  border-radius: 1rem;
+  border-radius: calc(var(--radius) + 2px);
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: #fff;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1.2rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.05rem;
 }
 
 .section#lojas .card__map iframe {
   width: 100%;
-  height: 220px;
+  height: 200px;
   border: 0;
   display: block;
 }
 
-/* actions */
+/* ações */
 .section#lojas .card__actions {
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
@@ -137,319 +222,297 @@
    PRODUTOS / CATEGORIAS (#produtos)
    ======================================================= */
 
-.categorias {
+#produtos .categorias {
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.65rem;
-  max-width: 960px;
-  margin: 0 auto;
+  gap: 0.75rem;
 }
 
-.categoria {
+#produtos .categoria {
   display: grid;
-  gap: 0.2rem;
-  padding: 1.25rem 1.35rem;
-  border-radius: 1.05rem;
-  background: var(--white);
+  gap: 0.25rem;
+  padding: 1.15rem 1.2rem;
+  border-radius: var(--radius-lg);
+  background: var(--branco);
   border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
-.categoria__nome {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 1.06rem;
+#produtos .categoria:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+  border-color: rgba(236, 38, 143, 0.14);
+}
+
+#produtos .categoria__nome {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
   margin: 0;
   color: var(--text-strong);
+  letter-spacing: -0.01em;
 }
 
-.categoria__descricao {
-  font-size: 0.95rem;
-  color: var(--text-light);
-}
-
-/* =======================================================
-   ESSÊNCIA (#essencia)
-   ======================================================= */
-
-.essencia__grid {
-  max-width: 960px;
-  margin: 0 auto;
-  display: grid;
-  gap: 1.5rem;
-}
-
-.essencia__bloco {
-  background: var(--white);
-  border-radius: 0.95rem;
-  padding: 1.5rem 1.6rem;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.essencia__bloco h3 {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 1.1rem;
-  color: var(--text-dark);
-  margin: 0 0 0.6rem;
-}
-
-.essencia__bloco p {
+#produtos .categoria__descricao {
   font-size: 0.95rem;
   color: var(--text-light);
   margin: 0;
+  line-height: 1.55;
 }
 
-.valores__lista {
-  list-style: none;
-  padding: 0;
-  margin: 0.9rem 0 0;
+/* =======================================================
+   VITRINE (#vitrine) — alinhamento + espaçamento coerente
+   (sem tocar no vitrine.css)
+   ======================================================= */
+
+#vitrine .container {
+  max-width: 960px;
 }
 
-.valores__lista li {
-  font-size: 0.95rem;
-  color: var(--text-light);
-  padding-left: 1.1rem;
-  position: relative;
+#vitrine .section__title {
+  letter-spacing: -0.01em;
 }
 
-.valores__lista li + li {
-  margin-top: 0.35rem;
+#vitrine .section__subtitle {
+  max-width: 70ch;
 }
 
-.valores__lista li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--pink);
+/* =======================================================
+   PROMOÇÕES (#promocoes) — filtro/paginação mais “premium”
+   ======================================================= */
+
+#promocoes .container {
+  max-width: 960px;
+}
+
+#promocoes .promos-current-filter {
+  margin: 0.9rem 0 0.75rem;
+  font-size: 0.86rem;
   font-weight: 900;
+  color: var(--cinza-texto);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
 }
 
-/* =======================================================
-   EQUIPE (#equipe)
-   ======================================================= */
-
-.equipe {
-  max-width: 960px;
-  margin: 0 auto;
-  display: grid;
-  gap: 1.2rem;
-}
-
-.equipe__item {
-  background: var(--white);
-  border-radius: 0.95rem;
-  padding: 1.1rem 1.4rem;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+#promocoes .promos-pagination {
+  margin-top: 2.1rem;
   display: flex;
-  gap: 1rem;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.equipe__foto {
-  width: 190px;
-  height: 190px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 3px var(--pink-soft);
-  background: var(--pink-light);
+#promocoes .promos-page-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 900;
+  background: var(--rosa-intenso);
+  color: var(--branco);
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(236, 38, 143, 0.32);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
 }
 
-.equipe__info {
-  flex: 1;
-  min-width: 0;
+#promocoes .promos-page-btn:hover:not([disabled]) {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(236, 38, 143, 0.42);
 }
 
-.equipe__nome {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 1.1rem;
-  color: var(--text-dark);
-  margin: 0;
+#promocoes .promos-page-btn[disabled] {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
 }
 
-.equipe__papel {
-  font-size: 0.95rem;
-  color: var(--pink);
-  margin: 0.2rem 0 0.4rem;
-  font-weight: 800;
-}
-
-.equipe__texto,
-.equipe__info p {
-  font-size: 0.95rem;
-  color: var(--text-light);
-  margin: 0;
+#promocoes .promos-page-info {
+  font-size: 0.9rem;
+  color: var(--cinza-texto);
 }
 
 /* =======================================================
-   CONTATO FINAL (bloco premium)
+   CONTATO FINAL (#contato) — bloco premium mais equilibrado
    ======================================================= */
 
-.contact-final {
-  padding: 4rem 0 3rem;
+#contato.contact-final {
+  padding: clamp(2.5rem, 5vw, 3.75rem) 0;
 }
 
-.contact-final__card {
+#contato .contact-final__card {
+  max-width: 960px;
+  margin-inline: auto;
+  padding: clamp(1.6rem, 4vw, 3rem);
+  border-radius: 28px;
   background: radial-gradient(
     circle at top left,
-    #fdeff6 0,
+    var(--rosa-claro) 0,
     #ffffff 45%,
-    #ffe5f3 100%
+    rgba(236, 38, 143, 0.09) 100%
   );
-  border-radius: 32px;
   box-shadow: 0 18px 40px rgba(236, 38, 143, 0.12);
   border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 3rem 3.5rem;
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
-  gap: 3rem;
+  grid-template-columns: 1fr;
+  gap: clamp(1.35rem, 3vw, 2.25rem);
   align-items: flex-start;
 }
 
-.contact-final__left,
-.contact-final__right {
-  min-width: 0;
-}
-
-.contact-final__eyebrow {
-  font-size: 0.8rem;
+#contato .contact-final__eyebrow {
+  font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--rosa-intenso);
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.65rem;
 }
 
-.contact-final__title {
-  font-size: 1.9rem;
-  line-height: 1.25;
+#contato .contact-final__title {
+  font-size: clamp(1.55rem, 3.2vw, 1.95rem);
+  line-height: 1.2;
   margin: 0 0 0.75rem;
-  color: var(--text-dark);
-  font-family: "Poppins", system-ui, sans-serif;
+  color: var(--text-strong);
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
-.contact-final__subtitle {
-  margin: 0 0 1.5rem;
+#contato .contact-final__subtitle {
+  margin: 0 0 1.35rem;
   color: var(--text-light);
   font-size: 1rem;
+  line-height: 1.6;
 }
 
-.contact-final__list {
+#contato .contact-final__list {
   list-style: none;
   padding: 0;
-  margin: 0 0 1.75rem;
-  color: var(--text-dark);
+  margin: 0 0 1.35rem;
+  color: var(--text-strong);
   font-size: 0.98rem;
 }
 
-.contact-final__list li + li {
+#contato .contact-final__list li + li {
   margin-top: 0.35rem;
 }
 
-.contact-final__stats {
+#contato .contact-final__stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
-  margin-bottom: 2rem;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
 }
 
-.contact-final__stat {
+#contato .contact-final__stat {
   background: rgba(255, 255, 255, 0.92);
   border-radius: 16px;
   padding: 0.9rem 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.contact-final__stat-number {
+#contato .contact-final__stat:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.06);
+}
+
+#contato .contact-final__stat-number {
   display: block;
   font-weight: 900;
   font-size: 1.1rem;
   color: var(--rosa-intenso);
 }
 
-.contact-final__stat-label {
+#contato .contact-final__stat-label {
   display: block;
   font-size: 0.86rem;
   color: var(--text-light);
 }
 
-.contact-final__hours {
+#contato .contact-final__hours {
   border-top: 1px dashed rgba(0, 0, 0, 0.1);
-  padding-top: 1.3rem;
+  padding-top: 1.1rem;
 }
 
-.contact-final__hours-title {
+#contato .contact-final__hours-title {
   font-size: 0.98rem;
   font-weight: 900;
   margin: 0 0 0.5rem;
-  color: var(--text-dark);
+  color: var(--text-strong);
 }
 
-.contact-final__hours-list {
+#contato .contact-final__hours-list {
   list-style: none;
   padding: 0;
   margin: 0 0 0.6rem;
   font-size: 0.9rem;
-  color: var(--text-dark);
+  color: var(--text-strong);
 }
 
-.contact-final__hours-list li + li {
+#contato .contact-final__hours-list li + li {
   margin-top: 0.2rem;
 }
 
-.contact-final__hours-note {
+#contato .contact-final__hours-note {
   font-size: 0.86rem;
   color: var(--text-light);
   margin: 0;
 }
 
-.contact-final__right-label {
+#contato .contact-final__right-label {
   font-size: 0.95rem;
   font-weight: 900;
-  color: var(--text-dark);
+  color: var(--text-strong);
   margin: 0 0 0.9rem;
 }
 
-.contact-final__buttons {
+#contato .contact-final__buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.1rem;
 }
 
-.contact-final__btn {
+#contato .contact-final__btn {
   flex: 1 1 180px;
   text-align: center;
 }
 
-.contact-final__whats-group--single {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.contact-final__btn--main {
+#contato .contact-final__btn--main {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-weight: 900;
 }
 
-.contact-final__btn--main i {
-  font-size: 1.1rem;
+#contato .contact-final__btn--main i {
+  font-size: 1.05rem;
 }
 
-.contact-final__hint {
+#contato .contact-final__hint {
   margin-top: 8px;
   font-size: 0.9rem;
   color: var(--text-light);
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 /* Social pílulas com ícones */
-.contact-final__social-links--icons {
+#contato .contact-final__social-links,
+#contato .contact-final__social-links--icons {
   display: flex;
   flex-direction: row;
   gap: 12px;
@@ -457,7 +520,7 @@
   margin-top: 4px;
 }
 
-.contact-final__social-link {
+#contato .contact-final__social-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -467,179 +530,77 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
   font-size: 0.92rem;
   text-decoration: none;
-  color: var(--text-dark);
+  color: var(--text-strong);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.contact-final__social-link i {
+#contato .contact-final__social-link i {
   font-size: 1rem;
 }
 
-.contact-final__social-link--insta {
+#contato .contact-final__social-link--insta {
   color: #e1306c;
 }
-.contact-final__social-link--face {
+#contato .contact-final__social-link--face {
   color: #1877f2;
 }
 
-.contact-final__social-link:hover {
-  background: #ffe3f1;
+#contato .contact-final__social-link:hover {
+  transform: translateY(-1px);
+  background: rgba(236, 38, 143, 0.1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
 }
 
 /* Confiança + assinatura */
-.contact-final__trust {
+#contato .contact-final__trust,
+#contato .contact-final__signature {
   font-size: 0.86rem;
   color: var(--text-light);
-  margin-bottom: 0.6rem;
-}
-
-.contact-final__signature {
-  font-size: 0.86rem;
-  color: var(--text-light);
+  margin: 0 0 0.6rem;
   opacity: 0.95;
 }
 
 /* =======================================================
-   PROMOS (alguns componentes reaproveitados)
+   RESPONSIVIDADE (mobile-first)
    ======================================================= */
 
-.promos-current-filter {
-  margin: 1rem 0 0.75rem;
-  font-size: 0.9rem;
-  font-weight: 900;
-  color: var(--cinza-texto);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.promos-pagination {
-  margin-top: 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.promos-page-btn {
-  border: none;
-  border-radius: 999px;
-  padding: 10px 18px;
-  font-size: 0.9rem;
-  font-weight: 900;
-  background: var(--rosa-intenso);
-  color: var(--branco);
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(236, 38, 143, 0.35);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.15s ease;
-}
-
-.promos-page-btn:hover:not([disabled]) {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 30px rgba(236, 38, 143, 0.45);
-}
-
-.promos-page-btn[disabled] {
-  opacity: 0.45;
-  cursor: default;
-  box-shadow: none;
-}
-
-.promos-page-info {
-  font-size: 0.9rem;
-  color: var(--cinza-texto);
-}
-
-/* =======================================================
-   RESPONSIVIDADE GERAL HOME
-   ======================================================= */
-
-@media (max-width: 900px) {
-  .section#lojas .cards {
-    grid-template-columns: 1fr;
+@media (min-width: 520px) {
+  #inicio .hero__inner {
     gap: 1.4rem;
   }
 
-  .section#lojas .card {
-    border-radius: 1.1rem;
-    padding: 1.3rem 1.4rem 1.5rem;
+  .section#lojas .card__map iframe {
+    height: 220px;
   }
 
-  .section#lojas .card__title {
-    font-size: 1.18rem;
-  }
-  .section#lojas .card__text {
-    font-size: 0.92rem;
-  }
-
-  .categoria {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-final__card {
-    grid-template-columns: 1fr;
-    padding: 2.5rem 1.75rem;
-  }
-
-  .contact-final__stats {
+  #contato .contact-final__stats {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .contact-final__whats-group--single {
-    align-items: center;
-    text-align: center;
-  }
-
-  .contact-final__hint {
-    text-align: center;
-  }
-
-  .contact-final__social-links--icons {
-    justify-content: center;
   }
 }
 
-@media (max-width: 640px) {
-  .section#lojas .card__image img {
-    height: 170px;
-  }
-  .section#lojas .card__map iframe {
-    height: 170px;
+@media (min-width: 900px) {
+  .section#lojas .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4rem;
   }
 
-  .equipe__item {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  #contato .contact-final__card {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.15fr);
+    gap: 2.75rem;
+    padding: 3rem 3.25rem;
   }
 
-  .equipe__foto {
-    width: 160px;
-    height: 160px;
+  #contato .contact-final__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
 
-  .contact-final {
-    padding-top: 3rem;
-  }
-
-  .contact-final__card {
-    padding: 2.2rem 1.3rem;
-    border-radius: 24px;
-    gap: 2rem;
-  }
-
-  .contact-final__title {
-    font-size: 1.55rem;
-  }
-
-  .contact-final__stats {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-final__buttons {
-    flex-direction: column;
+@media (min-width: 1024px) {
+  #inicio {
+    padding-bottom: clamp(2rem, 2.5vw, 3rem);
   }
 }
 
@@ -647,7 +608,7 @@
    MOBILE: cards deslizando (se você usar .promos-grid na home)
    ======================================================= */
 @media (max-width: 768px) {
-  .promos-grid {
+  #promocoes .promos-grid {
     display: flex;
     overflow-x: auto;
     gap: 16px;
@@ -655,9 +616,32 @@
     scroll-snap-type: x mandatory;
   }
 
-  .promo-card {
-    flex: 0 0 80%;
+  #promocoes .promo-card {
+    flex: 0 0 82%;
     max-width: 340px;
     scroll-snap-align: start;
+  }
+}
+
+/* =======================================================
+   ACESSIBILIDADE: reduzir movimento
+   ======================================================= */
+@media (prefers-reduced-motion: reduce) {
+  #inicio .hero__social-links a,
+  .section#lojas .card,
+  #produtos .categoria,
+  #contato .contact-final__stat,
+  #contato .contact-final__social-link,
+  #promocoes .promos-page-btn {
+    transition: none;
+  }
+
+  #inicio .hero__social-links a:hover,
+  .section#lojas .card:hover,
+  #produtos .categoria:hover,
+  #contato .contact-final__stat:hover,
+  #contato .contact-final__social-link:hover,
+  #promocoes .promos-page-btn:hover:not([disabled]) {
+    transform: none;
   }
 }
