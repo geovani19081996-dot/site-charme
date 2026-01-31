@@ -6,6 +6,10 @@
    ========================================================================== */
 
 :root {
+  /* Compat / util */
+  --container-pad: clamp(16px, 3vw, 48px);
+  --branco: var(--white);
+
   /* Cores (brand) */
   --pink: #ec268f;
   --pink-strong: #d91f80;
