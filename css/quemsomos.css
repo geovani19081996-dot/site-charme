@@ -1,11 +1,41 @@
 /* =======================================================
-   CHARME COSMÉTICOS — QUEM SOMOS
+   CHARME COSMETICOS - QUEM SOMOS
    Estilos compartilhados entre:
    - index.html (blocos: #sobre, #essencia, #equipe)
-   - sobre.html (página completa Quem somos)
+   - sobre.html (pagina completa Quem somos)
    ======================================================= */
 
-/* ---------- GRIDS GENÉRICOS (USADOS EM QUEM SOMOS) ---------- */
+/* =======================================================
+   COMPAT: aliases de variaveis (pra nao depender de base.css antigo)
+   ======================================================= */
+:root {
+  /* Paleta (base.css novo) */
+  --pink: var(--pink, #ec268f);
+  --pink-dark: var(--pink-dark, #d51f7e);
+  --pink-light: var(--pink-light, #fdeff6);
+  --gold: var(--gold, #c49332);
+
+  /* Textos */
+  --text-dark: var(--text-dark, #222);
+  --text-light: var(--text-light, rgba(0, 0, 0, 0.62));
+  --white: var(--white, #fff);
+
+  /* Antigos -> novos */
+  --rosa-intenso: var(--pink);
+  --rosa-medio: var(--pink-dark);
+  --rosa-claro: var(--pink-light);
+  --preto-suave: var(--text-dark);
+  --cinza-texto: var(--text-light);
+
+  /* Aux */
+  --pink-soft: var(--pink-soft, rgba(236, 38, 143, 0.18));
+  --border-soft: rgba(0, 0, 0, 0.06);
+  --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.06);
+}
+
+/* =======================================================
+   GRIDS GENERICOS (USADOS EM QUEM SOMOS)
+   ======================================================= */
 
 .grid {
   display: grid;
@@ -23,12 +53,12 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* 4 colunas: família/equipe */
+/* 4 colunas: familia/equipe */
 .grid--4cols {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-/* Pequeno respiro extra na seção de valores */
+/* Pequeno respiro extra na secao de valores */
 .valores {
   margin-top: 1.8rem;
 }
@@ -38,35 +68,36 @@
    ======================================================= */
 
 .hero--interno {
-  background: linear-gradient(180deg, var(--rosa-claro) 0%, #ffffff 40%);
+  background: linear-gradient(180deg, var(--rosa-claro) 0%, #ffffff 46%);
   padding-block: 4rem 3rem;
 }
 
 .hero--interno .hero__inner {
-  max-width: 880px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
+  padding-inline: 1rem;
 }
 
 .hero--interno .hero__label {
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--rosa-intenso);
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.75rem;
 }
 
 .hero--interno .hero__title {
   font-family: "Poppins", system-ui, sans-serif;
-  font-size: 2rem;
-  line-height: 1.25;
+  font-size: 2.05rem;
+  line-height: 1.18;
   color: var(--preto-suave);
-  margin-bottom: 0.9rem;
+  margin: 0 0 0.9rem;
 }
 
 .hero--interno .hero__text {
-  font-size: 1rem;
+  font-size: 1.02rem;
   color: var(--cinza-texto);
   max-width: 720px;
   margin: 0 auto 1.6rem;
@@ -80,7 +111,7 @@
 }
 
 /* =======================================================
-   BLOCO HISTÓRIA / SEÇÃO SOBRE (#sobre)
+   BLOCO HISTORIA / SECAO SOBRE (#sobre)
    ======================================================= */
 
 .sobre__grid {
@@ -91,16 +122,19 @@
 }
 
 .sobre__texto {
-  font-size: 0.98rem;
+  font-size: 1rem;
   color: var(--text-light);
 }
 
+.sobre__texto p {
+  margin: 0;
+}
+
 .sobre__texto p + p {
-  margin-top: 0.7rem;
+  margin-top: 0.8rem;
 }
 
 /* Linha do tempo */
-
 .timeline {
   border-left: 3px solid var(--pink);
   padding-left: 1.4rem;
@@ -112,30 +146,30 @@
 
 .timeline__ano {
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 900;
   color: var(--pink);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .timeline__titulo {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.98rem;
+  font-weight: 800;
   color: var(--text-dark);
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
 }
 
 .timeline__texto {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-light);
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
+  line-height: 1.55;
 }
 
-/* Subtítulo menor (ex: Mariana, Ana...) */
-
+/* Subtitulo menor (ex: Mariana, Ana...) */
 .section__subtitle--small {
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--pink);
@@ -143,7 +177,7 @@
 }
 
 /* =======================================================
-   ESSÊNCIA / VALORES (#essencia)
+   ESSENCIA / VALORES (#essencia)
    ======================================================= */
 
 .essencia__grid {
@@ -155,36 +189,43 @@
 
 .essencia__bloco {
   background: var(--white);
-  border-radius: 0.9rem;
+  border-radius: 0.95rem;
   padding: 1.5rem 1.6rem;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-soft);
 }
 
 .essencia__bloco h3 {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", system-ui, sans-serif;
   font-size: 1.1rem;
   color: var(--text-dark);
-  margin-bottom: 0.6rem;
+  margin: 0 0 0.6rem;
 }
 
 .essencia__bloco p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-light);
+  margin: 0;
+  line-height: 1.55;
 }
 
 /* Lista de valores */
-
 .valores__lista {
   list-style: none;
-  margin-top: 0.75rem;
+  margin-top: 0.9rem;
   padding-left: 0;
 }
 
 .valores__lista li {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-light);
   padding-left: 1.1rem;
   position: relative;
+  line-height: 1.45;
+}
+
+.valores__lista li + li {
+  margin-top: 0.4rem;
 }
 
 .valores__lista li::before {
@@ -193,10 +234,11 @@
   left: 0;
   top: 0;
   color: var(--pink);
+  font-weight: 900;
 }
 
 /* =======================================================
-   FAMÍLIA / EQUIPE (#equipe / #familia)
+   FAMILIA / EQUIPE (#equipe / #familia)
    ======================================================= */
 
 .equipe {
@@ -208,9 +250,10 @@
 
 .equipe__item {
   background: var(--white);
-  border-radius: 0.9rem;
+  border-radius: 0.95rem;
   padding: 1.1rem 1.4rem;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-soft);
   display: flex;
   gap: 1rem;
   align-items: flex-start;
@@ -222,88 +265,37 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  background: var(--pink-light);
   box-shadow: 0 0 0 3px var(--pink-soft);
 }
 
 .equipe__info {
   flex: 1;
+  min-width: 0;
 }
 
 .equipe__nome {
-  font-family: "Poppins", sans-serif;
-  font-size: 1.05rem;
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 1.08rem;
   color: var(--text-dark);
+  margin: 0;
 }
 
 .equipe__papel {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--pink);
-  margin: 0.15rem 0 0.35rem;
+  margin: 0.2rem 0 0.45rem;
+  font-weight: 800;
 }
 
 .equipe__texto,
 .equipe__info p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-light);
+  margin: 0;
+  line-height: 1.55;
 }
 
-/* =======================================================
-   RESPONSIVIDADE — QUEM SOMOS
-   ======================================================= */
-
-@media (max-width: 960px) {
-  .grid--2cols {
-    grid-template-columns: 1fr;
-  }
-
-  .essencia__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 900px) {
-  .grid--3cols {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .grid--4cols {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .hero--interno {
-    padding-block: 3rem 2.5rem;
-  }
-
-  .hero--interno .hero__title {
-    font-size: 1.7rem;
-  }
-
-  .equipe__item {
-    flex-direction: row;
-  }
-}
-
-@media (max-width: 600px) {
-  .grid--3cols,
-  .grid--4cols {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .equipe__item {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .equipe__foto {
-    width: 160px;
-    height: 160px;
-  }
-}
 /* =======================================================
    BLOCO "POR QUE A CHARME EXISTE"
    ======================================================= */
@@ -324,8 +316,8 @@
   background: var(--white);
   border-radius: 18px;
   padding: 1.7rem 1.8rem;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(236, 38, 143, 0.08);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(236, 38, 143, 0.1);
 }
 
 .why-card__label {
@@ -333,19 +325,21 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--pink);
-  margin-bottom: 0.45rem;
-  font-weight: 700;
+  margin: 0 0 0.45rem;
+  font-weight: 900;
 }
 
 .why-card__text {
   font-size: 0.95rem;
   color: var(--text-light);
+  margin: 0;
+  line-height: 1.55;
 }
 
 .why-card__list {
-  margin-top: 0.8rem;
+  margin-top: 0.9rem;
   padding-left: 1.1rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-light);
 }
 
@@ -353,15 +347,86 @@
   margin-top: 0.35rem;
 }
 
-/* Responsivo/responsive */
+/* =======================================================
+   RESPONSIVIDADE - QUEM SOMOS
+   ======================================================= */
+
 @media (max-width: 960px) {
+  .grid--2cols {
+    grid-template-columns: 1fr;
+  }
+
+  .hero--interno {
+    padding-block: 3.4rem 2.6rem;
+  }
+
+  .hero--interno .hero__title {
+    font-size: 1.85rem;
+  }
+
   .why-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .grid--3cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid--4cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .hero--interno .hero__title {
+    font-size: 1.7rem;
+  }
+
+  /* Timeline mais legivel no mobile */
+  .timeline {
+    padding-left: 1.15rem;
+  }
+
+  .timeline__texto {
+    font-size: 0.95rem;
+  }
+
+  /* Equipe: ainda em linha no tablet */
+  .equipe__item {
+    flex-direction: row;
   }
 }
 
 @media (max-width: 640px) {
   .why-grid {
     grid-template-columns: 1fr;
+  }
+
+  .grid--3cols,
+  .grid--4cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero--interno {
+    padding-block: 3rem 2.2rem;
+  }
+
+  .hero--interno .hero__title {
+    font-size: 1.55rem;
+  }
+
+  .equipe__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .equipe__foto {
+    width: 160px;
+    height: 160px;
   }
 }
