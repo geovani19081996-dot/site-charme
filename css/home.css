@@ -20,241 +20,146 @@
   --rosa-claro: var(--pink-light);
   --dourado: var(--gold);
 
+  /* alguns arquivos usam nomes diferentes */
+  --branco: var(--white);
   --cinza-texto: var(--text);
   --preto-suave: var(--text-strong);
-  --branco: var(--white);
 
-  /* faltantes comuns */
-  --text-dark: var(--text-strong);
-  --text-light: rgba(0, 0, 0, 0.62);
-  --pink-soft: rgba(236, 38, 143, 0.18);
+  --pink-soft: rgba(236, 38, 143, 0.12);
+  --pink-soft-2: #fdeff6;
+}
+
+/* =======================================================
+   ALINHAMENTO (títulos fora do .container no index.html)
+   ======================================================= */
+.section#lojas > .section__title,
+.section#lojas > .section__subtitle,
+.section#produtos > .section__title,
+.section#produtos > .section__subtitle {
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: var(--container-pad);
 }
 
 /* =======================================================
    LOJAS (#lojas)
    ======================================================= */
 
-/* Fundo suave da seção */
 .section#lojas {
-  background: linear-gradient(
-    180deg,
-    var(--rosa-claro) 0%,
-    #ffffff 40%,
-    #ffffff 100%
-  );
+  background: linear-gradient(180deg, #fff, #fdeff6 55%, #fff 100%);
 }
 
-/* Grid dos cards de loja (escopado) */
+/* cards grid */
 .section#lojas .cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.6rem;
   max-width: 960px;
   margin: 0 auto;
-  display: grid;
-  gap: 1.8rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: stretch;
 }
 
-/* Card da loja (escopado pra não ferrar outros .card) */
+/* card */
 .section#lojas .card {
   position: relative;
+  background: var(--white);
+  border-radius: 1.2rem;
+  padding: 1.4rem 1.6rem 1.6rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  background: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    rgba(253, 239, 246, 0.75) 40%,
-    #ffffff 100%
-  );
-  border-radius: 1.4rem;
-  padding: 1.6rem 1.8rem 1.7rem;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(236, 38, 143, 0.06);
-  display: flex;
-  flex-direction: column;
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease;
 }
 
-/* Glow decorativo */
 .section#lojas .card::before {
   content: "";
   position: absolute;
-  inset: -40px auto auto -80px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(
-    circle at center,
-    rgba(236, 38, 143, 0.22),
-    transparent 60%
-  );
-  opacity: 0.85;
-  pointer-events: none;
-}
-
-/* Faixa vertical */
-.section#lojas .card::after {
-  content: "";
-  position: absolute;
+  top: 0;
   left: 0;
-  top: 16px;
-  bottom: 16px;
-  width: 4px;
-  border-radius: 999px;
-  background: linear-gradient(
-    to bottom,
-    var(--rosa-intenso),
-    var(--rosa-medio)
-  );
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--pink-dark));
 }
 
-.section#lojas .card--filial::after {
-  background: linear-gradient(
-    to bottom,
-    var(--rosa-medio),
-    var(--rosa-intenso)
-  );
-}
-
-.section#lojas .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.1);
-}
-
-/* Tag Matriz/Filial */
 .section#lojas .card__tag {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.25rem 0.9rem;
+  gap: 8px;
+  padding: 6px 12px;
   border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--rosa-intenso);
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--pink);
   background: rgba(236, 38, 143, 0.08);
+  border: 1px solid rgba(236, 38, 143, 0.18);
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.section#lojas .card__tag::before {
-  content: "";
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  background: var(--rosa-intenso);
-  box-shadow: 0 0 0 3px rgba(236, 38, 143, 0.22);
-}
-
-/* Título */
 .section#lojas .card__title {
-  position: relative;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
   font-family: "Poppins", system-ui, sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+  color: var(--text-strong);
   line-height: 1.25;
-  color: var(--preto-suave);
 }
 
-/* Texto */
-.section#lojas .card__text {
-  position: relative;
-  font-size: 0.94rem;
-  color: var(--cinza-texto);
-}
-
-.section#lojas .card__text + .card__text {
-  margin-top: 0.3rem;
-}
-
-.section#lojas .card__text strong,
-.section#lojas .card__text b {
-  font-weight: 800;
-}
-
-/* Foto */
-.section#lojas .card__image {
-  position: relative;
-  margin: -0.4rem -0.4rem 1rem;
-  border-radius: 1.2rem;
-  overflow: hidden;
-  background: var(--rosa-claro);
-}
-
-.section#lojas .card__image img {
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
-  display: block;
-}
-
-/* Mapa embed */
+/* map block */
 .section#lojas .card__map {
-  position: relative;
-  margin-top: 0.9rem;
-  border-radius: 1.1rem;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.2rem;
 }
 
 .section#lojas .card__map iframe {
   width: 100%;
-  height: 190px;
+  height: 220px;
   border: 0;
+  display: block;
 }
 
-/* Link do endereço */
-.section#lojas .card__address-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.section#lojas .card__address-link:hover {
-  color: var(--rosa-intenso);
-  text-decoration: underline;
-}
-
-/* Ações */
+/* actions */
 .section#lojas .card__actions {
-  position: relative;
-  margin-top: 1.1rem;
   display: flex;
+  gap: 12px;
   flex-wrap: wrap;
-  gap: 0.75rem;
 }
 
-.section#lojas .card__actions .btn--whats {
-  min-width: 210px;
-  justify-content: center;
+.section#lojas .card__actions--double .btn {
+  flex: 1 1 200px;
 }
 
 /* =======================================================
-   PRODUTOS (#produtos)
+   PRODUTOS / CATEGORIAS (#produtos)
    ======================================================= */
 
 .categorias {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
   max-width: 960px;
   margin: 0 auto;
-  display: grid;
-  gap: 0.65rem;
-  width: 100%;
 }
 
 .categoria {
-  background: var(--white);
-  border-radius: 0.95rem;
-  padding: 1.25rem 1.4rem;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
   display: grid;
-  grid-template-columns: minmax(0, 170px) minmax(0, 1fr);
-  column-gap: 1.5rem;
-  row-gap: 0.25rem;
+  gap: 0.2rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 1.05rem;
+  background: var(--white);
   border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
 }
 
 .categoria__nome {
-  font-weight: 800;
-  color: var(--pink);
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 1.06rem;
+  margin: 0;
+  color: var(--text-strong);
 }
 
 .categoria__descricao {
