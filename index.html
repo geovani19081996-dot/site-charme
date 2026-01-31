@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <!-- =======================================================
        BLOCO 01 • HEAD / META / FONTES / CSS
@@ -12,6 +12,7 @@
       content="Charme Cosméticos - duas lojas em Lucas do Rio Verde, com beleza acessível, atendimento humano e cuidado de família."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#EC268F" />
 
     <!-- JSON-LD (Schema.org) — Dados estruturados para SEO local -->
     <script type="application/ld+json">
@@ -56,10 +57,10 @@
             "url": "https://charmecosmeticos.com/#lojas",
             "telephone": "+55-65-3549-4404",
             "priceRange": "$$",
-            "parentOrganization": { "@id": "https://charmecosmeticos.com/#org" },
-            "sameAs": [
-              "https://share.google/u4loqToUUMESU5oXw"
-            ],
+            "parentOrganization": {
+              "@id": "https://charmecosmeticos.com/#org"
+            },
+            "sameAs": ["https://share.google/u4loqToUUMESU5oXw"],
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Av. Espírito Santo, 752-S - Jardim das Palmeiras",
@@ -77,13 +78,25 @@
             "openingHoursSpecification": [
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "08:00",
                 "closes": "11:00"
               },
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "13:00",
                 "closes": "18:00"
               },
@@ -102,10 +115,10 @@
             "url": "https://charmecosmeticos.com/#lojas",
             "telephone": "+55-65-3549-4404",
             "priceRange": "$$",
-            "parentOrganization": { "@id": "https://charmecosmeticos.com/#org" },
-            "sameAs": [
-              "https://share.google/pGB0RyRlF5XsWaPZj"
-            ],
+            "parentOrganization": {
+              "@id": "https://charmecosmeticos.com/#org"
+            },
+            "sameAs": ["https://share.google/pGB0RyRlF5XsWaPZj"],
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Av. Mato Grosso, 1417-E - Cidade Nova",
@@ -118,13 +131,25 @@
             "openingHoursSpecification": [
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "08:00",
                 "closes": "11:00"
               },
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "13:00",
                 "closes": "18:00"
               },
@@ -150,6 +175,7 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <!-- Icons/Ícones (Phosphor Icons) -->
     <link
       rel="stylesheet"
@@ -173,6 +199,85 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
+    <!-- =======================================================
+         PATCH LOCAL (SÓ INDEX) — TRAZ DE VOLTA A "FAIXA ROSA" + NAV MOBILE DECENTE
+         Não mexe em JSON-LD, nem exige alteração em base.css agora.
+         ======================================================= -->
+    <style>
+      /* Faixa rosa no topo (voltando o visual "Charme") */
+      .topbar {
+        background: linear-gradient(135deg, #ec268f, #d51f7e) !important;
+        backdrop-filter: none !important;
+        border-bottom: none !important;
+      }
+      .topbar .container.topbar__inner {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      .topbar .logo__tagline {
+        color: rgba(255, 255, 255, 0.92) !important;
+        font-weight: 700 !important;
+      }
+      .topbar .nav a {
+        color: rgba(255, 255, 255, 0.92) !important;
+      }
+      .topbar .nav a:hover {
+        color: #fff !important;
+        opacity: 1;
+      }
+      .topbar .nav a.active::after {
+        background: rgba(255, 255, 255, 0.92) !important;
+      }
+
+      /* Logo mais legível em cima do rosa */
+      .topbar .logo__img {
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
+      }
+
+      /* Scroll/âncora: não esconder títulos atrás do header sticky */
+      .scroll-margin {
+        scroll-margin-top: calc(var(--header-height, 90px) + 18px);
+      }
+
+      /* Mobile: menu em uma linha rolável, sem quebrar e sem “Quem so” */
+      @media (max-width: 768px) {
+        .topbar .container.topbar__inner {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+        .topbar .nav {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          gap: 10px;
+          padding-bottom: 6px;
+        }
+        .topbar .nav::-webkit-scrollbar {
+          display: none;
+        }
+        .topbar .nav a {
+          white-space: nowrap;
+          padding: 8px 10px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.14);
+        }
+      }
+
+      /* Mobile menor: dá mais “respiro” no topo e mantém a faixa bonita */
+      @media (max-width: 480px) {
+        .topbar .nav a {
+          font-size: 0.95rem;
+          padding: 8px 10px;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -181,7 +286,7 @@
          ======================================================= -->
     <header class="topbar">
       <div class="container topbar__inner">
-        <div class="logo">
+        <a class="logo" href="#inicio" aria-label="Voltar ao início">
           <img
             src="img/logo-charme.png"
             alt="Charme Cosméticos"
@@ -190,9 +295,9 @@
           <span class="logo__tagline" id="site-tagline"
             >Beleza acessível, com cuidado de família.</span
           >
-        </div>
+        </a>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Menu principal">
           <a href="#inicio" id="nav-inicio">Início</a>
           <a href="#lojas" id="nav-lojas">Lojas</a>
           <a href="#produtos" id="nav-produtos">Produtos</a>
@@ -214,7 +319,7 @@
       <!-- ---------------------------------------------------
            BLOCO 03.1 • HERO (CAPA INICIAL)
            --------------------------------------------------- -->
-      <section class="hero" id="inicio">
+      <section class="hero scroll-margin" id="inicio">
         <div class="container hero__inner">
           <div class="hero__label" id="home-hero-label">
             Marca de família em Lucas do Rio Verde
@@ -271,7 +376,7 @@
       <!-- ---------------------------------------------------
            BLOCO 03.2 • SEÇÃO LOJAS (#lojas)
            --------------------------------------------------- -->
-      <section class="section" id="lojas">
+      <section class="section scroll-margin" id="lojas">
         <h2 class="section__title" id="home-lojas-title">Nossas lojas</h2>
         <p class="section__subtitle" id="home-lojas-subtitle">
           Duas unidades em Lucas do Rio Verde, pensadas para atender tanto quem
@@ -293,6 +398,7 @@
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
+                title="Mapa - Loja 1 Jardim das Palmeiras"
               ></iframe>
             </div>
 
@@ -313,9 +419,8 @@
           <!-- Loja 2 - Filial -->
           <article class="card card--filial">
             <div class="card__tag" id="lojas-tag-2">Filial</div>
-            <h3 class="card__title" id="lojas-title-2">
-              Loja 2 – Cidade Nova
-            </h3>
+            <h3 class="card__title" id="lojas-title-2">Loja 2 – Cidade Nova</h3>
+
             <!-- Mapa embed/embutido dentro do card -->
             <div class="card__map">
               <iframe
@@ -323,10 +428,10 @@
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
+                title="Mapa - Loja 2 Cidade Nova"
               ></iframe>
             </div>
 
-            <!-- Botões: WhatsApp + Ver no mapa -->
             <div class="card__actions card__actions--double">
               <a
                 class="btn btn--outline"
@@ -346,7 +451,7 @@
       <!-- ---------------------------------------------------
            BLOCO 03.3 • SEÇÃO PRODUTOS / CATEGORIAS (#produtos)
            --------------------------------------------------- -->
-      <section class="section" id="produtos">
+      <section class="section scroll-margin" id="produtos">
         <h2 class="section__title" id="home-produtos-title">
           O que a Charme vende
         </h2>
@@ -405,7 +510,7 @@
       <!-- ---------------------------------------------------
            BLOCO 03.4 - VITRINE AO VIVO (#vitrine)
            --------------------------------------------------- -->
-      <section id="vitrine" class="secao-vitrine">
+      <section id="vitrine" class="secao-vitrine scroll-margin">
         <div class="container">
           <header class="vitrine-header">
             <div class="vitrine-header__kicker" id="vitrine-kicker">
@@ -415,8 +520,8 @@
               Últimas atualizações
             </h2>
             <p class="vitrine-header__subtitle" id="vitrine-subtitle">
-              Confira as novidades e reposições que acabaram de chegar nas nossas
-              prateleiras. Role para baixo e aproveite as promoções!
+              Confira as novidades e reposições que acabaram de chegar nas
+              nossas prateleiras. Role para baixo e aproveite as promoções!
             </p>
           </header>
 
@@ -437,20 +542,21 @@
            BLOCO 03.4 • SEÇÃO PROMOÇÕES PREMIUM
            (listagem dinâmica via promocoes.js)
            --------------------------------------------------- -->
-      <section id="promocoes" class="secao-promocoes">
+      <section id="promocoes" class="secao-promocoes scroll-margin">
         <div class="container">
           <header class="promos-header">
             <div class="promos-header__kicker" id="promos-kicker">
               Ofertas selecionadas da Charme Cosméticos
             </div>
-            <h2 class="promos-header__title" id="promos-title">Promoções ativas</h2>
+            <h2 class="promos-header__title" id="promos-title">
+              Promoções ativas
+            </h2>
             <p class="promos-header__subtitle" id="promos-subtitle">
               Preço bom, prazo limitado e estoque real das lojas — viu, gostou,
               manda WhatsApp 💗.
             </p>
           </header>
 
-          <!-- FILTROS DAS PROMOÇÕES -->
           <div class="promos-toolbar">
             <div class="promos-toolbar__left">
               <span id="promos-count" class="promos-pill"
@@ -485,17 +591,16 @@
             </div>
           </div>
 
-          <!-- LABEL DO FILTRO ATUAL (ex: Cabelos, Todas as categorias...) -->
           <div id="promos-current-filter" class="promos-current-filter" hidden>
             Todas as categorias
           </div>
 
-          <!-- GRID DE CARDS DE PROMOÇÃO (JS PREENCHENDO) -->
           <div id="promocoes-grid" class="promos-grid"></div>
 
-          <!-- ESTADO VAZIO (SEM PROMOÇÕES) -->
           <div id="promocoes-empty" class="promos-empty" hidden>
-            <div class="promos-empty__badge" id="promos-empty-badge">Ops...</div>
+            <div class="promos-empty__badge" id="promos-empty-badge">
+              Ops...
+            </div>
             <h3 class="promos-empty__title" id="promos-empty-title">
               Nenhuma promoção ativa no momento
             </h3>
@@ -514,7 +619,6 @@
             </a>
           </div>
 
-          <!-- PAGINAÇÃO (BLOCO 1, 2, 3...) -->
           <div class="promos-pagination" id="promos-pagination">
             <button id="promos-prev" class="promos-page-btn" type="button">
               ← Promoções anteriores
@@ -532,9 +636,8 @@
       <!-- ---------------------------------------------------
            BLOCO 03.5 • SEÇÃO CONTATO (#contato) - PREMIUM
            --------------------------------------------------- -->
-      <section class="section contact-final" id="contato">
+      <section class="section contact-final scroll-margin" id="contato">
         <div class="container contact-final__card">
-          <!-- COLUNA ESQUERDA -->
           <div class="contact-final__left">
             <div class="contact-final__eyebrow" id="contato-eyebrow">
               Marca de família em Lucas do Rio Verde
@@ -551,7 +654,9 @@
             </p>
 
             <ul class="contact-final__list">
-              <li id="contato-list-1">✔ Consultoria rápida de produtos e cores</li>
+              <li id="contato-list-1">
+                ✔ Consultoria rápida de produtos e cores
+              </li>
               <li id="contato-list-2">
                 ✔ Verificação de estoque em tempo real nas lojas
               </li>
@@ -560,37 +665,50 @@
               </li>
             </ul>
 
-            <!-- MINI ESTATÍSTICAS / PROVA SOCIAL -->
             <div class="contact-final__stats">
               <div class="contact-final__stat">
-                <span class="contact-final__stat-number" id="contato-stat-1-number"
+                <span
+                  class="contact-final__stat-number"
+                  id="contato-stat-1-number"
                   >2</span
                 >
-                <span class="contact-final__stat-label" id="contato-stat-1-label">
+                <span
+                  class="contact-final__stat-label"
+                  id="contato-stat-1-label"
+                >
                   Lojas físicas em Lucas do Rio Verde
                 </span>
               </div>
 
               <div class="contact-final__stat">
-                <span class="contact-final__stat-number" id="contato-stat-2-number"
+                <span
+                  class="contact-final__stat-number"
+                  id="contato-stat-2-number"
                   >100%</span
                 >
-                <span class="contact-final__stat-label" id="contato-stat-2-label">
+                <span
+                  class="contact-final__stat-label"
+                  id="contato-stat-2-label"
+                >
                   Estoque do site ligado nas lojas
                 </span>
               </div>
 
               <div class="contact-final__stat">
-                <span class="contact-final__stat-number" id="contato-stat-3-number"
+                <span
+                  class="contact-final__stat-number"
+                  id="contato-stat-3-number"
                   >Atendimento humano</span
                 >
-                <span class="contact-final__stat-label" id="contato-stat-3-label">
+                <span
+                  class="contact-final__stat-label"
+                  id="contato-stat-3-label"
+                >
                   Bot cuida do recado, equipe cuida de você 😉
                 </span>
               </div>
             </div>
 
-            <!-- HORÁRIOS OFICIAIS -->
             <div class="contact-final__hours">
               <h3 class="contact-final__hours-title" id="contato-hours-title">
                 Horário de atendimento pelo WhatsApp
@@ -615,7 +733,6 @@
             </div>
           </div>
 
-          <!-- COLUNA DIREITA -->
           <div class="contact-final__right">
             <p class="contact-final__right-label" id="contato-right-label">
               Escolha a loja pra falar no WhatsApp:
@@ -672,8 +789,8 @@
             </div>
 
             <div class="contact-final__trust" id="contato-trust-text">
-              Seus dados e conversas são usados só para atendimento. Nada de spam,
-              combinado? 💌
+              Seus dados e conversas são usados só para atendimento. Nada de
+              spam, combinado? 💌
             </div>
           </div>
         </div>

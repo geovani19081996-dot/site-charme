@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +9,7 @@
       content="Conheça a história real da família por trás da Charme Cosméticos: de um CNPJ tímido e prateleiras contadas a duas lojas em Lucas do Rio Verde, com beleza acessível, fé, responsabilidade financeira e cuidado de família."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#EC268F" />
 
     <!-- Favicon / Ícone da aba -->
     <link rel="icon" type="image/png" href="img/logo-charme-icon.png" />
@@ -26,7 +27,6 @@
     <link rel="stylesheet" href="css/avisos.css?v=202601310123" />
     <link rel="stylesheet" href="css/quemsomos.css?v=202601310123" />
 
-
     <!-- Font Awesome para ícones -->
     <link
       rel="stylesheet"
@@ -35,13 +35,83 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
+    <!-- =======================================================
+         PATCH LOCAL (SÓ SOBRE) — TOPO ROSA + NAV MOBILE ROLÁVEL
+         (mesmo comportamento da home)
+         ======================================================= -->
+    <style>
+      .topbar {
+        background: linear-gradient(135deg, #ec268f, #d51f7e) !important;
+        backdrop-filter: none !important;
+        border-bottom: none !important;
+      }
+      .topbar .container.topbar__inner {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      .topbar .logo__tagline {
+        color: rgba(255, 255, 255, 0.92) !important;
+        font-weight: 700 !important;
+      }
+      .topbar .nav a {
+        color: rgba(255, 255, 255, 0.92) !important;
+      }
+      .topbar .nav a:hover {
+        color: #fff !important;
+      }
+      .topbar .nav a.active {
+        background: rgba(255, 255, 255, 0.18) !important;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14) !important;
+      }
+
+      .topbar .logo__img {
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
+      }
+
+      @media (max-width: 768px) {
+        .topbar .container.topbar__inner {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+        .topbar .nav {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          gap: 10px;
+          padding-bottom: 6px;
+        }
+        .topbar .nav::-webkit-scrollbar {
+          display: none;
+        }
+        .topbar .nav a {
+          white-space: nowrap;
+          padding: 8px 10px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.14);
+        }
+        .topbar .logo {
+          justify-content: center;
+        }
+      }
+    </style>
   </head>
 
   <body>
     <!-- Header / Topbar igual da home -->
     <header class="topbar">
       <div class="container topbar__inner">
-        <div class="logo">
+        <a
+          class="logo"
+          href="index.html"
+          aria-label="Voltar para a página inicial"
+        >
           <img
             src="img/logo-charme.png"
             alt="Charme Cosméticos"
@@ -50,13 +120,15 @@
           <span class="logo__tagline" id="site-tagline">
             Beleza acessível, com cuidado de família.
           </span>
-        </div>
+        </a>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Menu principal">
           <a href="index.html" id="nav-inicio">Início</a>
           <a href="index.html#lojas" id="nav-lojas">Lojas</a>
           <a href="index.html#produtos" id="nav-produtos">Produtos</a>
-          <a href="sobre.html#historia" id="nav-quem" class="nav__link--active">Quem somos</a>
+          <a href="sobre.html#historia" id="nav-quem" class="active"
+            >Quem somos</a
+          >
           <a href="index.html#contato" id="nav-contato">Contato</a>
         </nav>
       </div>
@@ -82,10 +154,18 @@
           </p>
 
           <div class="hero__actions hero__actions--interno">
-            <a href="index.html#promocoes" class="btn btn--primary" id="sobre-cta-promos">
+            <a
+              href="index.html#promocoes"
+              class="btn btn--primary"
+              id="sobre-cta-promos"
+            >
               Ver promoções e ofertas
             </a>
-            <a href="index.html#lojas" class="btn btn--outline" id="sobre-cta-lojas">
+            <a
+              href="index.html#lojas"
+              class="btn btn--outline"
+              id="sobre-cta-lojas"
+            >
               Ver endereços das lojas
             </a>
           </div>
@@ -95,41 +175,46 @@
       <!-- Bloco 1: Nossa história + linha do tempo -->
       <section class="section" id="historia">
         <div class="container">
-          <h2 class="section__title" id="sobre-historia-title">Nossa história</h2>
+          <h2 class="section__title" id="sobre-historia-title">
+            Nossa história
+          </h2>
           <p class="section__subtitle" id="sobre-historia-subtitle">
-            Antes da fachada rosa existir, tinha medo, dúvida, planilha e fé.
-            A história da Charme é feita de decisões arriscadas, tombos, vitórias
-            e uma certeza: não dá pra cuidar da beleza das pessoas sem cuidar
-            da vida real de quem está por trás do balcão.
+            Antes da fachada rosa existir, tinha medo, dúvida, planilha e fé. A
+            história da Charme é feita de decisões arriscadas, tombos, vitórias
+            e uma certeza: não dá pra cuidar da beleza das pessoas sem cuidar da
+            vida real de quem está por trás do balcão.
           </p>
 
           <div class="grid grid--2cols sobre__grid">
             <div class="sobre__texto">
               <p id="sobre-historia-p1">
-                A origem burocrática da Charme começa em 2015, com um CNPJ tímido
-                no nome da Viviane, usado para vender cosméticos como consultora.
-                Na prática, era uma porta aberta para algo maior: a vontade de ter
-                um negócio próprio e atender melhor as pessoas da cidade.
+                A origem burocrática da Charme começa em 2015, com um CNPJ
+                tímido no nome da Viviane, usado para vender cosméticos como
+                consultora. Na prática, era uma porta aberta para algo maior: a
+                vontade de ter um negócio próprio e atender melhor as pessoas da
+                cidade.
               </p>
               <p id="sobre-historia-p2">
                 Em 2017, a primeira loja física saiu do papel. Veio o medo do
                 prédio, da obra, do endividamento e da pergunta que todo mundo
-                fazia: “e se der errado?”. Mesmo assim, a família decidiu seguir.
-                Cada cliente que entrava ajudava a pagar o próximo aluguel e dava
-                mais um fôlego para continuar.
+                fazia: “e se der errado?”. Mesmo assim, a família decidiu
+                seguir. Cada cliente que entrava ajudava a pagar o próximo
+                aluguel e dava mais um fôlego para continuar.
               </p>
               <p id="sobre-historia-p3">
-                De lá pra cá, a Charme cresceu, reformou, aprendeu com erros (como
-                a Loja 3, linda e pesada de manter) e escolheu algo muito claro:
-                só faz sentido se a empresa for saudável e se a família puder
-                dormir em paz.
+                De lá pra cá, a Charme cresceu, reformou, aprendeu com erros
+                (como a Loja 3, linda e pesada de manter) e escolheu algo muito
+                claro: só faz sentido se a empresa for saudável e se a família
+                puder dormir em paz.
               </p>
             </div>
 
             <div class="timeline">
               <div class="timeline__item">
                 <div class="timeline__ano" id="sobre-timeline-1-year">2015</div>
-                <div class="timeline__titulo" id="sobre-timeline-1-title">Origem do CNPJ</div>
+                <div class="timeline__titulo" id="sobre-timeline-1-title">
+                  Origem do CNPJ
+                </div>
                 <div class="timeline__texto" id="sobre-timeline-1-text">
                   Abertura do CNPJ da Viviane, inicialmente como consultora de
                   cosméticos. É a raiz oficial da marca, antes da loja física
@@ -139,7 +224,9 @@
 
               <div class="timeline__item">
                 <div class="timeline__ano" id="sobre-timeline-2-year">2017</div>
-                <div class="timeline__titulo" id="sobre-timeline-2-title">Nascimento da Matriz</div>
+                <div class="timeline__titulo" id="sobre-timeline-2-title">
+                  Nascimento da Matriz
+                </div>
                 <div class="timeline__texto" id="sobre-timeline-2-text">
                   Inauguração da primeira loja física Charme Cosméticos, na
                   Avenida Espírito Santo. Prateleiras pequenas, estoque contado
@@ -148,8 +235,12 @@
               </div>
 
               <div class="timeline__item">
-                <div class="timeline__ano" id="sobre-timeline-3-year">2020–2022</div>
-                <div class="timeline__titulo" id="sobre-timeline-3-title">Filial 2 e expansão</div>
+                <div class="timeline__ano" id="sobre-timeline-3-year">
+                  2020–2022
+                </div>
+                <div class="timeline__titulo" id="sobre-timeline-3-title">
+                  Filial 2 e expansão
+                </div>
                 <div class="timeline__texto" id="sobre-timeline-3-text">
                   A cidade cresceu, os bairros pediram uma Charme perto de casa
                   e a segunda loja nasceu. Passou por reforma, ficou maior e
@@ -158,8 +249,12 @@
               </div>
 
               <div class="timeline__item">
-                <div class="timeline__ano" id="sobre-timeline-4-year">2024–2025</div>
-                <div class="timeline__titulo" id="sobre-timeline-4-title">Loja 3: cicatriz e aprendizado</div>
+                <div class="timeline__ano" id="sobre-timeline-4-year">
+                  2024–2025
+                </div>
+                <div class="timeline__titulo" id="sobre-timeline-4-title">
+                  Loja 3: cicatriz e aprendizado
+                </div>
                 <div class="timeline__texto" id="sobre-timeline-4-text">
                   A loja mais bonita também foi a mais pesada de sustentar.
                   Depois de muito esforço, a família decidiu encerrar essa
@@ -170,7 +265,9 @@
 
               <div class="timeline__item">
                 <div class="timeline__ano" id="sobre-timeline-5-year">Hoje</div>
-                <div class="timeline__titulo" id="sobre-timeline-5-title">Duas lojas, muitos aprendizados</div>
+                <div class="timeline__titulo" id="sobre-timeline-5-title">
+                  Duas lojas, muitos aprendizados
+                </div>
                 <div class="timeline__texto" id="sobre-timeline-5-text">
                   Com duas lojas ativas e uma história cheia de altos e baixos,
                   a Charme segue focada em atendimento humano, preço justo e um
@@ -182,70 +279,76 @@
         </div>
       </section>
 
-      <!-- Bloco 2: Propósito, missão e visão -->
-      <section class="section" id="proposito">
+      <!-- Bloco 2: Por que a Charme existe -->
       <section class="section section--why" id="porque-charme">
-  <div class="container">
-    <h2 class="section__title" id="sobre-why-title">Por que a Charme existe</h2>
-    <p class="section__subtitle" id="sobre-why-subtitle">
-      Mais do que vender shampoo, maquiagem ou perfume, a Charme existe
-      para cuidar de pessoas – de quem trabalha aqui e de quem entra na loja.
-    </p>
+        <div class="container">
+          <h2 class="section__title" id="sobre-why-title">
+            Por que a Charme existe
+          </h2>
+          <p class="section__subtitle" id="sobre-why-subtitle">
+            Mais do que vender shampoo, maquiagem ou perfume, a Charme existe
+            para cuidar de pessoas – de quem trabalha aqui e de quem entra na
+            loja.
+          </p>
 
-    <div class="why-grid">
-      <!-- PROPÓSITO -->
-      <article class="why-card">
-        <h3 class="why-card__label" id="sobre-why-1-label">Propósito</h3>
-        <p class="why-card__text" id="sobre-why-1-text">
-          Cuidar de pessoas – funcionários, colaboradores, clientes e suas
-          famílias – oferecendo beleza, bem-estar e oportunidades de vida
-          melhor, com preço justo e respeito.
-        </p>
-        <ul class="why-card__list">
-          <li id="sobre-why-1-item-1">Cuidar de quem trabalha na Charme, não só cobrar resultado.</li>
-          <li id="sobre-why-1-item-2">Gerar uma vida melhor pra equipe, não só um emprego.</li>
-          <li id="sobre-why-1-item-3">
-            Levar beleza, autoestima e produtos de preço justo pra comunidade.
-          </li>
-        </ul>
-      </article>
+          <div class="why-grid">
+            <article class="why-card">
+              <h3 class="why-card__label" id="sobre-why-1-label">Propósito</h3>
+              <p class="why-card__text" id="sobre-why-1-text">
+                Cuidar de pessoas – funcionários, colaboradores, clientes e suas
+                famílias – oferecendo beleza, bem-estar e oportunidades de vida
+                melhor, com preço justo e respeito.
+              </p>
+              <ul class="why-card__list">
+                <li id="sobre-why-1-item-1">
+                  Cuidar de quem trabalha na Charme, não só cobrar resultado.
+                </li>
+                <li id="sobre-why-1-item-2">
+                  Gerar uma vida melhor pra equipe, não só um emprego.
+                </li>
+                <li id="sobre-why-1-item-3">
+                  Levar beleza, autoestima e produtos de preço justo pra
+                  comunidade.
+                </li>
+              </ul>
+            </article>
 
-      <!-- MISSÃO -->
-      <article class="why-card">
-        <h3 class="why-card__label" id="sobre-why-2-label">Missão</h3>
-        <p class="why-card__text" id="sobre-why-2-text">
-          Tornar a beleza acessível com atendimento humano e sincero:
-          olho no olho, conversa honesta e indicação que faz sentido
-          pra vida de cada pessoa.
-        </p>
-      </article>
+            <article class="why-card">
+              <h3 class="why-card__label" id="sobre-why-2-label">Missão</h3>
+              <p class="why-card__text" id="sobre-why-2-text">
+                Tornar a beleza acessível com atendimento humano e sincero: olho
+                no olho, conversa honesta e indicação que faz sentido pra vida
+                de cada pessoa.
+              </p>
+            </article>
 
-      <!-- VISÃO -->
-      <article class="why-card">
-        <h3 class="why-card__label" id="sobre-why-3-label">Visão</h3>
-        <ul class="why-card__list">
-          <li id="sobre-why-3-item-1">
-            Ter lojas saudáveis financeiramente, que funcionem bem com ou sem
-            a presença constante dos donos.
-          </li>
-          <li id="sobre-why-3-item-2">
-            Ser referência em cosméticos em Lucas do Rio Verde e região,
-            crescendo com pé no chão.
-          </li>
-          <li id="sobre-why-3-item-3">
-            No futuro, abrir novas unidades só quando as lojas atuais estiverem
-            muito bem cuidadas por dentro e por fora.
-          </li>
-        </ul>
-      </article>
-    </div>
-  </div>
-</section>
+            <article class="why-card">
+              <h3 class="why-card__label" id="sobre-why-3-label">Visão</h3>
+              <ul class="why-card__list">
+                <li id="sobre-why-3-item-1">
+                  Ter lojas saudáveis financeiramente, que funcionem bem com ou
+                  sem a presença constante dos donos.
+                </li>
+                <li id="sobre-why-3-item-2">
+                  Ser referência em cosméticos em Lucas do Rio Verde e região,
+                  crescendo com pé no chão.
+                </li>
+                <li id="sobre-why-3-item-3">
+                  No futuro, abrir novas unidades só quando as lojas atuais
+                  estiverem muito bem cuidadas por dentro e por fora.
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
 
       <!-- Bloco 3: Pra quem abrimos a porta todo dia -->
       <section class="section" id="para-quem">
         <div class="container">
-          <h2 class="section__title" id="sobre-para-title">Pra quem a Charme abre as portas</h2>
+          <h2 class="section__title" id="sobre-para-title">
+            Pra quem a Charme abre as portas
+          </h2>
           <p class="section__subtitle" id="sobre-para-subtitle">
             A Charme foi desenhada para a rotina real de quem vive em Lucas do
             Rio Verde: pouco tempo, muitos boletos e a vontade de se sentir bem
@@ -254,22 +357,26 @@
 
           <div class="grid grid--2cols sobre__grid">
             <div class="sobre__texto">
-              <h3 class="section__subtitle section__subtitle--small" id="sobre-para-small-title">
+              <h3
+                class="section__subtitle section__subtitle--small"
+                id="sobre-para-small-title"
+              >
                 Geovani queimando neuronios pra ver oque vai ter aqui.
               </h3>
               <p id="sobre-para-text-1">
-                Córtex Cerebral Carregando informação  ....
+                Córtex Cerebral Carregando informação ....
               </p>
             </div>
           </div>
         </div>
       </section>
 
-           
       <!-- Bloco 4: Essência e valores da marca -->
       <section class="section" id="essencia">
         <div class="container">
-          <h2 class="section__title" id="sobre-essencia-title">Nossa essência</h2>
+          <h2 class="section__title" id="sobre-essencia-title">
+            Nossa essência
+          </h2>
           <p class="section__subtitle" id="sobre-essencia-subtitle">
             A Charme é uma marca de família, mas principalmente de pessoas.
             Nossa essência mistura atendimento humano, preço justo, fé,
@@ -288,22 +395,26 @@
             </div>
 
             <div class="essencia__bloco">
-              <h3 id="sobre-essencia-2-title">Preço justo e responsabilidade financeira</h3>
+              <h3 id="sobre-essencia-2-title">
+                Preço justo e responsabilidade financeira
+              </h3>
               <p id="sobre-essencia-2-text">
-                Preço justo é equilíbrio: qualidade, acessibilidade e um
-                negócio que se mantém vivo. Depois da experiência da Loja 3, a
-                família decidiu crescer com consciência, sem repetir erros e
-                sem sacrificar a paz de casa.
+                Preço justo é equilíbrio: qualidade, acessibilidade e um negócio
+                que se mantém vivo. Depois da experiência da Loja 3, a família
+                decidiu crescer com consciência, sem repetir erros e sem
+                sacrificar a paz de casa.
               </p>
             </div>
 
             <div class="essencia__bloco">
-              <h3 id="sobre-essencia-3-title">Fé, respeito e trabalho em família</h3>
+              <h3 id="sobre-essencia-3-title">
+                Fé, respeito e trabalho em família
+              </h3>
               <p id="sobre-essencia-3-text">
                 A caminhada da Charme é guiada por princípios cristãos que
-                influenciam ética, respeito e decisões difíceis. O trabalho é
-                em família: cada um com um papel, mas todos com o mesmo objetivo
-                – que a Charme seja um lugar bom de trabalhar e de comprar.
+                influenciam ética, respeito e decisões difíceis. O trabalho é em
+                família: cada um com um papel, mas todos com o mesmo objetivo –
+                que a Charme seja um lugar bom de trabalhar e de comprar.
               </p>
             </div>
           </div>
@@ -321,101 +432,144 @@
           </p>
 
           <div class="equipe">
-            <!-- Viviane -->
             <article class="equipe__item">
               <img
                 src="img/Viviane.png"
                 alt="Viviane Cândida de Albues Souza"
-                class="equipe__foto" id="sobre-equipe-1-foto"
+                class="equipe__foto"
+                id="sobre-equipe-1-foto"
               />
               <div class="equipe__info">
-                <h3 class="equipe__nome" id="sobre-equipe-1-nome">Viviane Cândida de Albues Souza</h3>
-                <p class="equipe__papel" id="sobre-equipe-1-papel">Compras e mix de produtos</p>
+                <h3 class="equipe__nome" id="sobre-equipe-1-nome">
+                  Viviane Cândida de Albues Souza
+                </h3>
+                <p class="equipe__papel" id="sobre-equipe-1-papel">
+                  Compras e mix de produtos
+                </p>
                 <p class="equipe__texto" id="sobre-equipe-1-text">
-                  Eu, converso com representantes, avalio o que entra na loja, ajudo no estoque e faço o que for preciso no dia a dia. sou a coragem por trás da primeira porta aberta da Charme e o olhar atento para manter o mix equilibrado entre desejo das clientes e realidade do bolso.
+                  Eu, converso com representantes, avalio o que entra na loja,
+                  ajudo no estoque e faço o que for preciso no dia a dia. sou a
+                  coragem por trás da primeira porta aberta da Charme e o olhar
+                  atento para manter o mix equilibrado entre desejo das clientes
+                  e realidade do bolso.
                 </p>
               </div>
             </article>
 
-            <!-- Aparecido -->
             <article class="equipe__item">
               <img
                 src="img/Aparecido.png"
                 alt="Aparecido Francisco de Souza"
-                class="equipe__foto" id="sobre-equipe-2-foto"
+                class="equipe__foto"
+                id="sobre-equipe-2-foto"
               />
               <div class="equipe__info">
-                <h3 class="equipe__nome" id="sobre-equipe-2-nome">Aparecido Francisco de Souza</h3>
+                <h3 class="equipe__nome" id="sobre-equipe-2-nome">
+                  Aparecido Francisco de Souza
+                </h3>
                 <p class="equipe__papel" id="sobre-equipe-2-papel"></p>
                 <p class="equipe__texto" id="sobre-equipe-2-text">
-                  Eu, cuido das contas, do prédio, das reformas e de manter a casa de pé. Puxo para a economia e lembro o time que número também é cuidado. Sou o cara que garante que as luzes fiquem acesas enquanto a Charme cuida de beleza e autoestima. 🤪
+                  Eu, cuido das contas, do prédio, das reformas e de manter a
+                  casa de pé. Puxo para a economia e lembro o time que número
+                  também é cuidado. Sou o cara que garante que as luzes fiquem
+                  acesas enquanto a Charme cuida de beleza e autoestima. 🤪
                 </p>
               </div>
             </article>
 
-            <!-- Geovani -->
             <article class="equipe__item">
               <img
                 src="img/Geovani.png"
                 alt="Geovani Cândido de Souza"
-                class="equipe__foto" id="sobre-equipe-3-foto"
+                class="equipe__foto"
+                id="sobre-equipe-3-foto"
               />
               <div class="equipe__info">
-                <h3 class="equipe__nome" id="sobre-equipe-3-nome">Geovani Cândido de Souza</h3>
+                <h3 class="equipe__nome" id="sobre-equipe-3-nome">
+                  Geovani Cândido de Souza
+                </h3>
                 <p class="equipe__papel" id="sobre-equipe-3-papel">
                   tecnolia, organização digital e futuo da marca
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-3-text">
-                  Me considero menor aprendiz de empresário , quero estar em tudo: sistema, dados, marketing e expansão. Sou a mente moderna lutando para empurrar a Charme para o próximo nível, virando madrugada estudando para que o trabalho da minha família renda ainda mais lá na frente
+                  Me considero menor aprendiz de empresário , quero estar em
+                  tudo: sistema, dados, marketing e expansão. Sou a mente
+                  moderna lutando para empurrar a Charme para o próximo nível,
+                  virando madrugada estudando para que o trabalho da minha
+                  família renda ainda mais lá na frente
                 </p>
               </div>
             </article>
-            
-            <!-- Samantha -->
+
             <article class="equipe__item">
               <img
                 src="img/Tamiris.png"
                 alt="Tamiris Candida de Souza"
-                class="equipe__foto" id="sobre-equipe-4-foto"
+                class="equipe__foto"
+                id="sobre-equipe-4-foto"
               />
               <div class="equipe__info">
-                <h3 class="equipe__nome" id="sobre-equipe-4-nome">Tamiris Candida de Souza</h3>
-                <p class="equipe__papel" id="sobre-equipe-4-papel">Cota oficial de irmã adotada, estagiária da família e que pagou pra aparecer</p>
+                <h3 class="equipe__nome" id="sobre-equipe-4-nome">
+                  Tamiris Candida de Souza
+                </h3>
+                <p class="equipe__papel" id="sobre-equipe-4-papel">
+                  Cota oficial de irmã adotada, estagiária da família e que
+                  pagou pra aparecer
+                </p>
                 <p class="equipe__texto" id="sobre-equipe-4-text">
-                  Ninguém sabe ao certo por que a Tamiris está aqui no site: alguns dizem que ela é adotada, outros juram que ela pagou uma taxa só pra garantir a foto bonita. Oficialmente, é a estagiária vitalícia da família Charme: não tem cargo definido, não tem horário, não recebe e ainda leva bronca. Já rodou por tudo – caixa, gôndola, estoque – e hoje atua no setor “faz nada, mas opina em tudo”. Se este texto ainda estiver aqui quando o site for pro ar de verdade, é porque ela renovou o plano “irmã favorita” e seguiu pagando pra aparecer. 🤡❤️
-
-                  
+                  Ninguém sabe ao certo por que a Tamiris está aqui no site:
+                  alguns dizem que ela é adotada, outros juram que ela pagou uma
+                  taxa só pra garantir a foto bonita. Oficialmente, é a
+                  estagiária vitalícia da família Charme: não tem cargo
+                  definido, não tem horário, não recebe e ainda leva bronca. Já
+                  rodou por tudo – caixa, gôndola, estoque – e hoje atua no
+                  setor “faz nada, mas opina em tudo”. Se este texto ainda
+                  estiver aqui quando o site for pro ar de verdade, é porque ela
+                  renovou o plano “irmã favorita” e seguiu pagando pra aparecer.
+                  🤡❤️
                 </p>
               </div>
             </article>
-            
-            <!-- Samantha -->
+
             <article class="equipe__item">
               <img
                 src="img/Samantha.png"
                 alt="Samantha Bárbara Ulhmann Candido"
-                class="equipe__foto" id="sobre-equipe-5-foto"
+                class="equipe__foto"
+                id="sobre-equipe-5-foto"
               />
               <div class="equipe__info">
-                <h3 class="equipe__nome" id="sobre-equipe-5-nome">Samantha Bárbara Ulhmann Candido</h3>
-                <p class="equipe__papel" id="sobre-equipe-5-papel">Motivo e futuro da Charme</p>
+                <h3 class="equipe__nome" id="sobre-equipe-5-nome">
+                  Samantha Bárbara Ulhmann Candido
+                </h3>
+                <p class="equipe__papel" id="sobre-equipe-5-papel">
+                  Motivo e futuro da Charme
+                </p>
                 <p class="equipe__texto" id="sobre-equipe-5-text">
-                  Com 3 anos, é a menor de todas e a maior razão de todo esse corre. É a mascote da famíliaCharme: quando aparece na loja, ganha colo das meninas, distribui abraços, risadas e lembra todo mundo por quem vale a pena trabalhar direito. No fim do dia, cada prateleira arrumada, cada boleto pago e cada sistema organizado tem um pouco de "feito por ela e por quem ama ela
+                  Com 3 anos, é a menor de todas e a maior razão de todo esse
+                  corre. É a mascote da famíliaCharme: quando aparece na loja,
+                  ganha colo das meninas, distribui abraços, risadas e lembra
+                  todo mundo por quem vale a pena trabalhar direito. No fim do
+                  dia, cada prateleira arrumada, cada boleto pago e cada sistema
+                  organizado tem um pouco de "feito por ela e por quem ama ela
                 </p>
               </div>
             </article>
 
-            <!-- Equipe das lojas & clientes -->
             <article class="equipe__item">
               <img
                 src="img/logo-charme.png"
                 alt="Equipe das lojas e clientes"
-                class="equipe__foto" id="sobre-equipe-6-foto"
+                class="equipe__foto"
+                id="sobre-equipe-6-foto"
               />
-
               <div class="equipe__info">
-                <h3 class="equipe__nome" id="sobre-equipe-6-nome">Equipe das lojas &amp; clientes</h3>
-                <p class="equipe__papel" id="sobre-equipe-6-papel">A Charme acontecendo de verdade</p>
+                <h3 class="equipe__nome" id="sobre-equipe-6-nome">
+                  Equipe das lojas &amp; clientes
+                </h3>
+                <p class="equipe__papel" id="sobre-equipe-6-papel">
+                  A Charme acontecendo de verdade
+                </p>
                 <p class="equipe__texto" id="sobre-equipe-6-text">
                   Vendedoras, operadores, atendentes e cada pessoa que entra
                   pelas portas fazem a Charme existir todos os dias. São eles
@@ -430,7 +584,6 @@
       </section>
     </main>
 
-    <!-- Rodapé -->
     <footer class="footer footer--bottom">
       <div class="container footer__inner">
         <span class="footer__brand" id="footer-brand">Charme Cosméticos</span>
