@@ -328,3 +328,40 @@ img {
     justify-content: center;
   }
 }
+
+/* === MOBILE_PATCH_20260131 === */
+
+/* Container menos apertado no celular */
+@media (max-width: 900px){
+  .container{ padding: 0 1.5rem; }
+}
+@media (max-width: 640px){
+  .container{ padding: 0 1rem; }
+
+  /* Header: não esmagar conteúdo */
+  .topbar__inner{
+    height: auto;
+    padding: 10px 0;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* Menu: uma linha rolável ao invés de quebrar e virar bagunça */
+  .nav{
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .nav::-webkit-scrollbar{ display:none; }
+  .nav a{
+    flex: 0 0 auto;
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: .95rem;
+    white-space: nowrap;
+  }
+}

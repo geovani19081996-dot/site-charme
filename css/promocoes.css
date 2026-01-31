@@ -428,3 +428,7 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* === PROMOS_GRID_PATCH_20260131 === */
+.promos-grid{ justify-items: stretch; }
+.promo-card{ width: 100%; }
