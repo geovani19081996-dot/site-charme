@@ -6,45 +6,61 @@
   <title>Orçamento | Charme Cosméticos</title>
 
   <link rel="icon" type="image/png" href="../img/logo-charme-icon.png" />
-  <link rel="stylesheet" href="../css/base.css?v=1" />
-  <link rel="stylesheet" href="../css/orcamento.css?v=1" />
+  <link rel="stylesheet" href="../css/base.css?v=2" />
+  <link rel="stylesheet" href="../css/orcamento.css?v=2" />
+</head>
 
 <body>
+  <div class="oc-top">
+    <div class="oc-top__inner">
+      <a class="oc-brand" href="../index.html">
+        <img src="../img/logo-charme-icon.png" alt="Charme Cosméticos" />
+        <div>
+          <div class="oc-brand__t1">Charme Cosméticos</div>
+          <div class="oc-brand__t2">Orçamento interno</div>
+        </div>
+      </a>
+      <span class="oc-badge">Somente equipe</span>
+    </div>
+  </div>
+
   <div class="wrap">
-    <h1 style="margin:8px 0">Orçamento (interno)</h1>
-    <p class="muted">Escolha a loja, monte o carrinho e envie pro WhatsApp. Sem gravar no Firebird (por enquanto).</p>
+    <h1 class="oc-title">Orçamento</h1>
+    <p class="muted">Escolha a loja, monte o carrinho e envie no WhatsApp. (Ainda não grava no Firebird.)</p>
 
-    <div class="row">
-      <div class="card grow">
-        <div class="row" style="align-items:center;justify-content:space-between">
-          <div class="row" style="align-items:center">
-            <div class="card" style="padding:10px 12px">
-              <div class="muted">Pickup store/Loja de retirada</div>
-              <select id="storeSelect" class="btn2">
-                <option value="1">Loja 1</option>
-                <option value="2">Loja 2</option>
-              </select>
-            </div>
+    <div class="card oc-filters">
+      <div class="oc-filters__grid">
+        <div class="oc-field">
+          <label for="storeSelect">Loja de retirada</label>
+          <select id="storeSelect" class="btn2" style="width:100%">
+            <option value="1">Loja 1</option>
+            <option value="2">Loja 2</option>
+          </select>
+        </div>
 
-            <div class="card" style="padding:10px 12px">
-              <div class="muted">Search/Buscar</div>
-              <input id="search" class="btn2" style="min-width:260px" placeholder="nome ou código" />
-            </div>
+        <div class="oc-field">
+          <label for="search">Buscar</label>
+          <input id="search" class="btn2" style="width:100%" placeholder="nome ou código" />
+        </div>
 
-            <label class="card" style="padding:10px 12px;display:flex;gap:8px;align-items:center">
-              <input id="onlyPromos" type="checkbox" />
-              <span>Only promos/Só promoções</span>
-            </label>
+        <div class="oc-checks">
+          <label class="oc-check">
+            <input id="onlyPromos" type="checkbox" />
+            <span>Só promoções</span>
+          </label>
 
-            <label class="card" style="padding:10px 12px;display:flex;gap:8px;align-items:center">
-              <input id="onlyStock" type="checkbox" checked />
-              <span>Only in stock/Só com estoque</span>
-            </label>
-          </div>
+          <label class="oc-check">
+            <input id="onlyStock" type="checkbox" checked />
+            <span>Só com estoque</span>
+          </label>
 
           <span class="tag" id="metaTag">Carregando…</span>
         </div>
+      </div>
+    </div>
 
+    <div class="oc-layout">
+      <div class="card grow">
         <div class="hr"></div>
         <div id="productGrid" class="grid"></div>
       </div>
@@ -55,7 +71,7 @@
         <div class="hr"></div>
 
         <div class="card" style="padding:10px 12px">
-          <div class="muted">Customer/Cliente (opcional)</div>
+          <div class="muted">Cliente (opcional)</div>
           <input id="clienteNome" class="btn2" placeholder="Nome do cliente" style="width:100%" />
           <input id="clienteFone" class="btn2" placeholder="Telefone (opcional)" style="width:100%;margin-top:8px" />
           <textarea id="obs" class="btn2" placeholder="Observações (opcional)" style="width:100%;margin-top:8px;min-height:70px"></textarea>
@@ -68,19 +84,19 @@
         <div class="line"><strong>Total</strong><strong id="total">R$ 0,00</strong></div>
 
         <div class="actions">
-          <button class="btn2 primary" id="btnWhats">Send WhatsApp/Enviar WhatsApp</button>
-          <button class="btn2" id="btnCopy">Copy text/Copiar texto</button>
-          <button class="btn2" id="btnLink">Share link/Copiar link</button>
-          <button class="btn2 danger" id="btnClear">Clear/Limpar</button>
+          <button class="btn2 primary" id="btnWhats">Enviar WhatsApp</button>
+          <button class="btn2" id="btnCopy">Copiar texto</button>
+          <button class="btn2" id="btnLink">Copiar link</button>
+          <button class="btn2 danger" id="btnClear">Limpar</button>
         </div>
 
         <p class="muted" style="margin-top:10px">
-          Dica: se você proteger essa página com Cloudflare Access/Controle de Acesso, ela fica realmente “fechada”.
+          Dica: se você proteger essa página com Cloudflare Access, ela fica realmente “fechada”.
         </p>
       </div>
     </div>
   </div>
 
-  <script src="orcamento.js?v=1"></script>
+  <script src="orcamento.js?v=2"></script>
 </body>
 </html>

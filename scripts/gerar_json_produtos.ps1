@@ -1,0 +1,652 @@
+$ErrorActionPreference = "Stop"
+
+Write-Host "Executando exportacao de PRODUTOS..." -ForegroundColor Cyan
+
+function Invoke-WithRetry {
+  param(
+    [scriptblock]$Action,
+    [string]$Label = "acao",
+    [int]$Retries = 8,
+    [int]$DelayMs = 250
+  )
+  for ($i = 0; $i -lt $Retries; $i++) {
+    try {
+      return & $Action
+    } catch {
+      if ($i -ge ($Retries - 1)) { throw "$Label falhou: $($_.Exception.Message)" }
+      Start-Sleep -Milliseconds $DelayMs
+    }
+  }
+}
+
+function New-SharedStreamReader {
+  param([string]$Path)
+  $fs = [System.IO.File]::Open($Path, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+  return New-Object System.IO.StreamReader($fs, [System.Text.Encoding]::Default)
+}
+
+function Write-TextSafe {
+  param(
+    [string]$Path,
+    [string]$Content,
+    [System.Text.Encoding]$Encoding
+  )
+  $tmp = "$Path.tmp"
+  Invoke-WithRetry { [System.IO.File]::WriteAllText($tmp, $Content, $Encoding) } "Escrever $tmp"
+  Invoke-WithRetry { Move-Item -Path $tmp -Destination $Path -Force } "Atualizar $Path"
+}
+
+function Sync-Vitrine {
+  param(
+    [string]$SourcePath,
+    [string]$SitePath,
+    [string]$LivePath
+  )
+  if (!(Test-Path $SourcePath)) { throw "Vitrine nao encontrada: $SourcePath" }
+
+  if ($SitePath) {
+    $siteDir = Split-Path $SitePath -Parent
+    if ($siteDir -and !(Test-Path $siteDir)) { New-Item -ItemType Directory -Force -Path $siteDir | Out-Null }
+    Invoke-WithRetry { Copy-Item $SourcePath $SitePath -Force } "Copiar $SitePath"
+    Write-Host "Copia vitrine site: $SitePath" -ForegroundColor Green
+  }
+
+  if ($LivePath) {
+    $liveDir = Split-Path $LivePath -Parent
+    if ($liveDir -and !(Test-Path $liveDir)) { New-Item -ItemType Directory -Force -Path $liveDir | Out-Null }
+    Invoke-WithRetry { Copy-Item $SourcePath $LivePath -Force } "Copiar $LivePath"
+    Write-Host "Copia vitrine live: $LivePath" -ForegroundColor Green
+  }
+
+  if ($SitePath -and $LivePath) {
+    $hashSite = $null
+    $hashLive = $null
+
+    if (Get-Command Get-FileHash -ErrorAction SilentlyContinue) {
+      $hashSite = (Get-FileHash -Algorithm SHA256 -Path $SitePath).Hash
+      $hashLive = (Get-FileHash -Algorithm SHA256 -Path $LivePath).Hash
+    } else {
+      function Get-Sha256Hex([string]$p) {
+        $sha = [System.Security.Cryptography.SHA256]::Create()
+        $fs = [System.IO.File]::OpenRead($p)
+        try { $bytes = $sha.ComputeHash($fs) } finally { $fs.Dispose(); $sha.Dispose() }
+        return (-join ($bytes | ForEach-Object { $_.ToString("x2") })).ToUpperInvariant()
+      }
+      $hashSite = Get-Sha256Hex $SitePath
+      $hashLive = Get-Sha256Hex $LivePath
+    }
+
+    Write-Host ("hash_site_local: {0}" -f $hashSite) -ForegroundColor DarkGray
+    Write-Host ("hash_live_local: {0}" -f $hashLive) -ForegroundColor DarkGray
+    if ($hashSite -ne $hashLive) {
+      throw "Hash vitrine diferente entre site e live."
+    }
+  }
+}
+
+function Resolve-Python {
+  $candidates = @(
+    "C:\Charme\super_painel\.venv\Scripts\python.exe",
+    "C:\Python311\python.exe",
+    "C:\Python310\python.exe",
+    "C:\Python39\python.exe"
+  )
+  foreach ($candidate in $candidates) {
+    if (Test-Path $candidate) { return $candidate }
+  }
+  if (Get-Command py -ErrorAction SilentlyContinue) { return "py" }
+  return $null
+}
+
+function Load-CodMap {
+  param([string]$Path)
+  $map = @{}
+  if (!(Test-Path $Path)) { return $map }
+  foreach ($line in Get-Content -Path $Path) {
+    $t = $line.Trim()
+    if (-not $t) { continue }
+    $p = $t.Split("|")
+    if ($p.Count -lt 2) { continue }
+    $code = 0
+    $cod = 0
+    if ([int]::TryParse($p[0], [ref]$code) -and [long]::TryParse($p[1], [ref]$cod)) {
+      $map[$code] = $cod
+    }
+  }
+  return $map
+}
+
+$exportDir = "C:\Charme\export"
+$sqlFile   = Join-Path $exportDir "produtos_site.sql"
+$txtFile   = Join-Path $exportDir "produtos_site.txt"
+$txtFileTmp = Join-Path $exportDir ("produtos_site_tmp_{0}.txt" -f (Get-Date -Format "yyyyMMdd_HHmmss_fff"))
+$jsonOut   = Join-Path $exportDir "produtos.json"
+$lastCodPath = Join-Path $exportDir "produtos_last_cod.txt"
+$lastMapPath = Join-Path $exportDir "produtos_cod_map.txt"
+$changedCodesPath = Join-Path $exportDir "produtos_changed_codes.txt"
+$siteRepo  = "C:\Charme\git\site-charme"
+$siteDir   = Join-Path $siteRepo "data\private"
+$siteOut   = Join-Path $siteDir "produtos.json"
+$dbPath    = "C:\Celta Sistemas\CELTA.FDB"
+$auxDbPath = "C:\Celta Sistemas\CELTAAUXILIAR.FDB"
+$imgScript = "C:\Charme\git\site-charme\scripts\exportar_imagens_produtos.py"
+$liveImgDir = "C:\Charme\live\img\produtos"
+$asciiEnc  = New-Object System.Text.ASCIIEncoding
+$vitrineOut = Join-Path $exportDir "vitrine.json"
+$siteVitrineOut = Join-Path $siteDir "vitrine.json"
+$statePath = Join-Path $exportDir "vitrine_state.json"
+$imgRepoDir = Join-Path $siteRepo "img\produtos"
+$liveRoot = "C:\Charme\live"
+$livePrivateDir = Join-Path $liveRoot "data\private"
+$liveVitrineOut = Join-Path $livePrivateDir "vitrine.json"
+$MAX_ITEMS = 8
+$LOW_STOCK_LIMIT = 2
+$LOW_STOCK_MAX_BADGES = 3
+$NOVO_DIAS = 7
+
+function Normalize-Text {
+  param([string]$Text)
+  if ($null -eq $Text) { return "" }
+  return $Text.Trim()
+}
+
+function Get-Resumo {
+  param(
+    [string]$Resumo,
+    [string]$Nome,
+    [int]$MaxLen = 90
+  )
+  $value = Normalize-Text $Resumo
+  if (-not $value) { $value = Normalize-Text $Nome }
+  if (-not $value) { return "" }
+  if ($value.Length -gt $MaxLen) { return $value.Substring(0, $MaxLen).Trim() }
+  return $value
+}
+
+function Parse-DateSafe {
+  param([string]$Text)
+  $t = Normalize-Text $Text
+  if (-not $t) { return $null }
+  try {
+    return [datetime]::Parse($t, [System.Globalization.CultureInfo]::InvariantCulture)
+  } catch {
+    return $null
+  }
+}
+
+function Get-ImageOk {
+  param(
+    [string]$ImgName,
+    [string]$BaseDir
+  )
+  $name = Normalize-Text $ImgName
+  if (-not $name) { return $false }
+  $path = Join-Path $BaseDir $name
+  return [System.IO.File]::Exists($path)
+}
+
+function Load-VitrineState {
+  param([string]$Path)
+  if (!(Test-Path $Path)) { return @{} }
+  try {
+    $raw = Get-Content -Path $Path -Raw
+    if (-not $raw.Trim()) { return @{} }
+    $data = $raw | ConvertFrom-Json
+    if ($null -eq $data) { return @{} }
+    $state = @{}
+    foreach ($prop in $data.PSObject.Properties) {
+      $state[$prop.Name] = $prop.Value
+    }
+    return $state
+  } catch {
+    return @{}
+  }
+}
+
+function Get-Price {
+  param($Item)
+  $p1 = 0
+  $p2 = 0
+  if ($Item.preco_loja1 -ne $null) { $p1 = [double]$Item.preco_loja1 }
+  if ($Item.preco_loja2 -ne $null) { $p2 = [double]$Item.preco_loja2 }
+  if ($p1 -gt 0) { return $p1 }
+  if ($p2 -gt 0) { return $p2 }
+  return 0
+}
+
+if (!(Test-Path $sqlFile)) { throw "SQL nao encontrado: $sqlFile" }
+if (!(Test-Path $dbPath)) { throw "Banco nao encontrado: $dbPath" }
+
+# isql.exe (tenta Firebird 5, depois 3)
+$isql = "C:\Program Files\Firebird\Firebird_5_0\isql.exe"
+if (!(Test-Path $isql)) { $isql = "C:\Program Files\Firebird\Firebird_3_0\isql.exe" }
+if (!(Test-Path $isql)) { throw "isql.exe nao encontrado (Firebird_5_0/Firebird_3_0)" }
+
+function Get-CodStamp {
+  $tmpSql = Join-Path $env:TEMP ("_tmp_produtos_cod_{0}.sql" -f (Get-Date -Format "yyyyMMdd_HHmmss_fff"))
+@"
+CONNECT '$dbPath' USER 'SYSDBA' PASSWORD 'masterkey';
+SET HEADING OFF;
+SET LIST OFF;
+SELECT p.EMPRESA || '|' || COALESCE(MAX(p.COD_ATUALIZACAO), 0)
+FROM PRODUTOS p
+WHERE p.EMPRESA IN (1, 2)
+GROUP BY p.EMPRESA
+ORDER BY p.EMPRESA;
+QUIT;
+"@ | Set-Content -Path $tmpSql -Encoding ASCII
+
+  $output = & $isql -q -i $tmpSql
+  Remove-Item $tmpSql -Force -ErrorAction SilentlyContinue
+
+  $lines = @()
+  foreach ($line in $output) {
+    $t = $line.Trim()
+    if ($t -match "^\d+\|\d+") { $lines += $t }
+  }
+  if (-not $lines.Count) { return $null }
+  return ($lines -join "`n")
+}
+
+$codStamp = Get-CodStamp
+if ($codStamp) {
+  $skip = $false
+  if (Test-Path $lastCodPath) {
+    $lastCod = (Get-Content -Path $lastCodPath -Raw -Encoding ASCII).Trim()
+    if ($lastCod -eq $codStamp.Trim()) { $skip = $true }
+  }
+
+  if ($skip) {
+    $needsUpgrade = $false
+    if (!(Test-Path $jsonOut)) {
+      $needsUpgrade = $true
+    } else {
+      try {
+        $rawJson = Get-Content -Path $jsonOut -Raw
+        if ($rawJson -notmatch '"descricao_resumida"') { $needsUpgrade = $true }
+        if ($rawJson -notmatch '"categoria"') { $needsUpgrade = $true }
+        if ($rawJson -notmatch '"marca"') { $needsUpgrade = $true }
+        if ($rawJson -notmatch '"imagem_ok"') { $needsUpgrade = $true }
+      } catch {
+        $needsUpgrade = $true
+      }
+    }
+
+    if (!(Test-Path $vitrineOut)) {
+      $needsUpgrade = $true
+    }
+    if (!(Test-Path $statePath)) {
+      $needsUpgrade = $true
+    }
+
+    if ($needsUpgrade) { $skip = $false }
+  }
+
+  if ($skip) {
+    if (!(Test-Path $lastMapPath) -and (Test-Path $jsonOut)) {
+      try {
+        $data = Get-Content -Path $jsonOut -Raw | ConvertFrom-Json
+        if ($data) {
+          $lines = @()
+          foreach ($item in ($data | Sort-Object codigo)) {
+            $lines += ("{0}|{1}" -f $item.codigo, $item.cod_atualizacao)
+          }
+          Write-TextSafe -Path $lastMapPath -Content ($lines -join "`r`n") -Encoding $asciiEnc
+        }
+      } catch {
+        # ignore
+      }
+    }
+    if (Test-Path $vitrineOut) {
+      Sync-Vitrine -SourcePath $vitrineOut -SitePath $siteVitrineOut -LivePath $liveVitrineOut
+    }
+    Write-Host "Sem mudancas em COD_ATUALIZACAO. Pulando exportacao." -ForegroundColor DarkGray
+    exit 0
+  }
+}
+
+# Rodar isql (o CONNECT esta dentro do .sql)
+& $isql `
+  -q `
+  -user SYSDBA `
+  -password masterkey `
+  -i $sqlFile `
+  -o $txtFileTmp
+
+if (!(Test-Path $txtFileTmp)) { throw "TXT nao gerado: $txtFileTmp" }
+try {
+  Invoke-WithRetry { Copy-Item $txtFileTmp $txtFile -Force } "Copiar $txtFileTmp"
+} catch {
+  Write-Host "Aviso: nao foi possivel atualizar $txtFile (em uso)." -ForegroundColor Yellow
+}
+
+$cultura = [System.Globalization.CultureInfo]::InvariantCulture
+$estilo  = [System.Globalization.NumberStyles]::Any
+
+$map = @{}  # codigo -> objeto final com estoque_loja1/2
+$reader = Invoke-WithRetry { New-SharedStreamReader $txtFileTmp } "Abrir $txtFileTmp"
+try {
+  while (($linha = $reader.ReadLine()) -ne $null) {
+    $l = $linha.Trim()
+    if ([string]::IsNullOrWhiteSpace($l)) { continue }
+    if ($l -notmatch "^\d") {
+      $m = [regex]::Match($l, "(\d.*)")
+      if ($m.Success) { $l = $m.Groups[1].Value } else { continue }
+    }
+    if ($l -notmatch "\|") { continue }
+
+    $p = $l.Split('|')
+    if ($p.Count -lt 10) { continue }
+
+    $empresa = [int]$p[0]
+    $codigo  = [int]$p[1]
+    $nome    = $p[2].Trim()
+    $unidade = $p[3].Trim()
+
+    $precoStr   = $p[4].Trim().Replace(",", ".")
+    $estoqueStr = $p[5].Trim().Replace(",", ".")
+    $codStr     = $p[6].Trim()
+    $dtStr      = $p[7].Trim()
+    $precoBaixouStr = $p[8].Trim()
+    $precoBaixouData = $p[9].Trim()
+    $descResumidaRaw = if ($p.Count -gt 10) { $p[10].Trim() } else { "" }
+    $categoriaRaw = if ($p.Count -gt 11) { $p[11].Trim() } else { "" }
+    $subcategoriaRaw = if ($p.Count -gt 12) { $p[12].Trim() } else { "" }
+    $marcaRaw = if ($p.Count -gt 13) { $p[13].Trim() } else { "" }
+
+    $precoBaixou = $false
+    if ($precoBaixouStr -eq "1" -or $precoBaixouStr.ToLower() -eq "true") {
+      $precoBaixou = $true
+    }
+
+    [double]$preco = 0
+    [double]$estoque = 0
+    [long]$codAtualizacao = 0
+    [void][double]::TryParse($precoStr, $estilo, $cultura, [ref]$preco)
+    [void][double]::TryParse($estoqueStr, $estilo, $cultura, [ref]$estoque)
+    [void][long]::TryParse($codStr, [ref]$codAtualizacao)
+
+    if (-not $map.ContainsKey($codigo)) {
+      $map[$codigo] = [ordered]@{
+        codigo        = $codigo
+        nome          = $nome
+        unidade       = $unidade
+        preco_loja1   = $null
+        preco_loja2   = $null
+        estoque_loja1 = 0.0
+        estoque_loja2 = 0.0
+        cod_atualizacao = 0
+        dt_cadastro  = $dtStr
+        preco_baixou = $false
+        preco_baixou_data = ""
+        preco_baixou_sort = ""
+        descricao_resumida = $descResumidaRaw
+        categoria     = $categoriaRaw
+        subcategoria  = $subcategoriaRaw
+        marca         = $marcaRaw
+        imagem        = "$codigo.jpg"
+      }
+    }
+
+    if ($empresa -eq 1) {
+      $map[$codigo]["preco_loja1"] = $preco
+      $map[$codigo]["estoque_loja1"] = $estoque
+    } elseif ($empresa -eq 2) {
+      $map[$codigo]["preco_loja2"] = $preco
+      $map[$codigo]["estoque_loja2"] = $estoque
+    }
+
+    if ($codAtualizacao -gt $map[$codigo]["cod_atualizacao"]) {
+      $map[$codigo]["cod_atualizacao"] = $codAtualizacao
+    }
+
+    if ($dtStr -and (-not $map[$codigo]["dt_cadastro"])) {
+      $map[$codigo]["dt_cadastro"] = $dtStr
+    }
+
+    if ($precoBaixouData) {
+      $currentSort = [string]$map[$codigo]["preco_baixou_sort"]
+      if (-not $currentSort -or $precoBaixouData -gt $currentSort) {
+        $map[$codigo]["preco_baixou_sort"] = $precoBaixouData
+        $map[$codigo]["preco_baixou"] = $precoBaixou
+        $map[$codigo]["preco_baixou_data"] = $precoBaixouData
+      }
+    }
+
+    if ($descResumidaRaw -and -not $map[$codigo]["descricao_resumida"]) {
+      $map[$codigo]["descricao_resumida"] = $descResumidaRaw
+    }
+    if ($categoriaRaw -and -not $map[$codigo]["categoria"]) {
+      $map[$codigo]["categoria"] = $categoriaRaw
+    }
+    if ($subcategoriaRaw -and -not $map[$codigo]["subcategoria"]) {
+      $map[$codigo]["subcategoria"] = $subcategoriaRaw
+    }
+    if ($marcaRaw -and -not $map[$codigo]["marca"]) {
+      $map[$codigo]["marca"] = $marcaRaw
+    }
+  }
+} finally {
+  $reader.Dispose()
+}
+
+$lista = $map.Values | Sort-Object { $_.codigo }
+foreach ($item in $lista) {
+  if ($item.Contains("preco_baixou_sort")) {
+    [void]$item.Remove("preco_baixou_sort")
+  }
+}
+
+# Registrar cod_atualizacao por codigo e detectar mudancas
+$prevMap = Load-CodMap $lastMapPath
+$changedCodes = New-Object System.Collections.Generic.List[int]
+foreach ($item in $map.Values) {
+  $code = [int]$item.codigo
+  $codAtual = [long]$item.cod_atualizacao
+  if (-not $prevMap.ContainsKey($code) -or $prevMap[$code] -ne $codAtual) {
+    $changedCodes.Add($code) | Out-Null
+  }
+}
+
+$mapLines = @()
+foreach ($item in $lista) {
+  $mapLines += ("{0}|{1}" -f $item.codigo, $item.cod_atualizacao)
+}
+Write-TextSafe -Path $lastMapPath -Content ($mapLines -join "`r`n") -Encoding $asciiEnc
+
+$codesCsv = ""
+if ($changedCodes.Count -gt 0) {
+  $codesCsv = ($changedCodes | Sort-Object -Unique) -join ","
+}
+Write-TextSafe -Path $changedCodesPath -Content $codesCsv -Encoding $asciiEnc
+
+# Enriquecer dados com estoque_total, descricao_resumida, categorias, marca, imagem_ok e reposicao
+$now = Get-Date
+$nowStamp = $now.ToString("yyyy-MM-dd HH:mm:ss")
+$state = Load-VitrineState $statePath
+$stateOut = [ordered]@{}
+
+foreach ($item in $lista) {
+  $item.estoque_total = [math]::Round(([double]$item.estoque_loja1 + [double]$item.estoque_loja2), 4)
+  $item.descricao_resumida = Get-Resumo $item.descricao_resumida $item.nome 90
+  $item.categoria = Normalize-Text $item.categoria
+  $item.subcategoria = Normalize-Text $item.subcategoria
+  $item.marca = Normalize-Text $item.marca
+  $item.imagem_ok = Get-ImageOk $item.imagem $imgRepoDir
+
+  $codeKey = [string]$item.codigo
+  $prev = $null
+  if ($state.ContainsKey($codeKey)) { $prev = $state[$codeKey] }
+
+  $prevStock = $null
+  $prevReposicao = $false
+  $prevReposicaoData = ""
+
+  if ($prev -ne $null) {
+    if ($prev.PSObject.Properties.Name -contains "stock_total_anterior") {
+      $prevStock = [double]$prev.stock_total_anterior
+    }
+    if ($prev.PSObject.Properties.Name -contains "reposicao_ativa") {
+      $prevReposicao = [bool]$prev.reposicao_ativa
+    }
+    if ($prev.PSObject.Properties.Name -contains "reposicao_data") {
+      $prevReposicaoData = [string]$prev.reposicao_data
+    }
+  }
+
+  $reposicaoAtiva = $prevReposicao
+  $reposicaoData = $prevReposicaoData
+
+  if ($prevStock -ne $null -and $prevStock -le 0 -and $item.estoque_total -gt 0) {
+    $reposicaoAtiva = $true
+    $reposicaoData = $nowStamp
+  }
+
+  if ($item.estoque_total -le 0) {
+    $reposicaoAtiva = $false
+  }
+
+  $item.reposicao = ($reposicaoAtiva -and $item.estoque_total -ge 1)
+  $item.reposicao_data = if ($item.reposicao -and $reposicaoData) { $reposicaoData } else { "" }
+
+  $stateOut[$codeKey] = [ordered]@{
+    stock_total_anterior = $item.estoque_total
+    reposicao_ativa = [bool]$reposicaoAtiva
+  }
+  if ($reposicaoData) {
+    $stateOut[$codeKey]["reposicao_data"] = $reposicaoData
+  }
+}
+
+# JSON UTF-8 sem BOM
+$json = ($lista | ConvertTo-Json -Depth 6)
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+Write-TextSafe -Path $jsonOut -Content $json -Encoding $utf8NoBom
+if ($codStamp) { Set-Content -Path $lastCodPath -Value $codStamp -Encoding ASCII }
+
+Write-Host "JSON gerado: $jsonOut" -ForegroundColor Green
+Write-Host ("Total produtos: " + $lista.Count) -ForegroundColor Cyan
+
+if (Test-Path $siteRepo) {
+  if (!(Test-Path $siteDir)) { New-Item -ItemType Directory -Force -Path $siteDir | Out-Null }
+  Invoke-WithRetry { Copy-Item $jsonOut $siteOut -Force } "Copiar $siteOut"
+  Write-Host "Copia para site: $siteOut" -ForegroundColor Green
+}
+
+# Gerar vitrine.json (8 principais + 8 fallback)
+$normalized = foreach ($item in $lista) {
+  if (-not $item.codigo -or -not $item.nome) { continue }
+  if (-not $item.imagem_ok) { continue }
+
+  $preco = Get-Price $item
+  if ($preco -le 0) { continue }
+  if ($item.estoque_total -le 0) { continue }
+
+  $dtCadastro = Parse-DateSafe $item.dt_cadastro
+  $precoBaixouDt = Parse-DateSafe $item.preco_baixou_data
+
+  $novo = $false
+  if ($dtCadastro) {
+    $diffDays = ($now - $dtCadastro).TotalDays
+    if ($diffDays -ge 0 -and $diffDays -le $NOVO_DIAS) { $novo = $true }
+  }
+
+  $lowStock = ($item.estoque_total -gt 0 -and $item.estoque_total -le $LOW_STOCK_LIMIT)
+
+  [pscustomobject]@{
+    item = $item
+    preco = $preco
+    estoque_total = $item.estoque_total
+    novo = $novo
+    preco_baixou = [bool]$item.preco_baixou
+    preco_baixou_sort = if ($precoBaixouDt) { $precoBaixouDt.Ticks } else { 0 }
+    dt_cadastro_sort = if ($dtCadastro) { $dtCadastro.Ticks } else { 0 }
+    low_stock = $lowStock
+    reposicao = [bool]$item.reposicao
+  }
+}
+
+$priority = $normalized | Where-Object { $_.novo -or $_.reposicao -or $_.preco_baixou }
+$lowStock = $normalized | Where-Object { $_.low_stock -and -not ($_.novo -or $_.reposicao -or $_.preco_baixou) }
+$rest = $normalized | Where-Object { -not ($_.novo -or $_.reposicao -or $_.preco_baixou) -and -not $_.low_stock }
+
+$priority = $priority | Sort-Object -Property `
+  @{ Expression = { if ($_.novo) { 0 } elseif ($_.reposicao) { 1 } elseif ($_.preco_baixou) { 2 } else { 3 } } }, `
+  @{ Expression = { if ($_.novo) { -$_.dt_cadastro_sort } elseif ($_.preco_baixou) { -$_.preco_baixou_sort } else { 0 } } }, `
+  @{ Expression = { $_.item.nome } }
+
+$lowStock = $lowStock | Sort-Object -Property `
+  @{ Expression = { $_.estoque_total } }, `
+  @{ Expression = { $_.item.nome } }
+
+$rest = $rest | Sort-Object -Property `
+  @{ Expression = { $_.item.nome } }, `
+  @{ Expression = { -[long]$_.item.cod_atualizacao } }
+
+$selected = New-Object System.Collections.Generic.List[object]
+$selectedCodes = New-Object System.Collections.Generic.HashSet[string]
+
+foreach ($entry in ($priority | Select-Object -First $MAX_ITEMS)) {
+  $selected.Add($entry.item) | Out-Null
+  $selectedCodes.Add([string]$entry.item.codigo) | Out-Null
+}
+
+if ($selected.Count -lt $MAX_ITEMS) {
+  $limit = [math]::Min($LOW_STOCK_MAX_BADGES, $MAX_ITEMS - $selected.Count)
+  foreach ($entry in ($lowStock | Select-Object -First $limit)) {
+    $selected.Add($entry.item) | Out-Null
+    $selectedCodes.Add([string]$entry.item.codigo) | Out-Null
+  }
+}
+
+if ($selected.Count -lt $MAX_ITEMS) {
+  $limit = $MAX_ITEMS - $selected.Count
+  foreach ($entry in ($rest | Select-Object -First $limit)) {
+    $selected.Add($entry.item) | Out-Null
+    $selectedCodes.Add([string]$entry.item.codigo) | Out-Null
+  }
+}
+
+$fallback = New-Object System.Collections.Generic.List[object]
+foreach ($entry in $rest) {
+  $code = [string]$entry.item.codigo
+  if ($selectedCodes.Contains($code)) { continue }
+  $fallback.Add($entry.item) | Out-Null
+  if ($fallback.Count -ge $MAX_ITEMS) { break }
+}
+
+$vitrineList = @($selected + $fallback)
+$vitrineJson = ($vitrineList | ConvertTo-Json -Depth 6)
+Write-TextSafe -Path $vitrineOut -Content $vitrineJson -Encoding $utf8NoBom
+
+$stateDir = Split-Path $statePath -Parent
+if ($stateDir -and !(Test-Path $stateDir)) {
+  New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
+}
+$stateJson = ($stateOut | ConvertTo-Json -Depth 6)
+Write-TextSafe -Path $statePath -Content $stateJson -Encoding $utf8NoBom
+
+Sync-Vitrine -SourcePath $vitrineOut -SitePath $siteVitrineOut -LivePath $liveVitrineOut
+
+# Exportar imagens dos produtos alterados (live)
+if ($codesCsv -and (Test-Path $imgScript) -and (Test-Path $auxDbPath)) {
+  $python = Resolve-Python
+  if ($python) {
+    New-Item -ItemType Directory -Force -Path $liveImgDir | Out-Null
+    try {
+      & $python $imgScript `
+        --main-db "$dbPath" `
+        --aux-db "$auxDbPath" `
+        --out-dir "$liveImgDir" `
+        --codes "$codesCsv" `
+        --overwrite | Out-Null
+      Write-Host ("Imagens exportadas (live): " + $codesCsv) -ForegroundColor DarkGray
+    } catch {
+      Write-Host ("Aviso: falha exportar imagens (live): " + $_.Exception.Message) -ForegroundColor Yellow
+    }
+  } else {
+    Write-Host "Aviso: python nao encontrado para exportar imagens." -ForegroundColor Yellow
+  }
+}
+
+Invoke-WithRetry { Remove-Item $txtFileTmp -Force -ErrorAction SilentlyContinue } "Remover $txtFileTmp"
