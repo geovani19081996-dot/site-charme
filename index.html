@@ -1,827 +1,438 @@
 <!doctype html>
-<html lang="pt-BR">
-  <!-- =======================================================
-       BLOCO 01 • HEAD / META / FONTES / CSS
-       ======================================================= -->
+<html lang="pt-br">
   <head>
-    <meta charset="UTF-8" />
-    <title>Charme Cosméticos | Beleza acessível, com cuidado de família</title>
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#EC268F" />
     <meta
       name="description"
-      content="Charme Cosméticos - duas lojas em Lucas do Rio Verde, com beleza acessível, atendimento humano e cuidado de família."
+      content="Charme Cosméticos em Lucas do Rio Verde: beleza acessível, com cuidado de família. Lojas, produtos, promoções e contato."
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#EC268F" />
 
-    <!-- JSON-LD (Schema.org) — Dados estruturados para SEO local -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "Organization",
-            "@id": "https://charmecosmeticos.com/#org",
-            "name": "Charme Cosméticos",
-            "url": "https://charmecosmeticos.com/",
-            "logo": "https://charmecosmeticos.com/img/logo-charme.png",
-            "sameAs": [
-              "https://www.instagram.com/charmecosmeticoslrv/",
-              "https://www.facebook.com/charmecosmeticoslrv/",
-              "https://share.google/u4loqToUUMESU5oXw",
-              "https://share.google/pGB0RyRlF5XsWaPZj"
-            ],
-            "contactPoint": [
-              {
-                "@type": "ContactPoint",
-                "contactType": "customer service",
-                "telephone": "+55-65-3549-4404",
-                "areaServed": "BR",
-                "availableLanguage": ["pt-BR"],
-                "url": "https://wa.me/556535494404"
-              }
-            ]
-          },
-          {
-            "@type": "WebSite",
-            "@id": "https://charmecosmeticos.com/#website",
-            "url": "https://charmecosmeticos.com/",
-            "name": "Charme Cosméticos",
-            "publisher": { "@id": "https://charmecosmeticos.com/#org" },
-            "inLanguage": "pt-BR"
-          },
-          {
-            "@type": "Store",
-            "@id": "https://charmecosmeticos.com/#loja-jardim-das-palmeiras",
-            "name": "Charme Cosméticos – Loja Jardim das Palmeiras",
-            "url": "https://charmecosmeticos.com/#lojas",
-            "telephone": "+55-65-3549-4404",
-            "priceRange": "$$",
-            "parentOrganization": {
-              "@id": "https://charmecosmeticos.com/#org"
-            },
-            "sameAs": ["https://share.google/u4loqToUUMESU5oXw"],
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Av. Espírito Santo, 752-S - Jardim das Palmeiras",
-              "addressLocality": "Lucas do Rio Verde",
-              "addressRegion": "MT",
-              "postalCode": "78455-000",
-              "addressCountry": "BR"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": -13.0831042,
-              "longitude": -55.9123232
-            },
-            "hasMap": "https://www.google.com/maps/dir//Charme+Cosm%C3%A9ticos+%E2%80%93+Loja+Jardim+das+Palmeiras+-+Av.+Esp%C3%ADrito+Santo,+752-S+-+Jardim+das+Palmeiras,+Lucas+do+Rio+Verde+-+MT,+78455-000/@-13.0781448,-55.9194736,16z/data=!4m9!4m8!1m0!1m5!1m1!1s0x93a0f31b60150887:0x774ec7ae45160142!2m2!1d-55.9123232!2d-13.0831042!3e0?entry=ttu&g_ep=EgoyMDI1MTIwOC4wIKXMDSoASAFQAw%3D%3D",
-            "openingHoursSpecification": [
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday"
-                ],
-                "opens": "08:00",
-                "closes": "11:00"
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday"
-                ],
-                "opens": "13:00",
-                "closes": "18:00"
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Saturday"],
-                "opens": "08:00",
-                "closes": "12:00"
-              }
-            ]
-          },
-          {
-            "@type": "Store",
-            "@id": "https://charmecosmeticos.com/#loja-cidade-nova",
-            "name": "Charme Cosméticos – Loja Cidade Nova",
-            "url": "https://charmecosmeticos.com/#lojas",
-            "telephone": "+55-65-3549-4404",
-            "priceRange": "$$",
-            "parentOrganization": {
-              "@id": "https://charmecosmeticos.com/#org"
-            },
-            "sameAs": ["https://share.google/pGB0RyRlF5XsWaPZj"],
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Av. Mato Grosso, 1417-E - Cidade Nova",
-              "addressLocality": "Lucas do Rio Verde",
-              "addressRegion": "MT",
-              "postalCode": "78455-000",
-              "addressCountry": "BR"
-            },
-            "hasMap": "https://www.google.com/maps?s=web&rlz=1C1CHZN_pt-BRBR997BR997&lqi=ChFjaGFybWUgY29zbWV0aWNvc0iZk9bglLWAgAhaGxAAEAEYABgBIhFjaGFybWUgY29zbWV0aWNvc5IBD2Nvc21ldGljc19zdG9yZQ&vet=12ahUKEwj6_en7xLSRAxVTK7kGHQWBF4kQ1YkKegQIMBAB..i&cs=0&um=1&ie=UTF-8&fb=1&gl=br&sa=X&geocode=KdHBSeun86CTMROzV1D-R3OC&daddr=Av.+Mato+Grosso,+1417+E+-+Cidade+Nova,+Lucas+do+Rio+Verde+-+MT,+78455-000",
-            "openingHoursSpecification": [
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday"
-                ],
-                "opens": "08:00",
-                "closes": "11:00"
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday"
-                ],
-                "opens": "13:00",
-                "closes": "18:00"
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Saturday"],
-                "opens": "08:00",
-                "closes": "12:00"
-              }
-            ]
-          }
-        ]
-      }
-    </script>
+    <title>Charme Cosméticos | Beleza acessível, com cuidado de família.</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/logo-charme-icon.png" />
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Icons/Ícones (Phosphor Icons) -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"
-    />
-
-    <!-- CSS base + home + promoções -->
     <link rel="stylesheet" href="css/base.css?v=202601310123" />
-    <link rel="stylesheet" href="css/avisos.css?v=202601310123" />
     <link rel="stylesheet" href="css/home.css?v=202601310123" />
     <link rel="stylesheet" href="css/vitrine.css?v=202601310123" />
     <link rel="stylesheet" href="css/promocoes.css?v=202601310123" />
-    <link rel="stylesheet" href="css/quemsomos.css?v=202601310123" />
+    <link rel="stylesheet" href="css/avisos.css?v=202601310123" />
 
-    <!-- Font Awesome (ícones Whats/Instagram) -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-
-    <!-- =======================================================
-         HOTFIX (mínimo necessário)
-         - Mapeia variáveis antigas (rosa-*) e novas (pink-*)
-         - Garante faixa rosa no topo e links legíveis
-         - Melhora ancoragem com header sticky
-         ======================================================= -->
     <style>
-      :root {
-        /* Paleta oficial (mantém tudo consistente) */
-        --rosa-intenso: #ec268f;
-        --rosa-medio: #f7afd5;
-        --rosa-claro: #fdeff6;
-        --dourado: #c49332;
-
-        --cinza-texto: #4a4a4a;
-        --preto-suave: #222222;
-        --branco: #ffffff;
-
-        /* Alias/compatibilidade (arquivos misturados) */
-        --pink: #ec268f;
-        --pink-dark: #d51f7e;
-        --pink-light: #fdeff6;
-
-        --white: #ffffff;
-        --text-dark: #222222;
-        --gray: #666666;
-        --text-light: #666666;
-
-        --pink-soft: rgba(236, 38, 143, 0.12);
-        --pink-soft-2: #fdeff6;
-
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-      }
-
-      /* Faixa rosa no topo (sem depender do humor do CSS) */
-      .topbar {
+      /* Ajustes críticos do topo: mantêm o header estável e evitam “sumir menu” por CSS quebrado */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
         background: linear-gradient(
           90deg,
-          var(--rosa-intenso),
-          var(--pink-dark)
-        ) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
+          #ec268f 0%,
+          #d91e80 55%,
+          #ec268f 100%
+        );
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+      }
+      .site-header .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        gap: 14px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 220px;
+        color: #fff;
+        text-decoration: none;
+      }
+      .brand img {
+        height: 34px;
+        width: auto;
+        display: block;
+      }
+      .brand .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+      }
+      .brand .brand-text strong {
+        font-size: 15px;
+        letter-spacing: 0.2px;
+      }
+      .brand .brand-text span {
+        font-size: 12px;
+        opacity: 0.92;
       }
 
-      .topbar .logo__tagline {
-        color: rgba(255, 255, 255, 0.92) !important;
-        font-weight: 700;
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+        background: rgba(255, 255, 255, 0);
+      }
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-1px);
+      }
+      .nav-links a.active {
+        background: rgba(255, 255, 255, 0.18);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
       }
 
-      .nav a {
-        color: rgba(255, 255, 255, 0.95) !important;
-      }
-      .nav a:hover {
-        color: #ffffff !important;
-      }
-      .nav a.active::after {
-        background: rgba(255, 255, 255, 0.95) !important;
+      /* Âncora não esconder título atrás do header */
+      section[id] {
+        scroll-margin-top: 92px;
       }
 
-      /* Âncoras não ficam escondidas pelo header sticky */
-      #inicio,
-      #lojas,
-      #produtos,
-      #vitrine,
-      #promocoes,
-      #contato {
-        scroll-margin-top: 120px;
-      }
-
-      @media (max-width: 768px) {
-        #inicio,
-        #lojas,
-        #produtos,
-        #vitrine,
-        #promocoes,
-        #contato {
-          scroll-margin-top: 140px;
+      @media (max-width: 920px) {
+        .site-header .container {
+          align-items: flex-start;
+        }
+        .brand {
+          min-width: unset;
+        }
+        .nav-links {
+          justify-content: flex-start;
         }
       }
     </style>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "Charme Cosméticos",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lucas do Rio Verde",
+          "addressRegion": "MT",
+          "addressCountry": "BR"
+        }
+      }
+    </script>
   </head>
 
-  <body>
-    <!-- =======================================================
-         BLOCO 02 • TOPO / MENU (TOPBAR)
-         ======================================================= -->
-    <header class="topbar">
-      <div class="container topbar__inner">
-        <a class="logo" href="#inicio" aria-label="Ir para o início">
-          <img
-            src="img/logo-charme.png"
-            alt="Charme Cosméticos"
-            class="logo__img"
-          />
-          <span class="logo__tagline" id="site-tagline"
-            >Beleza acessível, com cuidado de família.</span
-          >
+  <body class="page-home">
+    <!-- CONGELADO: estrutura do HTML e IDs de seção. Evitar mexer aqui; brilho vem no CSS depois. -->
+
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="#inicio" aria-label="Ir para o início">
+          <img src="img/logo_charme_branco.png" alt="Charme Cosméticos" />
+          <span class="brand-text">
+            <strong>Charme Cosméticos</strong>
+            <span>Beleza acessível, com cuidado de família.</span>
+          </span>
         </a>
 
-        <nav class="nav" aria-label="Menu principal">
-          <a href="#inicio" id="nav-inicio" class="active">Início</a>
-          <a href="#lojas" id="nav-lojas">Lojas</a>
-          <a href="#produtos" id="nav-produtos">Produtos</a>
-          <a href="#promocoes" id="nav-promocoes">Promoções</a>
-          <a href="sobre.html" id="nav-quem">Quem somos</a>
-          <a href="#contato" id="nav-contato">Contato</a>
+        <nav class="nav-links" aria-label="Navegação principal">
+          <a href="#inicio" class="active">Início</a>
+          <a href="#lojas">Lojas</a>
+          <a href="#produtos">Produtos</a>
+          <a href="#promocoes">Promoções</a>
+          <a href="sobre.html">Quem somos</a>
+          <a href="#contato">Contato</a>
         </nav>
       </div>
     </header>
 
-    <div id="site-avisos" class="avisos-bar" hidden>
-      <div class="container avisos-bar__inner"></div>
-    </div>
-
-    <!-- =======================================================
-         BLOCO 03 • MAIN (CONTEÚDO PRINCIPAL)
-         ======================================================= -->
     <main>
-      <!-- ---------------------------------------------------
-           BLOCO 03.1 • HERO (CAPA INICIAL)
-           --------------------------------------------------- -->
-      <section class="hero" id="inicio">
-        <div class="container hero__inner">
-          <div class="hero__label" id="home-hero-label">
-            Marca de família em Lucas do Rio Verde
-          </div>
-          <h1 class="hero__title" id="home-hero-title">
-            Beleza acessível, com cuidado de família.
-          </h1>
-          <p class="hero__text" id="home-hero-text">
+      <!-- HERO -->
+      <section id="inicio" class="hero">
+        <div class="container">
+          <p class="kicker">Marca de família em Lucas do Rio Verde</p>
+          <h1>Beleza acessível, com cuidado de família.</h1>
+          <p class="lead">
             Duas lojas de cosméticos que nasceram do sonho de oferecer
             atendimento humano, preço justo e produtos que deixam o dia a dia
             mais leve.
           </p>
 
-          <div class="hero__actions">
-            <!-- Botão principal: leva pros cards de lojas -->
-            <a href="#lojas" class="btn btn--primary" id="home-cta-lojas">
-              Ver endereços das lojas
-            </a>
+          <div class="cta-row">
+            <a class="btn-primary" href="#lojas">Ver endereços das lojas</a>
+          </div>
 
-            <!-- Linha com icons/ícones sociais -->
-            <div class="hero__social">
-              <span class="hero__social-label" id="home-social-label">
-                Preferiu falar direto?
-              </span>
-
-              <div class="hero__social-links">
-                <!-- WhatsApp geral -->
-                <a
-                  class="hero__social-link hero__social-link--whats"
-                  href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Falar com a Charme pelo WhatsApp"
-                >
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-
-                <!-- Instagram oficial -->
-                <a
-                  class="hero__social-link hero__social-link--insta"
-                  href="https://www.instagram.com/charmecosmeticoslrv/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Ver Instagram da Charme Cosméticos"
-                >
-                  <i class="fa-brands fa-instagram"></i>
-                </a>
-              </div>
+          <div class="quick-contact">
+            <p>Preferiu falar direto?</p>
+            <div class="social">
+              <a
+                href="https://wa.me/5599980000000"
+                target="_blank"
+                rel="noopener"
+                >WhatsApp</a
+              >
+              <a href="https://instagram.com/" target="_blank" rel="noopener"
+                >Instagram</a
+              >
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ---------------------------------------------------
-           BLOCO 03.2 • SEÇÃO LOJAS (#lojas)
-           --------------------------------------------------- -->
-      <section class="section" id="lojas">
+      <!-- LOJAS -->
+      <section id="lojas" class="page-section">
         <div class="container">
-          <h2 class="section__title" id="home-lojas-title">Nossas lojas</h2>
-          <p class="section__subtitle" id="home-lojas-subtitle">
+          <h2>Nossas lojas</h2>
+          <p class="section-subtitle">
             Duas unidades em Lucas do Rio Verde, pensadas para atender tanto
             quem passa rapidinho quanto quem gosta de conversar e pedir
             conselho.
           </p>
-        </div>
 
-        <div class="container cards">
-          <!-- Loja 1 - Matriz -->
-          <article class="card">
-            <div class="card__tag" id="lojas-tag-1">Matriz</div>
-            <h3 class="card__title" id="lojas-title-1">
-              Loja 1 – Jardim das Palmeiras
-            </h3>
+          <div class="lojas-grid">
+            <article class="loja-card">
+              <div class="pill">MATRIZ</div>
+              <h3>Loja 1 – Jardim das Palmeiras</h3>
 
-            <!-- Mapa embed/embutido dentro do card -->
-            <div class="card__map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31090.029238045558!2d-55.94436877490686!3d-13.083104199999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93a0f31b60150887%3A0x774ec7ae45160142!2sCharme%20Cosm%C3%A9ticos%20%E2%80%93%20Loja%20Jardim%20das%20Palmeiras!5e0!3m2!1spt-BR!2sbr!4v1765420515936!5m2!1spt-BR!2sbr"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
+              <div class="map-wrap">
+                <iframe
+                  title="Mapa Charme Cosméticos - Jardim das Palmeiras"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d..."
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
 
-            <div class="card__actions card__actions--double">
               <a
-                class="btn btn--outline"
-                id="lojas-btn-1"
-                href="https://www.google.com/maps/dir//Charme+Cosm%C3%A9ticos+%E2%80%93+Loja+Jardim+das+Palmeiras+-+Av.+Esp%C3%ADrito+Santo,+752-S+-+Jardim+das+Palmeiras,+Lucas+do+Rio+Verde+-+MT,+78455-000/@-13.0781448,-55.9194736,16z/data=!4m9!4m8!1m0!1m5!1m1!1s0x93a0f31b60150887:0x774ec7ae45160142!2m2!1d-55.9123232!2d-13.0831042!3e0?entry=ttu&g_ep=EgoyMDI1MTIwOC4wIKXMDSoASAFQAw%3D%3D"
+                class="btn-outline"
+                href="https://maps.google.com/?q=Charme%20Cosm%C3%A9ticos%20Jardim%20das%20Palmeiras"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
               >
-                <i class="ph ph-map-pin"></i>
                 Localizar no mapa
               </a>
-            </div>
-          </article>
+            </article>
 
-          <!-- Loja 2 - Filial -->
-          <article class="card card--filial">
-            <div class="card__tag" id="lojas-tag-2">Filial</div>
-            <h3 class="card__title" id="lojas-title-2">Loja 2 – Cidade Nova</h3>
+            <article class="loja-card">
+              <div class="pill">FILIAL</div>
+              <h3>Loja 2 – Cidade Nova</h3>
 
-            <!-- Mapa embed/embutido dentro do card -->
-            <div class="card__map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31090.029238045558!2d-55.94436877490686!3d-13.083104199999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93a0f3a7eb49c1d1%3A0x827347fe5057b313!2sCharme%20Cosm%C3%A9ticos%20%E2%80%93%20Loja%20Cidade%20Nova!5e0!3m2!1spt-BR!2sbr!4v1765420572972!5m2!1spt-BR!2sbr"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
+              <div class="map-wrap">
+                <iframe
+                  title="Mapa Charme Cosméticos - Cidade Nova"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d..."
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
 
-            <div class="card__actions card__actions--double">
               <a
-                class="btn btn--outline"
-                id="lojas-btn-2"
-                href="https://www.google.com/maps?s=web&rlz=1C1CHZN_pt-BRBR997BR997&lqi=ChFjaGFybWUgY29zbWV0aWNvc0iZk9bglLWAgAhaGxAAEAEYABgBIhFjaGFybWUgY29zbWV0aWNvc5IBD2Nvc21ldGljc19zdG9yZQ&vet=12ahUKEwj6_en7xLSRAxVTK7kGHQWBF4kQ1YkKegQIMBAB..i&cs=0&um=1&ie=UTF-8&fb=1&gl=br&sa=X&geocode=KdHBSeun86CTMROzV1D-R3OC&daddr=Av.+Mato+Grosso,+1417+E+-+Cidade+Nova,+Lucas+do+Rio+Verde+-+MT,+78455-000"
+                class="btn-outline"
+                href="https://maps.google.com/?q=Charme%20Cosm%C3%A9ticos%20Cidade%20Nova"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
               >
-                <i class="ph ph-map-pin"></i>
                 Localizar no mapa
               </a>
-            </div>
-          </article>
+            </article>
+          </div>
         </div>
       </section>
 
-      <!-- ---------------------------------------------------
-           BLOCO 03.3 • SEÇÃO PRODUTOS / CATEGORIAS (#CHECKPOINT 1.1: CONTAINER)
-           --------------------------------------------------- -->
-      <section class="section" id="produtos">
+      <!-- PRODUTOS -->
+      <section id="produtos" class="page-section">
         <div class="container">
-          <h2 class="section__title" id="home-produtos-title">
-            O que a Charme vende
-          </h2>
-          <p class="section__subtitle" id="home-produtos-subtitle">
+          <h2>O que a Charme vende</h2>
+          <p class="section-subtitle">
             Mix completo para cabelo, maquiagem, unhas, pele, perfumaria e linha
             profissional.
           </p>
-        </div>
 
-        <div class="container categorias">
-          <article class="categoria">
-            <div class="categoria__nome" id="prod-cat-1-name">Cabelos</div>
-            <div class="categoria__descricao" id="prod-cat-1-desc">
-              Shampoo, condicionador, máscaras, finalizadores.
+          <div class="categorias">
+            <div class="categoria">
+              <h3>Cabelos</h3>
+              <p>Shampoo, condicionador, máscaras, finalizadores.</p>
             </div>
-          </article>
-
-          <article class="categoria">
-            <div class="categoria__nome" id="prod-cat-2-name">Maquiagem</div>
-            <div class="categoria__descricao" id="prod-cat-2-desc">
-              Bases, batons, pós, sombras e mais.
+            <div class="categoria">
+              <h3>Maquiagem</h3>
+              <p>Bases, batons, pós, sombras e mais.</p>
             </div>
-          </article>
-
-          <article class="categoria">
-            <div class="categoria__nome" id="prod-cat-3-name">Unhas</div>
-            <div class="categoria__descricao" id="prod-cat-3-desc">
-              Esmaltes, removedores e linha manicure.
+            <div class="categoria">
+              <h3>Unhas</h3>
+              <p>Esmaltes, removedores e linha manicure.</p>
             </div>
-          </article>
-
-          <article class="categoria">
-            <div class="categoria__nome" id="prod-cat-4-name">Perfumaria</div>
-            <div class="categoria__descricao" id="prod-cat-4-desc">
-              Colônias, body splash e fragrâncias.
+            <div class="categoria">
+              <h3>Perfumaria</h3>
+              <p>Colônias, body splash e fragrâncias.</p>
             </div>
-          </article>
-
-          <article class="categoria">
-            <div class="categoria__nome" id="prod-cat-5-name">Skincare</div>
-            <div class="categoria__descricao" id="prod-cat-5-desc">
-              Hidratação e cuidados acessíveis.
+            <div class="categoria">
+              <h3>Skincare</h3>
+              <p>Hidratação e cuidados acessíveis.</p>
             </div>
-          </article>
-
-          <article class="categoria">
-            <div class="categoria__nome" id="prod-cat-6-name">
-              Linha profissional
+            <div class="categoria">
+              <h3>Linha profissional</h3>
+              <p>Tamanhos profissionais e produtos de salão.</p>
             </div>
-            <div class="categoria__descricao" id="prod-cat-6-desc">
-              Tamanhos profissionais e produtos de salão.
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ---------------------------------------------------
-           BLOCO 03.4 - VITRINE AO VIVO (#vitrine)
-           --------------------------------------------------- -->
-      <section id="vitrine" class="secao-vitrine">
-        <div class="container">
-          <header class="vitrine-header">
-            <div class="vitrine-header__kicker" id="vitrine-kicker">
-              Atualizados agora
-            </div>
-            <h2 class="vitrine-header__title" id="vitrine-title">
-              Últimas atualizações
-            </h2>
-            <p class="vitrine-header__subtitle" id="vitrine-subtitle">
-              Confira as novidades e reposições que acabaram de chegar nas
-              nossas prateleiras. Role para baixo e aproveite as promoções!
-            </p>
-          </header>
-
-          <div class="vitrine-toolbar">
-            <span class="vitrine-pill" id="vitrine-count">
-              12 novidades para você.
-            </span>
-          </div>
-
-          <div id="vitrine-grid" class="vitrine-grid"></div>
-          <div id="vitrine-empty" class="vitrine-empty" hidden>
-            Nenhum produto disponivel no momento.
           </div>
         </div>
       </section>
 
-      <!-- ---------------------------------------------------
-           BLOCO 03.4 • SEÇÃO PROMOÇÕES PREMIUM
-           (listagem dinâmica via promocoes.js)
-           --------------------------------------------------- -->
-      <section id="promocoes" class="secao-promocoes">
+      <!-- VITRINE (dinâmica) -->
+      <section id="vitrine" class="page-section">
         <div class="container">
-          <header class="promos-header">
-            <div class="promos-header__kicker" id="promos-kicker">
-              Ofertas selecionadas da Charme Cosméticos
-            </div>
-            <h2 class="promos-header__title" id="promos-title">
-              Promoções ativas
-            </h2>
-            <p class="promos-header__subtitle" id="promos-subtitle">
-              Preço bom, prazo limitado e estoque real das lojas — viu, gostou,
-              manda WhatsApp 💗.
-            </p>
-          </header>
+          <h2>Vitrine</h2>
+          <p class="section-subtitle">Destaques e novidades das lojas.</p>
 
-          <div class="promos-toolbar">
-            <div class="promos-toolbar__left">
-              <span id="promos-count" class="promos-pill"
-                >Carregando promoções...</span
-              >
-            </div>
+          <div id="vitrine-root"></div>
+        </div>
+      </section>
 
-            <div class="promos-toolbar__right">
-              <div class="promos-field">
-                <input
-                  type="text"
-                  id="promo-search"
-                  class="promos-input"
-                  placeholder="Buscar promoção..."
-                />
-              </div>
+      <!-- PROMOÇÕES (dinâmica) -->
+      <section id="promocoes" class="page-section">
+        <div class="container">
+          <h2>Promoções ativas</h2>
+          <p class="section-subtitle">
+            Preço bom, prazo limitado e estoque real das lojas.
+          </p>
 
-              <div class="promos-field">
-                <select id="promo-category" class="promos-select">
-                  <option value="">Todas as categorias</option>
-                </select>
-              </div>
+          <div id="promocoes-root"></div>
+        </div>
+      </section>
 
-              <div class="promos-field">
-                <select id="promo-sort" class="promos-select">
-                  <option value="urgency">Mais urgentes</option>
-                  <option value="discountPercent">Maior desconto %</option>
-                  <option value="discountValue">Maior desconto R$</option>
-                  <option value="priceAsc">Menor preço</option>
-                </select>
-              </div>
-            </div>
-          </div>
+      <!-- CONTATO -->
+      <section id="contato" class="page-section">
+        <div class="container">
+          <h2>Contato</h2>
+          <p class="section-subtitle">
+            Fale com a Charme do jeito que for mais fácil.
+          </p>
 
-          <div id="promos-current-filter" class="promos-current-filter" hidden>
-            Todas as categorias
-          </div>
-
-          <div id="promocoes-grid" class="promos-grid"></div>
-
-          <div id="promocoes-empty" class="promos-empty" hidden>
-            <div class="promos-empty__badge" id="promos-empty-badge">
-              Ops...
-            </div>
-            <h3 class="promos-empty__title" id="promos-empty-title">
-              Nenhuma promoção ativa no momento
-            </h3>
-            <p class="promos-empty__text" id="promos-empty-text">
-              Estamos preparando novas ofertas. Volte amanhã ou chame no
-              WhatsApp 💬.
-            </p>
-
+          <div class="contact-final">
             <a
-              href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20e%20quero%20saber%20das%20promoções"
+              class="btn-primary"
+              href="https://wa.me/5599980000000"
               target="_blank"
-              class="btn btn--whats promos-empty__btn"
-              id="promos-empty-button"
+              rel="noopener"
+              >Chamar no WhatsApp</a
             >
-              Falar com a Charme
-            </a>
-          </div>
-
-          <div class="promos-pagination" id="promos-pagination">
-            <button id="promos-prev" class="promos-page-btn" type="button">
-              ← Promoções anteriores
-            </button>
-
-            <span id="promos-page-info" class="promos-page-info"></span>
-
-            <button id="promos-next" class="promos-page-btn" type="button">
-              Ver mais promoções →
-            </button>
+            <a class="btn-outline" href="orcamento/index.html"
+              >Pedir orçamento</a
+            >
           </div>
         </div>
       </section>
 
-      <!-- ---------------------------------------------------
-           BLOCO 03.5 • SEÇÃO CONTATO (#contato) - PREMIUM
-           --------------------------------------------------- -->
-      <section class="section contact-final" id="contato">
-        <div class="container contact-final__card">
-          <div class="contact-final__left">
-            <div class="contact-final__eyebrow" id="contato-eyebrow">
-              Marca de família em Lucas do Rio Verde
-            </div>
-
-            <h2 class="contact-final__title" id="contato-title">
-              Fale direto com a equipe da Charme 💬
-            </h2>
-
-            <p class="contact-final__subtitle" id="contato-subtitle">
-              Atendimento humano com ajuda da tecnologia: mensagens automáticas
-              organizam a fila e avisam o horário, mas quem resolve de verdade
-              são as pessoas das lojas.
-            </p>
-
-            <ul class="contact-final__list">
-              <li id="contato-list-1">
-                ✔ Consultoria rápida de produtos e cores
-              </li>
-              <li id="contato-list-2">
-                ✔ Verificação de estoque em tempo real nas lojas
-              </li>
-              <li id="contato-list-3">
-                ✔ Envio de fotos de produtos e valores pelo WhatsApp
-              </li>
-            </ul>
-
-            <div class="contact-final__stats">
-              <div class="contact-final__stat">
-                <span
-                  class="contact-final__stat-number"
-                  id="contato-stat-1-number"
-                  >2</span
-                >
-                <span
-                  class="contact-final__stat-label"
-                  id="contato-stat-1-label"
-                >
-                  Lojas físicas em Lucas do Rio Verde
-                </span>
-              </div>
-
-              <div class="contact-final__stat">
-                <span
-                  class="contact-final__stat-number"
-                  id="contato-stat-2-number"
-                  >100%</span
-                >
-                <span
-                  class="contact-final__stat-label"
-                  id="contato-stat-2-label"
-                >
-                  Estoque do site ligado nas lojas
-                </span>
-              </div>
-
-              <div class="contact-final__stat">
-                <span
-                  class="contact-final__stat-number"
-                  id="contato-stat-3-number"
-                  >Atendimento humano</span
-                >
-                <span
-                  class="contact-final__stat-label"
-                  id="contato-stat-3-label"
-                >
-                  Bot cuida do recado, equipe cuida de você 😉
-                </span>
-              </div>
-            </div>
-
-            <div class="contact-final__hours">
-              <h3 class="contact-final__hours-title" id="contato-hours-title">
-                Horário de atendimento pelo WhatsApp
-              </h3>
-
-              <ul class="contact-final__hours-list">
-                <li id="contato-hours-line-1">
-                  <strong>Segunda a sexta</strong> — 08h00–11h00 e 13h00–18h00
-                </li>
-                <li id="contato-hours-line-2">
-                  <strong>Sábado</strong> — 08h00–12h00
-                </li>
-                <li id="contato-hours-line-3">
-                  <strong>Domingo</strong> — fechado
-                </li>
-              </ul>
-
-              <p class="contact-final__hours-note" id="contato-hours-note">
-                Mandou mensagem fora desse horário? A gente responde assim que
-                abrir a loja. 💚
-              </p>
-            </div>
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <div class="footer-brand">
+            <strong>Charme Cosméticos</strong>
+            <span>© 2026 Charme Cosméticos. Todos os direitos reservados.</span>
           </div>
 
-          <div class="contact-final__right">
-            <p class="contact-final__right-label" id="contato-right-label">
-              Escolha a loja pra falar no WhatsApp:
-            </p>
-
-            <div class="contact-final__buttons">
-              <a
-                class="btn btn--whats contact-final__btn"
-                id="contato-btn-1"
-                href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%201."
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WhatsApp Loja 1
-              </a>
-
-              <a
-                class="btn btn--whats contact-final__btn"
-                id="contato-btn-2"
-                href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%202."
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WhatsApp Loja 2
-              </a>
-            </div>
-
-            <div class="contact-final__social">
-              <p class="contact-final__social-label" id="contato-social-label">
-                Prefere ver as novidades primeiro?
-              </p>
-
-              <div class="contact-final__social-links">
-                <a
-                  href="https://www.instagram.com/charmecosmeticoslrv/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="contact-final__social-link"
-                >
-                  <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-                  <span id="contato-social-1-label">@charmecosmeticoslrv</span>
-                </a>
-
-                <a
-                  href="https://www.facebook.com/charmecosmeticoslrv/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="contact-final__social-link"
-                >
-                  <i class="fa-brands fa-facebook" aria-hidden="true"></i>
-                  <span id="contato-social-2-label">Charme Cosméticos LRV</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="contact-final__trust" id="contato-trust-text">
-              Seus dados e conversas são usados só para atendimento. Nada de
-              spam, combinado? 💌
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ---------------------------------------------------
-           BLOCO 03.6 • RODAPÉ (FOOTER)
-           --------------------------------------------------- -->
-      <footer class="footer footer--bottom">
-        <div class="container footer__inner">
-          <span class="footer__brand" id="footer-brand">Charme Cosméticos</span>
-          <span class="footer__copy" id="footer-copy">
-            © 2025 – Todos os direitos reservados.
-          </span>
-          <span class="footer__tiny" id="footer-tiny">
-            Site em desenvolvimento contínuo pelo time Charme + Geo 😄
-          </span>
+          <nav class="footer-links" aria-label="Links do rodapé">
+            <a href="#lojas">Lojas</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#promocoes">Promoções</a>
+            <a href="sobre.html">Quem somos</a>
+          </nav>
         </div>
       </footer>
     </main>
 
-    <!-- =======================================================
-         BLOCO 04 • SCRIPTS FINAIS
-         ======================================================= -->
-    <script src="js/site_content.js?v=20260102-2154"></script>
-    <script src="js/vitrine.js?v=20260102-2154"></script>
-    <script src="js/promocoes.js?v=20260102-2154"></script>
+    <script src="js/site_content.js?v=202601310123"></script>
+    <script src="js/vitrine.js?v=202601310123"></script>
+    <script src="js/promocoes.js?v=202601310123"></script>
+
+    <!-- FIX: marcador/ativo do menu acompanha scroll e hash -->
+    <script>
+      (() => {
+        const header = document.querySelector(".site-header");
+        const nav = document.querySelector(".nav-links");
+        if (!header || !nav) return;
+
+        const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+        if (!links.length) return;
+
+        const linkByHash = new Map(
+          links.map((a) => [a.getAttribute("href"), a]),
+        );
+
+        const sections = links
+          .map((a) => document.querySelector(a.getAttribute("href")))
+          .filter((el) => el && el.id)
+          .sort((a, b) => a.offsetTop - b.offsetTop);
+
+        if (!sections.length) return;
+
+        const setActive = (hash) => {
+          links.forEach((a) =>
+            a.classList.toggle("active", a.getAttribute("href") === hash),
+          );
+        };
+
+        const getHeaderOffset = () =>
+          (header ? header.getBoundingClientRect().height : 0) + 18;
+
+        let ticking = false;
+        const update = () => {
+          ticking = false;
+          const y = window.scrollY + getHeaderOffset();
+
+          let current = sections[0];
+          for (const sec of sections) {
+            if (sec.offsetTop <= y) current = sec;
+            else break;
+          }
+          const hash = "#" + current.id;
+          if (linkByHash.has(hash)) setActive(hash);
+        };
+
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(update);
+        };
+
+        nav.addEventListener("click", (ev) => {
+          const a = ev.target.closest('a[href^="#"]');
+          if (!a) return;
+          const hash = a.getAttribute("href");
+          if (linkByHash.has(hash)) setActive(hash);
+        });
+
+        window.addEventListener(
+          "hashchange",
+          () => {
+            const hash = window.location.hash || "#inicio";
+            if (linkByHash.has(hash)) setActive(hash);
+            onScroll();
+          },
+          { passive: true },
+        );
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+
+        const initial =
+          window.location.hash && linkByHash.has(window.location.hash)
+            ? window.location.hash
+            : "#inicio";
+        setActive(initial);
+        onScroll();
+      })();
+    </script>
   </body>
 </html>
