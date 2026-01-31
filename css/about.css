@@ -8,12 +8,12 @@
    Tokens locais (não mexe no :root do site inteiro)
 -------------------------------- */
 .about-scope {
-  --pink: #EC268F;
-  --pink-2: #F7AFD5;
-  --pink-3: #FDEFF6;
-  --gold: #C49332;
+  --pink: #ec268f;
+  --pink-2: #f7afd5;
+  --pink-3: #fdeff6;
+  --gold: #c49332;
   --text: #1f1f1f;
-  --muted: #4A4A4A;
+  --muted: #4a4a4a;
 
   --radius: 18px;
   --radius-lg: 24px;
@@ -79,7 +79,7 @@
   border: 1px solid rgba(236, 38, 143, 0.12);
   border-radius: var(--radius, 18px);
   padding: var(--pad, 18px);
-  box-shadow: var(--shadow-soft, 0 10px 24px rgba(0,0,0,.06));
+  box-shadow: var(--shadow-soft, 0 10px 24px rgba(0, 0, 0, 0.06));
 }
 
 .card--soft {
@@ -102,7 +102,7 @@
 .card p {
   margin: 0;
   line-height: 1.6;
-  color: var(--muted, #4A4A4A);
+  color: var(--muted, #4a4a4a);
   word-break: break-word;
   overflow-wrap: anywhere;
 }
@@ -122,7 +122,7 @@
 }
 
 .kpi span {
-  color: var(--muted, #4A4A4A);
+  color: var(--muted, #4a4a4a);
 }
 
 /* ------------------------------
@@ -147,7 +147,7 @@
   width: 12px;
   height: 12px;
   border-radius: 999px;
-  background: var(--pink, #EC268F);
+  background: var(--pink, #ec268f);
   box-shadow: 0 0 0 4px rgba(236, 38, 143, 0.12);
 }
 
@@ -191,7 +191,7 @@ iframe.map {
   border: 0;
   border-radius: var(--radius, 18px);
   overflow: hidden;
-  box-shadow: var(--shadow-soft, 0 10px 24px rgba(0,0,0,.06));
+  box-shadow: var(--shadow-soft, 0 10px 24px rgba(0, 0, 0, 0.06));
 }
 
 /* ------------------------------
