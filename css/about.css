@@ -1,43 +1,211 @@
 /* =======================================================
-   CHARME COSMÉTICOS — SOBRE A MARCA
-   Layout específico da página sobre.html
+   CHARME COSMÉTICOS — SOBRE A MARCA (about.css)
+   Página: sobre.html (layout e componentes)
+   Objetivo: responsivo (desktop + mobile), sem quebrar o resto do site
    ======================================================= */
 
-/* Grids genéricos 
+/* ------------------------------
+   Tokens locais (não mexe no :root do site inteiro)
+-------------------------------- */
+.about-scope {
+  --pink: #EC268F;
+  --pink-2: #F7AFD5;
+  --pink-3: #FDEFF6;
+  --gold: #C49332;
+  --text: #1f1f1f;
+  --muted: #4A4A4A;
 
+  --radius: 18px;
+  --radius-lg: 24px;
+
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.06);
+
+  --pad: clamp(14px, 2.4vw, 22px);
+  --gap: clamp(12px, 2.2vw, 22px);
+}
+
+/* Se sua página não tiver wrapper .about-scope, isso aqui garante que ainda funcione */
+.grid,
+.grid--2cols,
+.grid--3cols,
+.grid--4cols,
+.valores,
+.card,
+.card--soft,
+.card--mini,
+.kpi,
+.timeline,
+.timeline__item,
+.familia,
+.familia__item {
+  box-sizing: border-box;
+}
+
+/* ------------------------------
+   Grid utilities (genéricos)
+-------------------------------- */
 .grid {
   display: grid;
-  gap: 1.8rem;
+  gap: var(--gap, 1.8rem);
 }
 
-/* 2 colunas: texto + card 
+/* 2 colunas: texto + card */
 .grid--2cols {
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  align-items: flex-start;
+  align-items: start;
 }
 
-/* 3 colunas: valores 
+/* 3 colunas: valores */
 .grid--3cols {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* 4 colunas: família 
+/* 4 colunas: família */
 .grid--4cols {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-/* Pequeno respiro extra na seção de valores 
+/* Pequeno respiro extra na seção de valores */
 .valores {
-  margin-top: 1.8rem;
+  margin-top: 1.6rem;
 }
 
-/* Responsividade 
+/* ------------------------------
+   Cards / blocos
+-------------------------------- */
+.card {
+  background: rgba(253, 239, 246, 0.55); /* rosa claro transparente */
+  border: 1px solid rgba(236, 38, 143, 0.12);
+  border-radius: var(--radius, 18px);
+  padding: var(--pad, 18px);
+  box-shadow: var(--shadow-soft, 0 10px 24px rgba(0,0,0,.06));
+}
+
+.card--soft {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.card--mini {
+  padding: 14px;
+  border-radius: 16px;
+}
+
+/* títulos internos mais estáveis no mobile */
+.card h3,
+.card h4 {
+  margin: 0 0 10px 0;
+  line-height: 1.15;
+}
+
+/* textos longos não “estouram” */
+.card p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--muted, #4A4A4A);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------
+   KPIs / números (se usar)
+-------------------------------- */
+.kpi {
+  display: grid;
+  gap: 6px;
+}
+
+.kpi strong {
+  font-size: clamp(22px, 3.2vw, 34px);
+  line-height: 1.05;
+  color: var(--text, #1f1f1f);
+}
+
+.kpi span {
+  color: var(--muted, #4A4A4A);
+}
+
+/* ------------------------------
+   Timeline (se usar na história)
+-------------------------------- */
+.timeline {
+  display: grid;
+  gap: var(--gap, 18px);
+}
+
+.timeline__item {
+  position: relative;
+  padding-left: 18px;
+  border-left: 3px solid rgba(236, 38, 143, 0.55);
+}
+
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--pink, #EC268F);
+  box-shadow: 0 0 0 4px rgba(236, 38, 143, 0.12);
+}
+
+/* ------------------------------
+   Família (cards com foto)
+-------------------------------- */
+.familia {
+  display: grid;
+  gap: var(--gap, 18px);
+}
+
+.familia__item {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.familia__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 999px; /* foto redonda */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 3px solid rgba(236, 38, 143, 0.18);
+  background: rgba(253, 239, 246, 0.7);
+}
+
+/* ------------------------------
+   Iframes / mapas / embeds
+-------------------------------- */
+iframe {
+  max-width: 100%;
+}
+
+/* Se você tiver mapas do Google com iframe */
+.map-embed,
+.mapa-embed,
+iframe.map {
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius, 18px);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft, 0 10px 24px rgba(0,0,0,.06));
+}
+
+/* ------------------------------
+   Responsividade (de verdade)
+-------------------------------- */
+
+/* <= 960px: vira 1 coluna */
 @media (max-width: 960px) {
   .grid--2cols {
     grid-template-columns: 1fr;
   }
 }
 
+/* <= 900px: 3 cols -> 2 cols | 4 cols -> 2 cols */
 @media (max-width: 900px) {
   .grid--3cols {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -48,9 +216,34 @@
   }
 }
 
+/* <= 600px: tudo 1 coluna, menos aperto, texto mais legível */
 @media (max-width: 600px) {
+  .grid {
+    gap: 14px;
+  }
+
   .grid--3cols,
   .grid--4cols {
     grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .timeline__item {
+    padding-left: 16px;
+  }
+}
+
+/* <= 380px: celulares pequenos (iPhone SE etc) */
+@media (max-width: 380px) {
+  .card {
+    padding: 12px;
+  }
+
+  .familia__item img {
+    border-width: 2px;
   }
 }
