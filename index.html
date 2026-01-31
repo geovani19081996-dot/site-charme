@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <!-- =======================================================
        BLOCO 01 • HEAD / META / FONTES / CSS
@@ -57,7 +57,9 @@
             "url": "https://charmecosmeticos.com/#lojas",
             "telephone": "+55-65-3549-4404",
             "priceRange": "$$",
-            "parentOrganization": { "@id": "https://charmecosmeticos.com/#org" },
+            "parentOrganization": {
+              "@id": "https://charmecosmeticos.com/#org"
+            },
             "sameAs": ["https://share.google/u4loqToUUMESU5oXw"],
             "address": {
               "@type": "PostalAddress",
@@ -76,13 +78,25 @@
             "openingHoursSpecification": [
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "08:00",
                 "closes": "11:00"
               },
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "13:00",
                 "closes": "18:00"
               },
@@ -101,7 +115,9 @@
             "url": "https://charmecosmeticos.com/#lojas",
             "telephone": "+55-65-3549-4404",
             "priceRange": "$$",
-            "parentOrganization": { "@id": "https://charmecosmeticos.com/#org" },
+            "parentOrganization": {
+              "@id": "https://charmecosmeticos.com/#org"
+            },
             "sameAs": ["https://share.google/pGB0RyRlF5XsWaPZj"],
             "address": {
               "@type": "PostalAddress",
@@ -111,17 +127,29 @@
               "postalCode": "78455-000",
               "addressCountry": "BR"
             },
-            "hasMap": "https://www.google.com/maps?s=web&rlz=1C1CHZN_pt-BRBR997BR997&lqi=ChFjaGFybWUgY29zbWV0aWNvc0iZk9bglLWAgAhaGxAAEAEYABgBIhFjaGFybWUgY29zbWV0aWNvc5IBD2Nvc21ldGljc19zdG9yZQ&vet=12ahUKEwj6_en7xLSRAxVTK7kGHQWBF4kQ1YkKegQIMBAB..i&cs=0&um=1&ie=UTF-8&fb=1&gl=br&sa=X&geocode=KdHBSeun86CTMROzV1D-R3OC&daddr=Av.+Mato+Grosso,+1417+E+-+Cidade+Nova,+Lucas+do+Rio+Verde+-+MT,+78455-000",
+            "hasMap": "https://www.google.com/maps?s=web&rlz=1C1CHZN_pt-BRBR997BR997&lqi=ChFjaGFybWUgY29zbWV0aWNvc0iZk9bglLWAgAhaGxAAEAEYABgBIhFjaGFybWUgY29zbWV0aWNvc5IBD2Nvc21ldGljc19zdG9yZQ&vet=12ahUKEwj6_en7xLSRAxVTK7kGHQWBF4kQ1YkKegQIMBAB..i&cs=0&um=1&ie=UTF-8&fb=1&gl=br&sa=X&geocode=KdHBSeunun86CTMROzV1D-R3OC&daddr=Av.+Mato+Grosso,+1417+E+-+Cidade+Nova,+Lucas+do+Rio+Verde+-+MT,+78455-000",
             "openingHoursSpecification": [
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "08:00",
                 "closes": "11:00"
               },
               {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
                 "opens": "13:00",
                 "closes": "18:00"
               },
@@ -171,83 +199,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
-    <!-- =======================================================
-         HOTFIX (mínimo necessário)
-         - Mapeia variáveis antigas (rosa-*) e novas (pink-*)
-         - Garante faixa rosa no topo e links legíveis
-         - Melhora ancoragem com header sticky
-         ======================================================= -->
-    <style>
-      :root {
-        /* Paleta oficial (mantém tudo consistente) */
-        --rosa-intenso: #ec268f;
-        --rosa-medio: #f7afd5;
-        --rosa-claro: #fdeff6;
-        --dourado: #c49332;
-
-        --cinza-texto: #4a4a4a;
-        --preto-suave: #222222;
-        --branco: #ffffff;
-
-        /* Alias/compatibilidade (arquivos misturados) */
-        --pink: #ec268f;
-        --pink-dark: #d51f7e;
-        --pink-light: #fdeff6;
-
-        --white: #ffffff;
-        --text-dark: #222222;
-        --gray: #666666;
-        --text-light: #666666;
-
-        --pink-soft: rgba(236, 38, 143, 0.12);
-        --pink-soft-2: #fdeff6;
-
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-      }
-
-      /* Faixa rosa no topo (sem depender do humor do CSS) */
-      .topbar {
-        background: linear-gradient(90deg, var(--rosa-intenso), var(--pink-dark)) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
-      }
-
-      .topbar .logo__tagline {
-        color: rgba(255, 255, 255, 0.92) !important;
-        font-weight: 700;
-      }
-
-      .nav a {
-        color: rgba(255, 255, 255, 0.95) !important;
-      }
-      .nav a:hover {
-        color: #ffffff !important;
-      }
-      .nav a.active::after {
-        background: rgba(255, 255, 255, 0.95) !important;
-      }
-
-      /* Âncoras não ficam escondidas pelo header sticky */
-      #inicio,
-      #lojas,
-      #produtos,
-      #vitrine,
-      #promocoes,
-      #contato {
-        scroll-margin-top: 120px;
-      }
-
-      @media (max-width: 768px) {
-        #inicio,
-        #lojas,
-        #produtos,
-        #vitrine,
-        #promocoes,
-        #contato {
-          scroll-margin-top: 140px;
-        }
-      }
-    </style>
   </head>
 
   <body>
@@ -388,9 +339,7 @@
           <!-- Loja 2 - Filial -->
           <article class="card card--filial">
             <div class="card__tag" id="lojas-tag-2">Filial</div>
-            <h3 class="card__title" id="lojas-title-2">
-              Loja 2 – Cidade Nova
-            </h3>
+            <h3 class="card__title" id="lojas-title-2">Loja 2 – Cidade Nova</h3>
 
             <!-- Mapa embed/embutido dentro do card -->
             <div class="card__map">
@@ -467,305 +416,60 @@
           </article>
 
           <article class="categoria">
-            <div class="categoria__nome" id="prod-cat-6-name">
-              Linha profissional
-            </div>
+            <div class="categoria__nome" id="prod-cat-6-name">Profissional</div>
             <div class="categoria__descricao" id="prod-cat-6-desc">
-              Tamanhos profissionais e produtos de salão.
+              Linhas de salão, tratamentos e finalizadores.
             </div>
           </article>
         </div>
       </section>
 
       <!-- ---------------------------------------------------
-           BLOCO 03.4 - VITRINE AO VIVO (#vitrine)
+           BLOCO 03.4 • VITRINE (#vitrine)
            --------------------------------------------------- -->
-      <section id="vitrine" class="secao-vitrine">
-        <div class="container">
-          <header class="vitrine-header">
-            <div class="vitrine-header__kicker" id="vitrine-kicker">
-              Atualizados agora
-            </div>
-            <h2 class="vitrine-header__title" id="vitrine-title">
-              Últimas atualizações
-            </h2>
-            <p class="vitrine-header__subtitle" id="vitrine-subtitle">
-              Confira as novidades e reposições que acabaram de chegar nas nossas
-              prateleiras. Role para baixo e aproveite as promoções!
-            </p>
-          </header>
-
-          <div class="vitrine-toolbar">
-            <span class="vitrine-pill" id="vitrine-count">
-              12 novidades para você.
-            </span>
-          </div>
-
-          <div id="vitrine-grid" class="vitrine-grid"></div>
-          <div id="vitrine-empty" class="vitrine-empty" hidden>
-            Nenhum produto disponivel no momento.
-          </div>
-        </div>
-      </section>
+      <section id="vitrine" class="secao-vitrine"></section>
 
       <!-- ---------------------------------------------------
-           BLOCO 03.4 • SEÇÃO PROMOÇÕES PREMIUM
-           (listagem dinâmica via promocoes.js)
+           BLOCO 03.5 • PROMOÇÕES (#promocoes)
            --------------------------------------------------- -->
-      <section id="promocoes" class="secao-promocoes">
-        <div class="container">
-          <header class="promos-header">
-            <div class="promos-header__kicker" id="promos-kicker">
-              Ofertas selecionadas da Charme Cosméticos
-            </div>
-            <h2 class="promos-header__title" id="promos-title">Promoções ativas</h2>
-            <p class="promos-header__subtitle" id="promos-subtitle">
-              Preço bom, prazo limitado e estoque real das lojas — viu, gostou,
-              manda WhatsApp 💗.
-            </p>
-          </header>
-
-          <div class="promos-toolbar">
-            <div class="promos-toolbar__left">
-              <span id="promos-count" class="promos-pill"
-                >Carregando promoções...</span
-              >
-            </div>
-
-            <div class="promos-toolbar__right">
-              <div class="promos-field">
-                <input
-                  type="text"
-                  id="promo-search"
-                  class="promos-input"
-                  placeholder="Buscar promoção..."
-                />
-              </div>
-
-              <div class="promos-field">
-                <select id="promo-category" class="promos-select">
-                  <option value="">Todas as categorias</option>
-                </select>
-              </div>
-
-              <div class="promos-field">
-                <select id="promo-sort" class="promos-select">
-                  <option value="urgency">Mais urgentes</option>
-                  <option value="discountPercent">Maior desconto %</option>
-                  <option value="discountValue">Maior desconto R$</option>
-                  <option value="priceAsc">Menor preço</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div id="promos-current-filter" class="promos-current-filter" hidden>
-            Todas as categorias
-          </div>
-
-          <div id="promocoes-grid" class="promos-grid"></div>
-
-          <div id="promocoes-empty" class="promos-empty" hidden>
-            <div class="promos-empty__badge" id="promos-empty-badge">Ops...</div>
-            <h3 class="promos-empty__title" id="promos-empty-title">
-              Nenhuma promoção ativa no momento
-            </h3>
-            <p class="promos-empty__text" id="promos-empty-text">
-              Estamos preparando novas ofertas. Volte amanhã ou chame no
-              WhatsApp 💬.
-            </p>
-
-            <a
-              href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20e%20quero%20saber%20das%20promoções"
-              target="_blank"
-              class="btn btn--whats promos-empty__btn"
-              id="promos-empty-button"
-            >
-              Falar com a Charme
-            </a>
-          </div>
-
-          <div class="promos-pagination" id="promos-pagination">
-            <button id="promos-prev" class="promos-page-btn" type="button">
-              ← Promoções anteriores
-            </button>
-
-            <span id="promos-page-info" class="promos-page-info"></span>
-
-            <button id="promos-next" class="promos-page-btn" type="button">
-              Ver mais promoções →
-            </button>
-          </div>
-        </div>
-      </section>
+      <section id="promocoes" class="secao-promocoes"></section>
 
       <!-- ---------------------------------------------------
-           BLOCO 03.5 • SEÇÃO CONTATO (#contato) - PREMIUM
+           BLOCO 03.6 • CONTATO FINAL (#contato)
            --------------------------------------------------- -->
-      <section class="section contact-final" id="contato">
-        <div class="container contact-final__card">
-          <div class="contact-final__left">
-            <div class="contact-final__eyebrow" id="contato-eyebrow">
-              Marca de família em Lucas do Rio Verde
-            </div>
-
-            <h2 class="contact-final__title" id="contato-title">
-              Fale direto com a equipe da Charme 💬
-            </h2>
-
-            <p class="contact-final__subtitle" id="contato-subtitle">
-              Atendimento humano com ajuda da tecnologia: mensagens automáticas
-              organizam a fila e avisam o horário, mas quem resolve de verdade
-              são as pessoas das lojas.
-            </p>
-
-            <ul class="contact-final__list">
-              <li id="contato-list-1">✔ Consultoria rápida de produtos e cores</li>
-              <li id="contato-list-2">
-                ✔ Verificação de estoque em tempo real nas lojas
-              </li>
-              <li id="contato-list-3">
-                ✔ Envio de fotos de produtos e valores pelo WhatsApp
-              </li>
-            </ul>
-
-            <div class="contact-final__stats">
-              <div class="contact-final__stat">
-                <span class="contact-final__stat-number" id="contato-stat-1-number"
-                  >2</span
-                >
-                <span class="contact-final__stat-label" id="contato-stat-1-label">
-                  Lojas físicas em Lucas do Rio Verde
-                </span>
-              </div>
-
-              <div class="contact-final__stat">
-                <span class="contact-final__stat-number" id="contato-stat-2-number"
-                  >100%</span
-                >
-                <span class="contact-final__stat-label" id="contato-stat-2-label">
-                  Estoque do site ligado nas lojas
-                </span>
-              </div>
-
-              <div class="contact-final__stat">
-                <span class="contact-final__stat-number" id="contato-stat-3-number"
-                  >Atendimento humano</span
-                >
-                <span class="contact-final__stat-label" id="contato-stat-3-label">
-                  Bot cuida do recado, equipe cuida de você 😉
-                </span>
-              </div>
-            </div>
-
-            <div class="contact-final__hours">
-              <h3 class="contact-final__hours-title" id="contato-hours-title">
-                Horário de atendimento pelo WhatsApp
-              </h3>
-
-              <ul class="contact-final__hours-list">
-                <li id="contato-hours-line-1">
-                  <strong>Segunda a sexta</strong> — 08h00–11h00 e 13h00–18h00
-                </li>
-                <li id="contato-hours-line-2">
-                  <strong>Sábado</strong> — 08h00–12h00
-                </li>
-                <li id="contato-hours-line-3">
-                  <strong>Domingo</strong> — fechado
-                </li>
-              </ul>
-
-              <p class="contact-final__hours-note" id="contato-hours-note">
-                Mandou mensagem fora desse horário? A gente responde assim que
-                abrir a loja. 💚
-              </p>
-            </div>
-          </div>
-
-          <div class="contact-final__right">
-            <p class="contact-final__right-label" id="contato-right-label">
-              Escolha a loja pra falar no WhatsApp:
-            </p>
-
-            <div class="contact-final__buttons">
-              <a
-                class="btn btn--whats contact-final__btn"
-                id="contato-btn-1"
-                href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%201."
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WhatsApp Loja 1
-              </a>
-
-              <a
-                class="btn btn--whats contact-final__btn"
-                id="contato-btn-2"
-                href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos%20e%20quero%20falar%20com%20a%20Loja%202."
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WhatsApp Loja 2
-              </a>
-            </div>
-
-            <div class="contact-final__social">
-              <p class="contact-final__social-label" id="contato-social-label">
-                Prefere ver as novidades primeiro?
-              </p>
-
-              <div class="contact-final__social-links">
-                <a
-                  href="https://www.instagram.com/charmecosmeticoslrv/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="contact-final__social-link"
-                >
-                  <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-                  <span id="contato-social-1-label">@charmecosmeticoslrv</span>
-                </a>
-
-                <a
-                  href="https://www.facebook.com/charmecosmeticoslrv/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="contact-final__social-link"
-                >
-                  <i class="fa-brands fa-facebook" aria-hidden="true"></i>
-                  <span id="contato-social-2-label">Charme Cosméticos LRV</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="contact-final__trust" id="contato-trust-text">
-              Seus dados e conversas são usados só para atendimento. Nada de spam,
-              combinado? 💌
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ---------------------------------------------------
-           BLOCO 03.6 • RODAPÉ (FOOTER)
-           --------------------------------------------------- -->
-      <footer class="footer footer--bottom">
-        <div class="container footer__inner">
-          <span class="footer__brand" id="footer-brand">Charme Cosméticos</span>
-          <span class="footer__copy" id="footer-copy">
-            © 2025 – Todos os direitos reservados.
-          </span>
-          <span class="footer__tiny" id="footer-tiny">
-            Site em desenvolvimento contínuo pelo time Charme + Geo 😄
-          </span>
-        </div>
-      </footer>
+      <section class="section contact-final" id="contato"></section>
     </main>
 
     <!-- =======================================================
-         BLOCO 04 • SCRIPTS FINAIS
+         BLOCO 04 • FOOTER
          ======================================================= -->
-    <script src="js/site_content.js?v=20260102-2154"></script>
-    <script src="js/vitrine.js?v=20260102-2154"></script>
-    <script src="js/promocoes.js?v=20260102-2154"></script>
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__left">
+          <h3 class="footer__title">Charme Cosméticos</h3>
+          <p class="footer__copy">
+            © <span id="year"></span> Charme Cosméticos. Todos os direitos
+            reservados.
+          </p>
+        </div>
+
+        <nav class="footer__links" aria-label="Links do rodapé">
+          <a href="#lojas">Lojas</a>
+          <a href="#produtos">Produtos</a>
+          <a href="#promocoes">Promoções</a>
+          <a href="sobre.html">Quem somos</a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- =======================================================
+         BLOCO 05 • SCRIPTS
+         ======================================================= -->
+    <script src="js/site_content.js?v=202601310123"></script>
+    <script src="js/vitrine.js?v=202601310123"></script>
+    <script src="js/promocoes.js?v=202601310123"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>
