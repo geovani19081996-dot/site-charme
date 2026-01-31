@@ -1,102 +1,152 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Orçamento | Charme Cosméticos</title>
 
-  <link rel="icon" type="image/png" href="../img/logo-charme-icon.png" />
-  <link rel="stylesheet" href="../css/base.css?v=202601310123" />
-  <link rel="stylesheet" href="../css/orcamento.css?v=202601310123" />
+  <!-- CSS (use ?v=... para cache/cache bust) -->
+  <link rel="stylesheet" href="../css/base.css?v=2" />
+  <link rel="stylesheet" href="../css/orcamento.css?v=2" />
+
+  <link rel="icon" href="../img/logo-charme-icon.png" />
 </head>
 
-<body>
-  <div class="oc-top">
-    <div class="oc-top__inner">
-      <a class="oc-brand" href="../index.html">
-        <img src="../img/logo-charme-icon.png" alt="Charme Cosméticos" />
-        <div>
-          <div class="oc-brand__t1">Charme Cosméticos</div>
-          <div class="oc-brand__t2">Orçamento interno</div>
+<body class="page-orcamento">
+
+  <!-- Topo fixo (mobile-friendly) -->
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Voltar para o site">
+        <img src="../img/logo-charme-icon.png" alt="" class="brand__icon" />
+        <div class="brand__txt">
+          <div class="brand__name">Charme Cosméticos</div>
+          <div class="brand__tag">Orçamento</div>
         </div>
       </a>
-      <span class="oc-badge">Somente equipe</span>
+
+      <!-- menu hamburguer/hambúrguer (só mobile) -->
+      <input type="checkbox" id="navToggle" class="nav-toggle" />
+      <label class="nav-toggle-btn" for="navToggle" aria-label="Abrir menu">☰</label>
+
+      <nav class="nav">
+        <a class="nav__link" href="../index.html#inicio" onclick="document.getElementById('navToggle').checked=false">Início</a>
+        <a class="nav__link" href="../index.html#lojas" onclick="document.getElementById('navToggle').checked=false">Lojas</a>
+        <a class="nav__link" href="../index.html#vitrine" onclick="document.getElementById('navToggle').checked=false">Produtos</a>
+        <a class="nav__link" href="../index.html#promocoes" onclick="document.getElementById('navToggle').checked=false">Promoções</a>
+        <a class="nav__link" href="../sobre.html" onclick="document.getElementById('navToggle').checked=false">Quem somos</a>
+        <a class="nav__link" href="../index.html#contato" onclick="document.getElementById('navToggle').checked=false">Contato</a>
+      </nav>
+
+      <span class="pill pill-soft" id="badgeOnlyTeam" title="Página interna (opcional)">
+        Somente equipe
+      </span>
     </div>
-  </div>
+  </header>
 
-  <div class="wrap">
-    <h1 class="oc-title">Orçamento</h1>
-    <p class="muted">Escolha a loja, monte o carrinho e envie no WhatsApp. (Ainda não grava no Firebird.)</p>
+  <main class="container orc-main">
+    <div class="orc-head">
+      <h1>Orçamento</h1>
+      <p class="muted">
+        Cliente escolhe itens no celular, envia no WhatsApp, e vocês só fecham. Sim, humanos ainda fazem coisas.
+      </p>
+    </div>
 
-    <div class="card oc-filters">
-      <div class="oc-filters__grid">
-        <div class="oc-field">
+    <!-- Controles (sticky/fixo no mobile) -->
+    <section class="orc-controls" aria-label="Filtros">
+      <div class="controls-grid">
+        <div class="field">
           <label for="storeSelect">Loja de retirada</label>
-          <select id="storeSelect" class="btn2" style="width:100%">
+          <select id="storeSelect">
             <option value="1">Loja 1</option>
             <option value="2">Loja 2</option>
           </select>
         </div>
 
-        <div class="oc-field">
-          <label for="search">Buscar</label>
-          <input id="search" class="btn2" style="width:100%" placeholder="nome ou código" />
+        <div class="field field-grow">
+          <label for="searchInput">Buscar</label>
+          <input id="searchInput" type="search" placeholder="nome ou código" autocomplete="off" />
         </div>
 
-        <div class="oc-checks">
-          <label class="oc-check">
-            <input id="onlyPromos" type="checkbox" />
+        <div class="field field-actions">
+          <label class="chk">
+            <input type="checkbox" id="onlyPromos" />
             <span>Só promoções</span>
           </label>
 
-          <label class="oc-check">
-            <input id="onlyStock" type="checkbox" checked />
+          <label class="chk">
+            <input type="checkbox" id="onlyStock" checked />
             <span>Só com estoque</span>
           </label>
 
-          <span class="tag" id="metaTag">Carregando…</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="oc-layout">
-      <div class="card grow">
-        <div class="hr"></div>
-        <div id="productGrid" class="grid"></div>
-      </div>
-
-      <div class="card side">
-        <h3 style="margin:6px 0">Carrinho</h3>
-        <div class="muted" id="cartMeta"></div>
-        <div class="hr"></div>
-
-        <div class="card" style="padding:10px 12px">
-          <div class="muted">Cliente (opcional)</div>
-          <input id="clienteNome" class="btn2" placeholder="Nome do cliente" style="width:100%" />
-          <input id="clienteFone" class="btn2" placeholder="Telefone (opcional)" style="width:100%;margin-top:8px" />
-          <textarea id="obs" class="btn2" placeholder="Observações (opcional)" style="width:100%;margin-top:8px;min-height:70px"></textarea>
+          <button class="btn btn-ghost" id="btnScan" type="button" title="Escanear (se o navegador suportar)">
+            Escanear
+          </button>
+          <input id="scanInput" type="file" accept="image/*" capture="environment" style="display:none" />
         </div>
 
-        <div class="hr"></div>
-        <div id="cartList"></div>
+        <div class="field field-status">
+          <div id="status" class="status-pill" data-kind="info">Carregando…</div>
+        </div>
+      </div>
+    </section>
 
-        <div class="hr"></div>
-        <div class="line"><strong>Total</strong><strong id="total">R$ 0,00</strong></div>
+    <!-- Grid: produtos + carrinho -->
+    <section class="orc-grid" aria-label="Produtos e carrinho">
+      <div class="orc-left">
+        <div id="prodList" class="p-grid" aria-live="polite"></div>
+      </div>
 
-        <div class="actions">
-          <button class="btn2 primary" id="btnWhats">Enviar WhatsApp</button>
-          <button class="btn2" id="btnCopy">Copiar texto</button>
-          <button class="btn2" id="btnLink">Copiar link</button>
-          <button class="btn2 danger" id="btnClear">Limpar</button>
+      <aside class="cart-panel" aria-label="Carrinho">
+        <div class="cart-title">
+          <h2>Carrinho</h2>
+          <button class="btn btn-mini" id="cartClose" type="button" aria-label="Fechar carrinho">Fechar</button>
         </div>
 
-        <p class="muted" style="margin-top:10px">
-          Dica: se você proteger essa página com Cloudflare Access, ela fica realmente “fechada”.
-        </p>
-      </div>
-    </div>
-  </div>
+        <div id="cartMeta" class="cart-meta">Itens: 0 • Loja 1</div>
 
-  <script src="orcamento.js?v=2"></script>
+        <div class="cart-client">
+          <div class="field">
+            <label for="clienteNome">Cliente (opcional)</label>
+            <input id="clienteNome" type="text" placeholder="Nome do cliente" />
+          </div>
+          <div class="field">
+            <label for="clienteFone">Telefone (opcional)</label>
+            <input id="clienteFone" type="tel" placeholder="(00) 00000-0000" />
+          </div>
+          <div class="field">
+            <label for="clienteObs">Observações (opcional)</label>
+            <textarea id="clienteObs" rows="3" placeholder="Ex: preciso pra hoje, prefere retirar na loja 2…"></textarea>
+          </div>
+        </div>
+
+        <div id="cartList" class="cart-list"></div>
+
+        <div class="cart-footer">
+          <div class="cart-total">
+            <span>Total</span>
+            <strong id="total">R$ 0,00</strong>
+          </div>
+
+          <div class="cart-actions">
+            <button class="btn btn-primary" id="btnWhats" type="button">Enviar no WhatsApp</button>
+            <button class="btn" id="btnCopyText" type="button">Copiar texto</button>
+            <button class="btn" id="btnCopyLink" type="button">Copiar link</button>
+            <button class="btn btn-danger" id="btnClear" type="button">Limpar</button>
+          </div>
+
+          <p class="muted small">
+            Dica: pra deixar “só equipe” de verdade, o caminho certo é Cloudflare Access. Não é CSS que resolve senha.
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- overlay do carrinho no mobile -->
+  <div id="cartOverlay" class="cart-overlay" style="display:none"></div>
+  <button id="cartFab" class="cart-fab" type="button" style="display:none">Carrinho</button>
+
+  <script src="./orcamento.js?v=2"></script>
 </body>
 </html>
