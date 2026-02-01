@@ -158,9 +158,10 @@
 /* Grid */
 #promocoes .promos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 360px));
   gap: clamp(14px, 1.4vw, 18px);
   align-items: stretch;
+  place-content: start center; /* (linha, coluna): centraliza horizontal */
 }
 
 /* Card */
