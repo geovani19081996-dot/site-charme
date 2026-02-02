@@ -110,9 +110,7 @@
   color: var(--text-strong, var(--text, #222));
   outline: none;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 #promocoes .promos-select {
@@ -123,9 +121,7 @@
   background-position:
     calc(100% - 18px) 52%,
     calc(100% - 12px) 52%;
-  background-size:
-    6px 6px,
-    6px 6px;
+  background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
 }
 
@@ -134,7 +130,7 @@
   border-color: var(--border-pink, rgba(236, 38, 143, 0.28));
   box-shadow:
     0 8px 16px rgba(0, 0, 0, 0.05),
-    0 0 0 4px rgba(236, 38, 143, 0.1);
+    0 0 0 4px rgba(236, 38, 143, 0.10);
 }
 
 /* Label do filtro atual */
@@ -187,10 +183,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    border-color 0.16s ease;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
 }
 
 #promocoes .promo-card:hover {
@@ -212,22 +205,14 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
-  background: linear-gradient(
-    135deg,
-    var(--pink, #ec268f),
-    var(--pink-strong, #d91f80)
-  );
+  background: linear-gradient(135deg, var(--pink, #ec268f), var(--pink-strong, #d91f80));
   box-shadow: 0 8px 14px rgba(236, 38, 143, 0.14);
 }
 
 /* imagem: quadrada tipo e-commerce, mas com padding baixo */
 #promocoes .promo-card__image-wrapper {
   position: relative;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    rgba(253, 239, 246, 0.55) 100%
-  );
+  background: linear-gradient(180deg, #ffffff 0%, rgba(253, 239, 246, 0.55) 100%);
   padding: 10px 10px 8px;
 }
 
@@ -268,7 +253,7 @@
 #promocoes .promo-card__category {
   font-weight: 900;
   font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.58);
 }
@@ -351,7 +336,7 @@
 
 #promocoes .promo-card__meta-item {
   background: rgba(253, 239, 246, 0.55);
-  border: 1px solid rgba(236, 38, 143, 0.1);
+  border: 1px solid rgba(236, 38, 143, 0.10);
   border-radius: 12px;
   padding: 0.45rem 0.55rem;
 }
@@ -417,10 +402,7 @@
   border-radius: 999px;
   cursor: pointer;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 #promocoes .promos-page-btn:hover:not([disabled]) {
@@ -447,14 +429,8 @@
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Ajustes finos pra telas muito estreitas */
@@ -472,16 +448,10 @@
   #promocoes .promo-card,
   #promocoes .promos-page-btn,
   #promocoes .promos-input,
-  #promocoes .promos-select {
-    transition: none;
-  }
+  #promocoes .promos-select { transition: none; }
 
-  #promocoes .fade-in-up {
-    animation: none;
-  }
+  #promocoes .fade-in-up { animation: none; }
 
   #promocoes .promo-card:hover,
-  #promocoes .promos-page-btn:hover:not([disabled]) {
-    transform: none;
-  }
+  #promocoes .promos-page-btn:hover:not([disabled]) { transform: none; }
 }
