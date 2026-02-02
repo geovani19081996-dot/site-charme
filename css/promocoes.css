@@ -1,29 +1,30 @@
 /* =========================================================
-   PROMOÇÕES CHARME – PREMIUM (LIMPO)
-   - Estilos da seção de promoções (cards, filtros, paginação)
-   - Escopo: #promocoes (não vaza para outras páginas)
-   - Regras: sem !important, sem criar arquivos novos
+   PROMOÇÕES CHARME – TILE COMPACTO (FEELING E-COMMERCE)
+   - Escopo: #promocoes (não vaza)
+   - Objetivo: densidade premium (menos “card gigante”)
    ========================================================= */
 
 #promocoes {
-  padding: clamp(2.2rem, 4vw, 3.1rem) 0 clamp(2rem, 4vw, 2.8rem);
+  padding: clamp(2rem, 3.6vw, 2.8rem) 0 clamp(1.8rem, 3.2vw, 2.4rem);
   background: linear-gradient(
     180deg,
-    rgba(247, 175, 213, 0.16) 0%,
-    rgba(253, 239, 246, 0.55) 55%,
+    rgba(247, 175, 213, 0.12) 0%,
+    rgba(253, 239, 246, 0.45) 55%,
     #ffffff 100%
   );
   overflow-x: hidden;
+  font-size: 14px; /* densidade tipo e-commerce */
+  line-height: 1.5;
 }
 
 #promocoes .container {
-  max-width: 960px; /* premium: reduz “deserto” no desktop */
+  max-width: 960px;
 }
 
 /* Cabeçalho */
 #promocoes .promos-header {
   text-align: center;
-  margin-bottom: 1.05rem;
+  margin-bottom: 0.9rem;
 }
 
 #promocoes .promos-header__kicker {
@@ -32,14 +33,14 @@
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   opacity: 0.92;
 }
 
 #promocoes .promos-header__title {
   font-family: var(--font-display, system-ui);
-  font-size: clamp(1.45rem, 3.2vw, 2.05rem);
-  margin: 0.45rem 0 0.3rem;
+  font-size: clamp(1.35rem, 3vw, 1.95rem);
+  margin: 0.4rem 0 0.25rem;
   color: var(--text-strong, var(--text, #222));
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -49,18 +50,17 @@
   max-width: 70ch;
   margin: 0 auto;
   color: var(--muted, #666);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
 /* Barra de filtros */
 #promocoes .promos-toolbar {
   display: grid;
-  gap: 12px;
-  margin: 1.05rem 0 0.95rem;
+  gap: 10px;
+  margin: 0.95rem auto 0.85rem;
   align-items: center;
   max-width: 960px;
-  margin-inline: auto;
 }
 
 #promocoes .promos-toolbar__left,
@@ -79,15 +79,15 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 0.52rem 0.9rem;
+  padding: 0.48rem 0.85rem;
   border-radius: 999px;
   border: 1px solid var(--border-pink, rgba(236, 38, 143, 0.18));
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--pink, #ec268f);
   font-weight: 900;
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   white-space: nowrap;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
 }
 
 #promocoes .promos-field {
@@ -102,14 +102,14 @@
   -webkit-appearance: none;
   width: 100%;
   min-height: 44px;
-  padding: 0.7rem 1rem;
+  padding: 0.66rem 0.95rem;
   border-radius: 999px;
   border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.95);
   font-size: 0.95rem;
   color: var(--text-strong, var(--text, #222));
   outline: none;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
   transition:
     border-color 0.18s ease,
     box-shadow 0.18s ease;
@@ -117,7 +117,6 @@
 
 #promocoes .promos-select {
   padding-right: 2.6rem;
-  /* Setinha do select sem :has() */
   background-image:
     linear-gradient(45deg, transparent 50%, var(--pink, #ec268f) 50%),
     linear-gradient(135deg, var(--pink, #ec268f) 50%, transparent 50%);
@@ -134,13 +133,13 @@
 #promocoes .promos-select:focus {
   border-color: var(--border-pink, rgba(236, 38, 143, 0.28));
   box-shadow:
-    0 10px 22px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.05),
     0 0 0 4px rgba(236, 38, 143, 0.1);
 }
 
 /* Label do filtro atual */
 #promocoes .promos-current-filter {
-  margin: 0.25rem 0 0.85rem;
+  margin: 0.2rem 0 0.75rem;
   color: var(--muted, #666);
   text-align: center;
   font-weight: 800;
@@ -148,46 +147,67 @@
   opacity: 0.9;
 }
 
-/* Grid */
+/* =========================================================
+   GRID: 2 colunas no mobile (tile), cresce no desktop
+   ========================================================= */
+
 #promocoes .promos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 420px));
-  gap: clamp(14px, 1.4vw, 18px);
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 tiles no mobile */
+  gap: 10px;
   align-items: stretch;
-  justify-content: center; /* centraliza quando tem poucos cards */
+  justify-content: center;
 }
 
-/* Card */
+@media (min-width: 520px) {
+  #promocoes .promos-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (min-width: 900px) {
+  #promocoes .promos-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+}
+
+/* =========================================================
+   CARD: menos raio, menos sombra, menos padding (premium denso)
+   ========================================================= */
+
 #promocoes .promo-card {
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
-  border-radius: var(--radius-lg, 24px);
-  box-shadow: var(--shadow-soft, 0 12px 28px rgba(0, 0, 0, 0.08));
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px; /* menor que 24px */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 
 #promocoes .promo-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-strong, 0 18px 44px rgba(0, 0, 0, 0.12));
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
   border-color: var(--border-pink, rgba(236, 38, 143, 0.18));
 }
 
+/* fita/badge compactos */
 #promocoes .promo-card__ribbon {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 10px;
+  left: 10px;
   z-index: 2;
-  padding: 0.34rem 0.7rem;
+  padding: 0.28rem 0.55rem;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -197,175 +217,184 @@
     var(--pink, #ec268f),
     var(--pink-strong, #d91f80)
   );
-  box-shadow: 0 10px 16px rgba(236, 38, 143, 0.14);
+  box-shadow: 0 8px 14px rgba(236, 38, 143, 0.14);
 }
 
+/* imagem: quadrada tipo e-commerce, mas com padding baixo */
 #promocoes .promo-card__image-wrapper {
   position: relative;
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    rgba(253, 239, 246, 0.65) 100%
+    rgba(253, 239, 246, 0.55) 100%
   );
-  padding: 12px 12px 10px;
+  padding: 10px 10px 8px;
 }
 
 #promocoes .promo-card__image {
   width: 100%;
-  aspect-ratio: 4 / 3; /* menos alto que 1:1 */
+  aspect-ratio: 1 / 1; /* feeling sephora */
   object-fit: contain;
-  border-radius: var(--radius, 18px);
+  border-radius: 12px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
 }
 
 #promocoes .promo-card__discount-tag {
   position: absolute;
-  right: 12px;
-  bottom: 12px;
-  padding: 0.3rem 0.55rem;
+  right: 10px;
+  bottom: 10px;
+  padding: 0.26rem 0.5rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--border-pink, rgba(236, 38, 143, 0.18));
   color: var(--pink, #ec268f);
   font-weight: 900;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
 }
 
+/* conteúdo: compacto */
 #promocoes .promo-card__content {
-  padding: 12px 14px 14px;
+  padding: 10px 12px 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
   min-width: 0;
 }
 
+/* categoria (vem do JS novo) */
+#promocoes .promo-card__category {
+  font-weight: 900;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.58);
+}
+
+/* título: 2 linhas no máximo */
 #promocoes .promo-card__title {
   font-family: var(--font-display, system-ui);
-  font-size: 1rem;
-  line-height: 1.25;
+  font-size: 0.95rem;
+  line-height: 1.22;
   margin: 0;
   color: var(--text-strong, var(--text, #222));
   letter-spacing: -0.01em;
-  /* Limite de linhas (pra não virar um cartaz) */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
-#promocoes .promo-card__subtitle {
-  margin: 0;
-  color: var(--muted, #666);
-  font-size: 0.92rem;
-  line-height: 1.5;
-  min-height: 1.2em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+/* descrição: 1 linha */
+#promocoes .promo-card__subtitle {
+  margin: 0;
+  color: var(--muted, #666);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  min-height: 1em;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* preços: mais enxuto */
 #promocoes .promo-card__prices {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 12px;
-  padding: 0.8rem 0;
-  border-top: 1px dashed rgba(0, 0, 0, 0.1);
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+  gap: 10px;
+  padding: 0.55rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 #promocoes .promo-card__label {
-  color: var(--muted, #666);
+  color: rgba(0, 0, 0, 0.55);
   font-weight: 800;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 }
 
 #promocoes .promo-card__price-current {
   color: var(--pink, #ec268f);
   font-weight: 900;
-  font-size: 1.22rem;
+  font-size: 1.12rem;
   line-height: 1.05;
 }
 
 #promocoes .promo-card__price-old {
   display: block;
-  color: rgba(0, 0, 0, 0.45);
+  color: rgba(0, 0, 0, 0.42);
   text-decoration: line-through;
   font-weight: 800;
-  font-size: 0.88rem;
-  margin-bottom: 0.2rem;
+  font-size: 0.82rem;
+  margin-bottom: 0.18rem;
 }
 
 #promocoes .promo-card__price-save {
   display: block;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.62);
   font-weight: 800;
-  font-size: 0.86rem;
+  font-size: 0.82rem;
 }
 
+/* meta compacta (JS novo usa promo-card__meta--compact) */
 #promocoes .promo-card__meta {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 #promocoes .promo-card__meta-item {
-  background: rgba(253, 239, 246, 0.62);
+  background: rgba(253, 239, 246, 0.55);
   border: 1px solid rgba(236, 38, 143, 0.1);
-  border-radius: var(--radius, 18px);
-  padding: 0.6rem 0.7rem;
-}
-
-#promocoes .promo-card__meta-label {
-  display: block;
-  color: var(--muted, #666);
-  font-weight: 900;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.9;
+  border-radius: 12px;
+  padding: 0.45rem 0.55rem;
 }
 
 #promocoes .promo-card__meta-value {
-  display: block;
-  margin-top: 0.3rem;
   color: var(--text-strong, var(--text, #222));
   font-weight: 800;
-  font-size: 0.94rem;
+  font-size: 0.82rem;
+  line-height: 1.25;
 }
 
 #promocoes .promo-card__timer {
   display: inline-block;
-  margin-left: 0.35rem;
+  margin-left: 0.25rem;
   color: var(--pink, #ec268f);
   font-weight: 900;
 }
 
-/* CTA do card */
+/* CTA: menos alto, mais “botão de catálogo” */
 #promocoes .promo-card__cta {
   width: 100%;
   text-align: center;
   margin-top: auto;
 }
 
-#promocoes .promo-card__cta .btn {
+#promocoes .promo-card__cta.btn {
   width: 100%;
+  min-height: 40px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
 /* Estado vazio */
 #promocoes .promos-empty {
-  margin: 2rem 0 0;
-  padding: 1.6rem;
-  border-radius: var(--radius-lg, 24px);
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  margin: 1.6rem 0 0;
+  padding: 1.2rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   color: var(--muted, #666);
   text-align: center;
-  box-shadow: var(--shadow-soft, 0 12px 28px rgba(0, 0, 0, 0.08));
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
 }
 
 /* Paginação */
@@ -373,21 +402,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  margin-top: 1.6rem;
+  gap: 12px;
+  margin-top: 1.25rem;
   flex-wrap: wrap;
 }
 
 #promocoes .promos-page-btn {
-  min-height: 44px;
+  min-height: 40px;
   border: 1px solid var(--border-pink, rgba(236, 38, 143, 0.18));
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--pink, #ec268f);
   font-weight: 900;
-  padding: 0.7rem 1.05rem;
+  padding: 0.6rem 0.95rem;
   border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
@@ -397,7 +426,7 @@
 #promocoes .promos-page-btn:hover:not([disabled]) {
   transform: translateY(-1px);
   background: rgba(253, 239, 246, 0.92);
-  box-shadow: 0 14px 22px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
 }
 
 #promocoes .promos-page-btn[disabled] {
@@ -414,13 +443,13 @@
 
 /* Animação leve (respeita reduce-motion abaixo) */
 #promocoes .fade-in-up {
-  animation: fadeInUp 420ms ease-out both;
+  animation: fadeInUp 320ms ease-out both;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -428,37 +457,10 @@
   }
 }
 
-/* =========================================================
-   Responsivo (mobile-first)
-   ========================================================= */
-
-@media (min-width: 640px) {
-  #promocoes .promos-toolbar__right {
-    justify-content: flex-end;
-  }
-  #promocoes .promos-field {
-    width: 240px;
-  }
-}
-
-@media (min-width: 900px) {
-  #promocoes .promos-toolbar {
-    grid-template-columns: auto 1fr;
-  }
-  #promocoes .promos-toolbar__left {
-    justify-content: flex-start;
-  }
-  #promocoes .promos-toolbar__right {
-    justify-content: flex-end;
-  }
-}
-
-@media (max-width: 480px) {
-  #promocoes .promos-header__subtitle {
-    font-size: 0.98rem;
-  }
-  #promocoes .promos-field {
-    max-width: none;
+/* Ajustes finos pra telas muito estreitas */
+@media (max-width: 360px) {
+  #promocoes .promos-grid {
+    grid-template-columns: 1fr; /* 320/360 muito apertado? vira 1 coluna */
   }
   #promocoes .promo-card__meta {
     grid-template-columns: 1fr;
