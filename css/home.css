@@ -11,6 +11,7 @@
 
 /* =======================================================
    ALINHAMENTO (títulos fora do .container no index.html)
+   (compat: usa o mesmo padding do .container do base.css)
    ======================================================= */
 .section#lojas > .section__title,
 .section#lojas > .section__subtitle,
@@ -19,7 +20,7 @@
   width: 100%;
   max-width: 960px;
   margin-inline: auto;
-  padding-inline: var(--container-pad);
+  padding-inline: clamp(16px, 3vw, 48px);
 }
 
 /* =======================================================
@@ -34,7 +35,6 @@
 .section#lojas,
 .section#produtos,
 #vitrine,
-#promocoes,
 #contato {
   padding-top: clamp(2.25rem, 4vw, 3.75rem);
   padding-bottom: clamp(2.5rem, 4.5vw, 4.25rem);
@@ -47,7 +47,7 @@
 #inicio .hero__inner {
   max-width: 960px;
   margin-inline: auto;
-  padding-inline: var(--container-pad);
+  padding-inline: clamp(16px, 3vw, 48px);
   display: grid;
   gap: 1.25rem;
 }
@@ -102,7 +102,7 @@
   display: grid;
   place-items: center;
   text-decoration: none;
-  color: var(--rosa-intenso);
+  color: var(--pink);
   background: rgba(236, 38, 143, 0.08);
   border: 1px solid rgba(236, 38, 143, 0.18);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
@@ -123,14 +123,14 @@
    ======================================================= */
 
 .section#lojas {
-  background: linear-gradient(180deg, #fff, var(--rosa-claro) 55%, #fff 100%);
+  background: linear-gradient(180deg, #fff, var(--pink-light) 55%, #fff 100%);
 }
 
 /* grid */
 .section#lojas .cards {
   max-width: 960px;
   margin-inline: auto;
-  padding-inline: var(--container-pad);
+  padding-inline: clamp(16px, 3vw, 48px);
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.1rem;
@@ -139,8 +139,8 @@
 /* card */
 .section#lojas .card {
   position: relative;
-  background: var(--branco);
-  border-radius: var(--radius-lg);
+  background: var(--white);
+  border-radius: calc(var(--radius) + 6px);
   padding: 1.25rem 1.25rem 1.35rem;
   box-shadow: var(--shadow-soft);
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -156,12 +156,12 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 6px;
-  background: linear-gradient(90deg, var(--rosa-intenso), var(--pink-dark));
+  background: linear-gradient(90deg, var(--pink), var(--pink-dark));
 }
 
 .section#lojas .card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-strong);
+  box-shadow: var(--shadow);
   border-color: rgba(236, 38, 143, 0.18);
 }
 
@@ -173,7 +173,7 @@
   border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 900;
-  color: var(--rosa-intenso);
+  color: var(--pink);
   background: rgba(236, 38, 143, 0.08);
   border: 1px solid rgba(236, 38, 143, 0.18);
   margin-bottom: 0.85rem;
@@ -225,7 +225,7 @@
 #produtos .categorias {
   max-width: 960px;
   margin-inline: auto;
-  padding-inline: var(--container-pad);
+  padding-inline: clamp(16px, 3vw, 48px);
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
@@ -235,8 +235,8 @@
   display: grid;
   gap: 0.25rem;
   padding: 1.15rem 1.2rem;
-  border-radius: var(--radius-lg);
-  background: var(--branco);
+  border-radius: calc(var(--radius) + 6px);
+  background: var(--white);
   border: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: var(--shadow-soft);
   transition:
@@ -247,7 +247,7 @@
 
 #produtos .categoria:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-strong);
+  box-shadow: var(--shadow);
   border-color: rgba(236, 38, 143, 0.14);
 }
 
@@ -261,7 +261,7 @@
 
 #produtos .categoria__descricao {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--muted);
   margin: 0;
   line-height: 1.55;
 }
@@ -284,65 +284,6 @@
 }
 
 /* =======================================================
-   PROMOÇÕES (#promocoes) — filtro/paginação mais “premium”
-   ======================================================= */
-
-#promocoes .container {
-  max-width: 960px;
-}
-
-#promocoes .promos-current-filter {
-  margin: 0.9rem 0 0.75rem;
-  font-size: 0.86rem;
-  font-weight: 900;
-  color: var(--cinza-texto);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.9;
-}
-
-#promocoes .promos-pagination {
-  margin-top: 2.1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-#promocoes .promos-page-btn {
-  border: none;
-  border-radius: 999px;
-  padding: 10px 18px;
-  font-size: 0.9rem;
-  font-weight: 900;
-  background: var(--rosa-intenso);
-  color: var(--branco);
-  cursor: pointer;
-  box-shadow: 0 12px 28px rgba(236, 38, 143, 0.32);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.15s ease;
-}
-
-#promocoes .promos-page-btn:hover:not([disabled]) {
-  transform: translateY(-1px);
-  box-shadow: 0 16px 34px rgba(236, 38, 143, 0.42);
-}
-
-#promocoes .promos-page-btn[disabled] {
-  opacity: 0.45;
-  cursor: default;
-  box-shadow: none;
-}
-
-#promocoes .promos-page-info {
-  font-size: 0.9rem;
-  color: var(--cinza-texto);
-}
-
-/* =======================================================
    CONTATO FINAL (#contato) — bloco premium mais equilibrado
    ======================================================= */
 
@@ -357,7 +298,7 @@
   border-radius: 28px;
   background: radial-gradient(
     circle at top left,
-    var(--rosa-claro) 0,
+    var(--pink-light) 0,
     #ffffff 45%,
     rgba(236, 38, 143, 0.09) 100%
   );
@@ -374,7 +315,7 @@
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--rosa-intenso);
+  color: var(--pink);
   margin: 0 0 0.65rem;
 }
 
@@ -389,7 +330,7 @@
 
 #contato .contact-final__subtitle {
   margin: 0 0 1.35rem;
-  color: var(--text-light);
+  color: var(--muted);
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -433,13 +374,13 @@
   display: block;
   font-weight: 900;
   font-size: 1.1rem;
-  color: var(--rosa-intenso);
+  color: var(--pink);
 }
 
 #contato .contact-final__stat-label {
   display: block;
   font-size: 0.86rem;
-  color: var(--text-light);
+  color: var(--muted);
 }
 
 #contato .contact-final__hours {
@@ -468,7 +409,7 @@
 
 #contato .contact-final__hours-note {
   font-size: 0.86rem;
-  color: var(--text-light);
+  color: var(--muted);
   margin: 0;
 }
 
@@ -506,7 +447,7 @@
 #contato .contact-final__hint {
   margin-top: 8px;
   font-size: 0.9rem;
-  color: var(--text-light);
+  color: var(--muted);
   opacity: 0.92;
 }
 
@@ -526,7 +467,7 @@
   gap: 6px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: var(--rosa-claro);
+  background: var(--pink-light);
   border: 1px solid rgba(0, 0, 0, 0.06);
   font-size: 0.92rem;
   text-decoration: none;
@@ -558,7 +499,7 @@
 #contato .contact-final__trust,
 #contato .contact-final__signature {
   font-size: 0.86rem;
-  color: var(--text-light);
+  color: var(--muted);
   margin: 0 0 0.6rem;
   opacity: 0.95;
 }
@@ -605,25 +546,6 @@
 }
 
 /* =======================================================
-   MOBILE: cards deslizando (se você usar .promos-grid na home)
-   ======================================================= */
-@media (max-width: 768px) {
-  #promocoes .promos-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    padding: 0 4px 16px;
-    scroll-snap-type: x mandatory;
-  }
-
-  #promocoes .promo-card {
-    flex: 0 0 82%;
-    max-width: 340px;
-    scroll-snap-align: start;
-  }
-}
-
-/* =======================================================
    ACESSIBILIDADE: reduzir movimento
    ======================================================= */
 @media (prefers-reduced-motion: reduce) {
@@ -631,8 +553,7 @@
   .section#lojas .card,
   #produtos .categoria,
   #contato .contact-final__stat,
-  #contato .contact-final__social-link,
-  #promocoes .promos-page-btn {
+  #contato .contact-final__social-link {
     transition: none;
   }
 
@@ -640,8 +561,7 @@
   .section#lojas .card:hover,
   #produtos .categoria:hover,
   #contato .contact-final__stat:hover,
-  #contato .contact-final__social-link:hover,
-  #promocoes .promos-page-btn:hover:not([disabled]) {
+  #contato .contact-final__social-link:hover {
     transform: none;
   }
 }
