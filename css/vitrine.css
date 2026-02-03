@@ -31,6 +31,7 @@
    ========================= */
 .vitrine-grid.swiper {
   position: relative;
+  overflow: hidden;
 }
 
 .vitrine-grid .swiper-wrapper {
@@ -186,6 +187,62 @@
   font-weight: 800;
   font-size: 1.05rem;
   color: var(--pink);
+}
+
+@media (max-width: 768px) {
+  .vitrine-grid.swiper {
+    padding-inline: 2px;
+  }
+
+  .vitrine-grid .swiper-button-prev,
+  .vitrine-grid .swiper-button-next {
+    width: 30px;
+    height: 30px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  }
+
+  .vitrine-grid .swiper-button-prev::after,
+  .vitrine-grid .swiper-button-next::after {
+    font-size: 12px;
+  }
+
+  .vitrine-grid.swiper .swiper-pagination {
+    margin-top: 8px;
+  }
+
+  .vitrine-card {
+    border-radius: 14px;
+  }
+
+  .vitrine-imgwrap {
+    aspect-ratio: auto;
+    height: clamp(140px, 46vw, 180px);
+    padding: 8px;
+  }
+
+  .vitrine-img {
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .vitrine-info {
+    padding: 10px 12px 12px;
+    gap: 4px;
+  }
+
+  .vitrine-marca {
+    font-size: 0.7rem;
+  }
+
+  .vitrine-nome {
+    font-size: var(--fs-card-title);
+    line-height: 1.25;
+    min-height: 2.4em;
+  }
+
+  .vitrine-preco {
+    font-size: var(--fs-card-price);
+  }
 }
 
 @media (max-width: 640px) {

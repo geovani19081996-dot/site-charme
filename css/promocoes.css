@@ -151,6 +151,8 @@
   gap: clamp(10px, 2vw, 16px);
   align-items: stretch;
   justify-content: stretch;
+  justify-items: stretch;
+  align-content: start;
 }
 
 /* Swiper */
@@ -502,6 +504,93 @@
 
   #promocoes .promos-grid .swiper-button-next {
     right: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  #promocoes {
+    font-size: 13px;
+  }
+
+  #promocoes .promos-grid.swiper {
+    padding-inline: 2px;
+  }
+
+  #promocoes .promos-grid .swiper-button-prev,
+  #promocoes .promos-grid .swiper-button-next {
+    width: 30px;
+    height: 30px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  }
+
+  #promocoes .promos-grid .swiper-button-prev::after,
+  #promocoes .promos-grid .swiper-button-next::after {
+    font-size: 12px;
+  }
+
+  #promocoes .promos-grid .swiper-pagination {
+    margin-top: 8px;
+  }
+
+  #promocoes .promo-card {
+    border-radius: 14px;
+  }
+
+  #promocoes .promo-card__image-wrapper {
+    padding: 8px;
+    height: clamp(140px, 44vw, 170px);
+  }
+
+  #promocoes .promo-card__image {
+    aspect-ratio: auto;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  #promocoes .promo-card__discount-tag {
+    right: 8px;
+    bottom: 8px;
+  }
+
+  #promocoes .promo-card__content {
+    padding: 8px 10px 12px;
+    gap: 4px;
+  }
+
+  #promocoes .promo-card__category {
+    font-size: 0.68rem;
+  }
+
+  #promocoes .promo-card__title {
+    font-size: var(--fs-card-title);
+    line-height: 1.22;
+  }
+
+  #promocoes .promo-card__subtitle {
+    font-size: 0.82rem;
+  }
+
+  #promocoes .promo-card__prices {
+    padding: 0.45rem 0;
+  }
+
+  #promocoes .promo-card__price-current {
+    font-size: var(--fs-card-price);
+  }
+
+  #promocoes .promo-card__meta {
+    gap: 6px;
+  }
+
+  #promocoes .promo-card__meta-item {
+    padding: 0.4rem 0.5rem;
+  }
+
+  #promocoes .promo-card__cta.btn {
+    min-height: 38px;
+    padding: 9px 12px;
+    font-size: var(--fs-card-cta);
   }
 }
 
