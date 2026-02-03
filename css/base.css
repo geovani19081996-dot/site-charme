@@ -6,30 +6,29 @@
    ========================================================================== */
 
 :root {
-  /* Compat / util */
-  --container-pad: clamp(16px, 3vw, 48px);
-  --branco: var(--white);
-
   /* Cores (brand) */
+  --white: #ffffff;
   --pink: #ec268f;
   --pink-strong: #d91f80;
   --pink-soft: #f7afd5;
   --pink-verysoft: #fdeff6;
   --gold: #c49332;
+  --text: #4a4a4a;
+  --text-strong: #2f2f2f;
+  --text-light: #6b6b6b;
+  --gray: #666666;
+
+  /* Compat / util */
+  --container-pad: clamp(16px, 3vw, 48px);
+  --branco: var(--white);
 
   /* Compatibilidade com CSS antigo (não remover) */
   --pink-dark: var(--pink-strong);
   --pink-mid: var(--pink-soft);
   --pink-light: var(--pink-verysoft);
 
-  --white: #ffffff;
-  --text-strong: #222222;
-  --text-light: #666666;
-  --gray: #666666;
-
-  /* Neutros (novos) */
-  --text: #2b2b2b;
-  --muted: #666;
+  /* Neutros */
+  --muted: #6a6a6a;
   --muted-2: #8a8a8a;
   --border: rgba(0, 0, 0, 0.08);
   --border-soft: var(--border);
@@ -42,11 +41,26 @@
     "Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-ui:
     "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --fs-body: clamp(0.95rem, 0.4vw + 0.9rem, 1.05rem);
+  --fs-h1: clamp(2rem, 4.6vw, 3.1rem);
+  --fs-h2: clamp(1.5rem, 3.4vw, 2.4rem);
+
+  /* Espaçamentos */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
 
   /* Layout */
   --container: 1120px;
-  --header-h: 86px;
-  --section-pad: 4rem;
+  --header-h: clamp(72px, 10vw, 92px);
+  --section-pad: clamp(2.5rem, 6vw, 4rem);
+  --grid-gap: clamp(12px, 2vw, 24px);
+  --card-pad: clamp(16px, 2.4vw, 24px);
 
   /* UI */
   --radius: 18px;
@@ -61,16 +75,19 @@
   --focus: rgba(236, 38, 143, 0.55);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 html {
-  font-size: 16px;
+  font-size: 100%;
 }
 
 body {
   margin: 0;
   font-family: var(--font-body);
+  font-size: var(--fs-body);
   color: var(--text);
   background: linear-gradient(180deg, #fff 0%, var(--pink-verysoft) 100%);
   line-height: 1.65;
@@ -79,10 +96,52 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1,
+h2 {
+  margin: 0 0 var(--space-4) 0;
+  color: var(--text-strong);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+}
+
 img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.media {
+  position: relative;
+  overflow: hidden;
+}
+
+.media > img,
+.media > picture > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 a {
@@ -97,6 +156,11 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
+a:focus-visible {
+  text-decoration-color: rgba(236, 38, 143, 0.85);
+  text-decoration-thickness: 2px;
+}
+
 :focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
@@ -104,9 +168,9 @@ a:hover {
 }
 
 .container {
-  max-width: var(--container);
+  width: min(100%, var(--container));
   margin: 0 auto;
-  padding: 0 clamp(16px, 3vw, 48px);
+  padding-inline: var(--container-pad);
 }
 
 /* ==========================================================================
@@ -117,7 +181,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 999;
-  height: var(--header-h);
+  min-height: var(--header-h);
   background: var(--pink);
   color: #fff;
   box-shadow: var(--shadow-soft);
@@ -126,23 +190,23 @@ a:hover {
 .topbar__inner {
   max-width: var(--container);
   margin: 0 auto;
-  height: 100%;
+  min-height: var(--header-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 0 clamp(16px, 3vw, 48px);
+  gap: var(--space-3);
+  padding: var(--space-2) var(--container-pad);
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 260px;
+  gap: var(--space-3);
+  min-width: clamp(180px, 30vw, 260px);
 }
 
 .logo img {
-  height: 48px;
+  max-height: clamp(40px, 5vw, 52px);
   width: auto;
 }
 
@@ -168,7 +232,7 @@ a:hover {
 .nav {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
   flex-wrap: wrap;
   justify-content: flex-end;
 }
@@ -178,7 +242,7 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: 999px;
   font-family: var(--font-ui);
   font-size: 14px;
@@ -224,7 +288,7 @@ a:hover {
    ========================================================================== */
 
 section {
-  padding: var(--section-pad) 0;
+  padding-block: var(--section-pad);
   position: relative;
   scroll-margin-top: calc(var(--header-h) + 24px);
 }
@@ -246,8 +310,8 @@ section.section--white {
 .section__title,
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(26px, 4vw, 40px);
-  margin: 0 0 14px 0;
+  font-size: var(--fs-h2);
+  margin: 0 0 var(--space-3) 0;
   letter-spacing: 0.2px;
 }
 
@@ -255,7 +319,7 @@ section.section--white {
 .section-subtitle {
   margin: 0;
   color: var(--muted);
-  font-size: 16px;
+  font-size: var(--fs-body);
   max-width: 70ch;
 }
 
@@ -267,15 +331,17 @@ section.section--white {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 12px 18px;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
   min-height: 44px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   text-decoration: none;
+  font-family: var(--font-ui);
   font-weight: 700;
+  font-size: 0.95rem;
   letter-spacing: 0.2px;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
   transition:
@@ -317,7 +383,7 @@ section.section--white {
 
 .btn--outline {
   background: transparent;
-  color: #2f2f2f;
+  color: var(--text-strong);
   border-color: var(--border-pink);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
 }
@@ -363,6 +429,7 @@ section.section--white {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
+  padding: var(--card-pad);
 }
 
 .pill {
@@ -376,6 +443,89 @@ section.section--white {
   color: #fff;
   font-weight: 700;
   font-size: 12px;
+}
+
+/* ==========================================================================
+   Grid utilitário
+   ========================================================================== */
+
+:where(.grid, .grid--2cols, .grid--3cols, .grid--4cols, .cards) {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+:where(.grid, .grid--2cols, .grid--3cols, .grid--4cols) {
+  grid-template-columns: 1fr;
+}
+
+:where(
+    .grid--products,
+    .vitrine-grid,
+    .promos-grid,
+    .p-grid,
+    #vitrine-grid,
+    #promocoes-grid,
+    #prodList
+  ) {
+  display: grid;
+  gap: var(--grid-gap);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  :where(
+      .grid--products,
+      .vitrine-grid,
+      .promos-grid,
+      .p-grid,
+      #vitrine-grid,
+      #promocoes-grid,
+      #prodList
+    ) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 720px) {
+  :where(.grid--2cols) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  :where(
+      .grid--products,
+      .vitrine-grid,
+      .promos-grid,
+      .p-grid,
+      #vitrine-grid,
+      #promocoes-grid,
+      #prodList
+    ) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  :where(.grid--3cols) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  :where(
+      .grid--products,
+      .vitrine-grid,
+      .promos-grid,
+      .p-grid,
+      #vitrine-grid,
+      #promocoes-grid,
+      #prodList
+    ) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  :where(.grid--4cols) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 /* ==========================================================================
@@ -400,7 +550,7 @@ section.section--white {
 .footer__inner:not(.container) {
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 clamp(16px, 3vw, 48px);
+  padding-inline: var(--container-pad);
 }
 
 /* Estrutura antiga (se aparecer) */
@@ -442,15 +592,15 @@ section.section--white {
 
 @media (max-width: 1024px) {
   :root {
-    --header-h: 108px;
+    --header-h: clamp(84px, 12vw, 112px);
   }
   .logo {
-    min-width: 220px;
+    min-width: clamp(180px, 40vw, 220px);
   }
   .topbar__inner {
     flex-wrap: wrap;
     justify-content: center;
-    padding: 10px 18px;
+    padding: var(--space-2) var(--container-pad);
   }
   .nav {
     width: 100%;
