@@ -5,8 +5,9 @@
    - Carrinho como "drawer" no mobile
 */
 
-const PRODUCTS_URL = "../data/private/produtos.json";
+const PRODUCTS_URL = "../data/produtos.json";
 const PROMOS_URL   = "../data/promocoes_site.json";
+const WHATSAPP_NUMBER = "556535494404"; // DDI + DDD + número (configure aqui)
 
 const STORAGE_KEY = "charme_orcamento_state_v2";
 const URL_PARAM_CART = "c"; // ?c=...
@@ -15,6 +16,7 @@ const URL_PARAM_CART = "c"; // ?c=...
 let produtos = [];
 let promos = [];
 let promoByCodigo = new Map(); // codigo -> promo
+let phoneMask = null;
 let state = {
   loja: 1,
   onlyPromos: false,
@@ -60,8 +62,12 @@ function loadState(){
   } catch {}
 }
 
+function phoneDigits(s){
+  return (s||"").replace(/\D+/g,"");
+}
+
 function fmtPhoneDigits(s){
-  return (s||"").replace(/\D+/g,"").slice(0,13);
+  return phoneDigits(s).slice(0,11);
 }
 
 function cartCount(){
@@ -433,8 +439,16 @@ function buildWhatsText(){
 }
 
 function openWhats(){
+  if(cartCount() === 0){
+    alert("Seu carrinho está vazio.");
+    return;
+  }
   const msg = buildWhatsText();
-  const phone = ""; // coloque o número oficial aqui (com DDI), ex: "5565999999999"
+  const phone = phoneDigits(WHATSAPP_NUMBER);
+  if(!phone){
+    alert("Número do vendedor não configurado.");
+    return;
+  }
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank", "noopener");
 }
@@ -590,6 +604,7 @@ async function boot(){
   const clienteNome = $("clienteNome");
   const clienteFone = $("clienteFone");
   const clienteObs  = $("clienteObs");
+  const clienteForm = $("clienteForm");
 
   if(clienteNome){
     clienteNome.value = state.clienteNome || "";
@@ -600,11 +615,20 @@ async function boot(){
   }
   if(clienteFone){
     clienteFone.value = state.clienteFone || "";
-    clienteFone.addEventListener("input", () => {
-      state.clienteFone = fmtPhoneDigits(clienteFone.value);
-      clienteFone.value = state.clienteFone;
-      persistState();
-    });
+    if(window.IMask){
+      phoneMask = window.IMask(clienteFone, { mask: "(00) 00000-0000" });
+      if(state.clienteFone) phoneMask.value = state.clienteFone;
+      phoneMask.on("accept", () => {
+        state.clienteFone = phoneMask.value;
+        persistState();
+      });
+    } else {
+      clienteFone.addEventListener("input", () => {
+        state.clienteFone = fmtPhoneDigits(clienteFone.value);
+        clienteFone.value = state.clienteFone;
+        persistState();
+      });
+    }
   }
   if(clienteObs){
     clienteObs.value = state.clienteObs || "";
@@ -619,7 +643,53 @@ async function boot(){
   const btnCopyLink = $("btnCopyLink");
   const btnClear = $("btnClear");
 
-  if(btnWhats) btnWhats.addEventListener("click", openWhats);
+  if(clienteForm){
+    const digitsFromField = () => {
+      if(phoneMask) return phoneDigits(phoneMask.value);
+      return phoneDigits(clienteFone ? clienteFone.value : "");
+    };
+
+    if(window.JustValidate){
+      const validator = new window.JustValidate(clienteForm, {
+        errorFieldCssClass: "is-invalid",
+        errorLabelStyle: { color: "#b42318" },
+        focusInvalidField: true,
+      });
+
+      validator
+        .addField("#clienteNome", [
+          { rule: "required", errorMessage: "Informe o nome." },
+          { rule: "minLength", value: 2, errorMessage: "Nome muito curto." },
+        ])
+        .addField("#clienteFone", [
+          {
+            validator: () => digitsFromField().length >= 10,
+            errorMessage: "Telefone inválido.",
+          },
+        ])
+        .onSuccess((event) => {
+          event.preventDefault();
+          openWhats();
+        });
+    } else {
+      clienteForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nome = (clienteNome ? clienteNome.value : "").trim();
+        const digits = digitsFromField();
+        if(nome.length < 2){
+          alert("Informe o nome.");
+          return;
+        }
+        if(digits.length < 10){
+          alert("Informe um telefone válido.");
+          return;
+        }
+        openWhats();
+      });
+    }
+  } else if(btnWhats) {
+    btnWhats.addEventListener("click", openWhats);
+  }
 
   if(btnCopyText){
     btnCopyText.addEventListener("click", async () => {

@@ -52,94 +52,112 @@
       </p>
     </div>
 
-    <!-- Controles (sticky/fixo no mobile) -->
-    <section class="orc-controls" aria-label="Filtros">
-      <div class="controls-grid">
-        <div class="field">
-          <label for="storeSelect">Loja de retirada</label>
-          <select id="storeSelect">
-            <option value="1">Loja 1</option>
-            <option value="2">Loja 2</option>
-          </select>
+    <section class="orc-grid" aria-label="Produtos, carrinho e formulário">
+      <section class="orc-block orc-search" aria-label="Busca de produtos">
+        <div class="orc-block__head">
+          <h2>1. Busque produtos</h2>
+          <p class="muted">Use a busca, filtre e adicione quantidades.</p>
         </div>
 
-        <div class="field field-grow">
-          <label for="searchInput">Buscar</label>
-          <input id="searchInput" type="search" placeholder="nome ou código" autocomplete="off" />
+        <!-- Controles (sticky/fixo no mobile) -->
+        <section class="orc-controls" aria-label="Filtros">
+          <div class="controls-grid">
+            <div class="field">
+              <label for="storeSelect">Loja de retirada</label>
+              <select id="storeSelect">
+                <option value="1">Loja 1</option>
+                <option value="2">Loja 2</option>
+              </select>
+            </div>
+
+            <div class="field field-grow">
+              <label for="searchInput">Buscar</label>
+              <input id="searchInput" type="search" placeholder="nome ou código" autocomplete="off" />
+            </div>
+
+            <div class="field field-actions">
+              <label class="chk">
+                <input type="checkbox" id="onlyPromos" />
+                <span>Só promoções</span>
+              </label>
+
+              <label class="chk">
+                <input type="checkbox" id="onlyStock" checked />
+                <span>Só com estoque</span>
+              </label>
+
+              <button class="btn btn-ghost" id="btnScan" type="button" title="Escanear (se o navegador suportar)">
+                Escanear
+              </button>
+              <input id="scanInput" type="file" accept="image/*" capture="environment" style="display:none" />
+            </div>
+
+            <div class="field field-status">
+              <div id="status" class="status-pill" data-kind="info">Carregando…</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="orc-left">
+          <div id="prodList" class="p-grid" aria-live="polite"></div>
         </div>
+      </section>
 
-        <div class="field field-actions">
-          <label class="chk">
-            <input type="checkbox" id="onlyPromos" />
-            <span>Só promoções</span>
-          </label>
+      <div class="orc-right">
+        <aside class="cart-panel orc-block" aria-label="Carrinho">
+          <div class="orc-block__head cart-title">
+            <h2>2. Carrinho</h2>
+            <button class="btn btn-mini" id="cartClose" type="button" aria-label="Fechar carrinho">Fechar</button>
+          </div>
 
-          <label class="chk">
-            <input type="checkbox" id="onlyStock" checked />
-            <span>Só com estoque</span>
-          </label>
+          <div id="cartMeta" class="cart-meta">Itens: 0 • Loja 1</div>
 
-          <button class="btn btn-ghost" id="btnScan" type="button" title="Escanear (se o navegador suportar)">
-            Escanear
-          </button>
-          <input id="scanInput" type="file" accept="image/*" capture="environment" style="display:none" />
-        </div>
+          <div id="cartList" class="cart-list"></div>
 
-        <div class="field field-status">
-          <div id="status" class="status-pill" data-kind="info">Carregando…</div>
-        </div>
+          <div class="cart-footer">
+            <div class="cart-total">
+              <span>Total</span>
+              <strong id="total">R$ 0,00</strong>
+            </div>
+
+            <div class="cart-actions">
+              <button class="btn btn-danger" id="btnClear" type="button">Limpar carrinho</button>
+            </div>
+          </div>
+        </aside>
+
+        <section class="client-panel orc-block" aria-label="Dados do cliente">
+          <div class="orc-block__head">
+            <h2>3. Seus dados</h2>
+            <p class="muted">Informe nome e telefone para contato.</p>
+          </div>
+
+          <form id="clienteForm" class="client-form" novalidate>
+            <div class="field">
+              <label for="clienteNome">Nome</label>
+              <input id="clienteNome" type="text" placeholder="Nome do cliente" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="clienteFone">Telefone</label>
+              <input id="clienteFone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+            </div>
+            <div class="field">
+              <label for="clienteObs">Observações</label>
+              <textarea id="clienteObs" rows="3" placeholder="Ex: preciso pra hoje, prefere retirar na loja 2…"></textarea>
+            </div>
+
+            <div class="client-actions">
+              <button class="btn btn-primary" id="btnWhats" type="submit">Enviar para vendedor</button>
+              <button class="btn" id="btnCopyText" type="button">Copiar texto</button>
+              <button class="btn" id="btnCopyLink" type="button">Copiar link</button>
+            </div>
+
+            <p class="muted small">
+              Dica: pra deixar “só equipe” de verdade, o caminho certo é Cloudflare Access. Não é CSS que resolve senha.
+            </p>
+          </form>
+        </section>
       </div>
-    </section>
-
-    <!-- Grid: produtos + carrinho -->
-    <section class="orc-grid" aria-label="Produtos e carrinho">
-      <div class="orc-left">
-        <div id="prodList" class="p-grid" aria-live="polite"></div>
-      </div>
-
-      <aside class="cart-panel" aria-label="Carrinho">
-        <div class="cart-title">
-          <h2>Carrinho</h2>
-          <button class="btn btn-mini" id="cartClose" type="button" aria-label="Fechar carrinho">Fechar</button>
-        </div>
-
-        <div id="cartMeta" class="cart-meta">Itens: 0 • Loja 1</div>
-
-        <div class="cart-client">
-          <div class="field">
-            <label for="clienteNome">Cliente (opcional)</label>
-            <input id="clienteNome" type="text" placeholder="Nome do cliente" />
-          </div>
-          <div class="field">
-            <label for="clienteFone">Telefone (opcional)</label>
-            <input id="clienteFone" type="tel" placeholder="(00) 00000-0000" />
-          </div>
-          <div class="field">
-            <label for="clienteObs">Observações (opcional)</label>
-            <textarea id="clienteObs" rows="3" placeholder="Ex: preciso pra hoje, prefere retirar na loja 2…"></textarea>
-          </div>
-        </div>
-
-        <div id="cartList" class="cart-list"></div>
-
-        <div class="cart-footer">
-          <div class="cart-total">
-            <span>Total</span>
-            <strong id="total">R$ 0,00</strong>
-          </div>
-
-          <div class="cart-actions">
-            <button class="btn btn-primary" id="btnWhats" type="button">Enviar no WhatsApp</button>
-            <button class="btn" id="btnCopyText" type="button">Copiar texto</button>
-            <button class="btn" id="btnCopyLink" type="button">Copiar link</button>
-            <button class="btn btn-danger" id="btnClear" type="button">Limpar</button>
-          </div>
-
-          <p class="muted small">
-            Dica: pra deixar “só equipe” de verdade, o caminho certo é Cloudflare Access. Não é CSS que resolve senha.
-          </p>
-        </div>
-      </aside>
     </section>
   </main>
 
@@ -147,6 +165,8 @@
   <div id="cartOverlay" class="cart-overlay" style="display:none"></div>
   <button id="cartFab" class="cart-fab" type="button" style="display:none">Carrinho</button>
 
-  <script src="./orcamento.js?v=2"></script>
+  <script src="../js/vendor/imask/imask.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js';"></script>
+  <script src="../js/vendor/just-validate/just-validate.production.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/just-validate@4.3.0/dist/just-validate.production.min.js';"></script>
+  <script src="./orcamento.js?v=3"></script>
 </body>
 </html>
