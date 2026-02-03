@@ -1,2 +1,4 @@
 /data/private/*.json
   Cache-Control: no-store, must-revalidate
+/data/*.json
+  Cache-Control: no-store, must-revalidate
