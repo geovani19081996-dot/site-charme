@@ -17,10 +17,9 @@
 .section#lojas > .section__subtitle,
 .section#produtos > .section__title,
 .section#produtos > .section__subtitle {
-  width: 100%;
-  max-width: 960px;
+  width: min(100%, var(--container));
   margin-inline: auto;
-  padding-inline: clamp(16px, 3vw, 48px);
+  padding-inline: var(--container-pad);
 }
 
 /* =======================================================
@@ -45,9 +44,6 @@
    ======================================================= */
 
 #inicio .hero__inner {
-  max-width: 960px;
-  margin-inline: auto;
-  padding-inline: clamp(16px, 3vw, 48px);
   display: grid;
   gap: 1.25rem;
 }
@@ -96,15 +92,15 @@
 }
 
 #inicio .hero__social-links a {
-  width: 42px;
-  height: 42px;
+  width: clamp(44px, 10vw, 48px);
+  height: clamp(44px, 10vw, 48px);
   border-radius: 999px;
   display: grid;
   place-items: center;
   text-decoration: none;
   color: var(--pink);
-  background: rgba(236, 38, 143, 0.08);
-  border: 1px solid rgba(236, 38, 143, 0.18);
+  background: color-mix(in srgb, var(--pink) 8%, transparent);
+  border: 1px solid var(--border-pink);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.18s ease,
@@ -114,7 +110,7 @@
 
 #inicio .hero__social-links a:hover {
   transform: translateY(-1px);
-  background: rgba(236, 38, 143, 0.12);
+  background: color-mix(in srgb, var(--pink) 12%, transparent);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
 }
 
@@ -123,17 +119,19 @@
    ======================================================= */
 
 .section#lojas {
-  background: linear-gradient(180deg, #fff, var(--pink-light) 55%, #fff 100%);
+  background: linear-gradient(
+    180deg,
+    var(--white),
+    var(--pink-light) 55%,
+    var(--white) 100%
+  );
 }
 
 /* grid */
 .section#lojas .cards {
-  max-width: 960px;
-  margin-inline: auto;
-  padding-inline: clamp(16px, 3vw, 48px);
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--grid-gap);
 }
 
 /* card */
@@ -141,9 +139,9 @@
   position: relative;
   background: var(--white);
   border-radius: calc(var(--radius) + 6px);
-  padding: 1.25rem 1.25rem 1.35rem;
+  padding: var(--card-pad);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
   overflow: hidden;
   transition:
     transform 0.18s ease,
@@ -162,7 +160,7 @@
 .section#lojas .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
-  border-color: rgba(236, 38, 143, 0.18);
+  border-color: var(--border-pink);
 }
 
 .section#lojas .card__tag {
@@ -174,8 +172,8 @@
   font-size: 0.72rem;
   font-weight: 900;
   color: var(--pink);
-  background: rgba(236, 38, 143, 0.08);
-  border: 1px solid rgba(236, 38, 143, 0.18);
+  background: color-mix(in srgb, var(--pink) 8%, transparent);
+  border: 1px solid var(--border-pink);
   margin-bottom: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -194,15 +192,15 @@
 .section#lojas .card__map {
   border-radius: calc(var(--radius) + 2px);
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--white);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
   margin-bottom: 1.05rem;
 }
 
 .section#lojas .card__map iframe {
   width: 100%;
-  height: 200px;
+  height: clamp(180px, 40vw, 240px);
   border: 0;
   display: block;
 }
@@ -223,12 +221,9 @@
    ======================================================= */
 
 #produtos .categorias {
-  max-width: 960px;
-  margin-inline: auto;
-  padding-inline: clamp(16px, 3vw, 48px);
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--grid-gap);
 }
 
 #produtos .categoria {
@@ -237,7 +232,7 @@
   padding: 1.15rem 1.2rem;
   border-radius: calc(var(--radius) + 6px);
   background: var(--white);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
   transition:
     transform 0.18s ease,
@@ -248,7 +243,7 @@
 #produtos .categoria:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow);
-  border-color: rgba(236, 38, 143, 0.14);
+  border-color: var(--border-pink);
 }
 
 #produtos .categoria__nome {
@@ -271,10 +266,6 @@
    (sem tocar no vitrine.css)
    ======================================================= */
 
-#vitrine .container {
-  max-width: 960px;
-}
-
 #vitrine .section__title {
   letter-spacing: -0.01em;
 }
@@ -292,20 +283,18 @@
 }
 
 #contato .contact-final__card {
-  max-width: 960px;
-  margin-inline: auto;
   padding: clamp(1.6rem, 4vw, 3rem);
   border-radius: 28px;
   background: radial-gradient(
     circle at top left,
     var(--pink-light) 0,
-    #ffffff 45%,
-    rgba(236, 38, 143, 0.09) 100%
+    var(--white) 45%,
+    color-mix(in srgb, var(--pink) 9%, transparent) 100%
   );
-  box-shadow: 0 18px 40px rgba(236, 38, 143, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--pink) 12%, transparent);
+  border: 1px solid var(--border);
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: clamp(1.35rem, 3vw, 2.25rem);
   align-items: flex-start;
 }
@@ -349,17 +338,17 @@
 
 #contato .contact-final__stats {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 0.85rem;
   margin-bottom: 1.5rem;
 }
 
 #contato .contact-final__stat {
-  background: rgba(255, 255, 255, 0.92);
+  background: color-mix(in srgb, var(--white) 92%, transparent);
   border-radius: 16px;
   padding: 0.9rem 1rem;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease;
@@ -384,7 +373,7 @@
 }
 
 #contato .contact-final__hours {
-  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+  border-top: 1px dashed var(--border);
   padding-top: 1.1rem;
 }
 
@@ -468,7 +457,7 @@
   padding: 8px 12px;
   border-radius: 999px;
   background: var(--pink-light);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
   font-size: 0.92rem;
   text-decoration: none;
   color: var(--text-strong);
@@ -491,7 +480,7 @@
 
 #contato .contact-final__social-link:hover {
   transform: translateY(-1px);
-  background: rgba(236, 38, 143, 0.1);
+  background: color-mix(in srgb, var(--pink) 10%, transparent);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
 }
 
@@ -512,30 +501,12 @@
   #inicio .hero__inner {
     gap: 1.4rem;
   }
-
-  .section#lojas .card__map iframe {
-    height: 220px;
-  }
-
-  #contato .contact-final__stats {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media (min-width: 900px) {
-  .section#lojas .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.4rem;
-  }
-
   #contato .contact-final__card {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.15fr);
-    gap: 2.75rem;
-    padding: 3rem 3.25rem;
-  }
-
-  #contato .contact-final__stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 2.75rem);
+    padding: clamp(2.4rem, 4vw, 3.25rem);
   }
 }
 
