@@ -1,246 +1,194 @@
-/* =======================================================
-   CHARME | VITRINE AO VIVO
-   ======================================================= */
+/* =========================
+   VITRINE (home)
+   ========================= */
 
-/* =======================================================
-   COMPAT: aliases/fallback de variaveis (pra nao quebrar se base.css mudar)
-   ======================================================= */
-:root {
-  --pink: var(--pink, #ec268f);
-  --pink-dark: var(--pink-dark, #d51f7e);
-  --pink-light: var(--pink-light, #fdeff6);
-  --gold: var(--gold, #c49332);
-
-  --text-dark: var(--text-dark, #222);
-  --gray: var(--gray, rgba(0, 0, 0, 0.62));
-
-  /* alguns arquivos antigos usam isso */
-  --pink-soft-2: var(--pink-soft-2, rgba(236, 38, 143, 0.1));
-  --shadow-soft: var(--shadow-soft, 0 10px 26px rgba(0, 0, 0, 0.06));
+.vitrine {
+  margin: 2rem 0;
 }
 
-/* =======================================================
-   SECAO
-   ======================================================= */
-
-.secao-vitrine {
-  padding: 4rem 0 4.5rem;
-  background: linear-gradient(180deg, #ffffff 0%, var(--pink-soft-2) 100%);
-}
-
-/* Cabeçalho */
 .vitrine-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding: 0 0.5rem;
-}
-
-.vitrine-header__kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.32rem 0.95rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--pink);
-  background: rgba(236, 38, 143, 0.12);
-}
-
-.vitrine-header__title {
-  margin: 0.85rem 0 0.45rem;
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: clamp(1.55rem, 3vw, 2.05rem);
-  line-height: 1.15;
-  color: var(--text-dark);
-}
-
-.vitrine-header__subtitle {
-  max-width: 680px;
-  margin: 0 auto;
-  color: var(--gray);
-  line-height: 1.55;
-  font-size: 1rem;
-}
-
-/* Pill */
-.vitrine-toolbar {
   display: flex;
-  justify-content: center;
-  margin-bottom: 1.8rem;
-  padding: 0 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.vitrine-pill {
-  padding: 0.38rem 0.95rem;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(236, 38, 143, 0.15);
-  color: var(--pink-dark);
-  font-weight: 700;
-  font-size: 0.85rem;
-  box-shadow: var(--shadow-soft);
-}
-
-/* =======================================================
-   GRID RESPONSIVO DE VERDADE (auto-fit)
-   ======================================================= */
-
-.vitrine-grid {
-  display: grid;
-  gap: 1.4rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  align-items: stretch;
-}
-
-/* =======================================================
-   CARD
-   ======================================================= */
-
-.vitrine-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1.2rem;
-  background: #fff;
-  border: 1px solid rgba(236, 38, 143, 0.08);
-  box-shadow: var(--shadow-soft);
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease;
-}
-
-/* Hover so onde faz sentido (mouse/trackpad) */
-@media (hover: hover) and (pointer: fine) {
-  .vitrine-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.12);
-  }
-}
-
-.vitrine-card__badge {
-  position: absolute;
-  top: 0.9rem;
-  left: 0.9rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  background: var(--pink);
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 0 10px 24px rgba(236, 38, 143, 0.35);
-}
-
-.vitrine-card__badge--restock {
-  background: var(--gold);
-  box-shadow: 0 10px 24px rgba(196, 147, 50, 0.35);
-}
-
-/* Imagem: sem “aperto” e consistente no mobile */
-.vitrine-card__image {
-  width: 100%;
-  aspect-ratio: 1 / 1; /* estabiliza o layout */
-  object-fit: contain;
-  background: linear-gradient(180deg, #fff, #fff7fb);
-  padding: 1rem;
-  display: block;
-}
-
-.vitrine-card__content {
-  padding: 1.1rem 1.2rem 1.35rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  height: 100%;
-  min-width: 0;
-}
-
-.vitrine-card__meta {
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gray);
-}
-
-.vitrine-card__title {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: var(--text-dark);
+.vitrine-header h2 {
+  font-size: 1.4rem;
   margin: 0;
 }
 
-.vitrine-card__taxonomy {
-  font-size: 0.82rem;
-  color: rgba(0, 0, 0, 0.65);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.vitrine-header .vitrine-sub {
+  color: #666;
+  font-size: 0.95rem;
 }
 
-.vitrine-card__price {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--pink-dark);
+/* grid base (fallback) */
+.vitrine-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: stretch;
 }
 
-.vitrine-card__stock {
-  font-size: 0.88rem;
-  color: var(--gray);
+/* =========================
+   VITRINE EM CARROSSEL (Slick)
+   - Quando Slick inicializa, ele cria .slick-list / .slick-track / .slick-slide
+   - Precisamos "desligar" o grid e dar espaçamento por padding (gutter)
+   ========================= */
+.vitrine-grid.slick-initialized {
+  display: block; /* cancela o display:grid */
 }
 
-.vitrine-card__cta {
-  margin-top: auto;
+.vitrine-grid.slick-initialized .slick-list {
+  margin: 0 -0.55rem;
 }
 
-/* Estado vazio */
-.vitrine-empty {
-  text-align: center;
-  padding: 2.5rem 1rem;
-  color: var(--gray);
+.vitrine-grid.slick-initialized .slick-slide {
+  padding: 0 0.55rem;
+  height: auto;
 }
 
-/* =======================================================
-   AJUSTES MOBILE
-   ======================================================= */
+.vitrine-grid.slick-initialized .slick-track {
+  display: flex;
+}
+
+.vitrine-grid.slick-initialized .vitrine-card {
+  height: 100%;
+}
+
+/* setas */
+.vitrine-grid .slick-prev,
+.vitrine-grid .slick-next {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #fdeff6;
+  border: 1px solid rgba(236, 38, 143, 0.25);
+  color: #ec268f;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  z-index: 2;
+}
+
+.vitrine-grid .slick-prev:before,
+.vitrine-grid .slick-next:before {
+  color: #ec268f; /* alguns temas usam ::before */
+}
+
+.vitrine-grid .slick-prev {
+  left: -14px;
+}
+
+.vitrine-grid .slick-next {
+  right: -14px;
+}
+
+/* bolinhas */
+.vitrine-grid .slick-dots li button:before {
+  color: #f7afd5;
+  opacity: 1;
+}
+
+.vitrine-grid .slick-dots li.slick-active button:before {
+  color: #ec268f;
+}
 
 @media (max-width: 640px) {
-  .secao-vitrine {
-    padding: 3.2rem 0 3.6rem;
+  .vitrine-grid .slick-prev {
+    left: -8px;
+  }
+  .vitrine-grid .slick-next {
+    right: -8px;
+  }
+}
+
+/* card */
+.vitrine-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.vitrine-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+}
+
+.vitrine-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vitrine-imgwrap {
+  background: #fdeff6;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.vitrine-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.vitrine-info {
+  padding: 12px 12px 14px;
+}
+
+.vitrine-marca {
+  font-size: 0.85rem;
+  color: #4a4a4a;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.vitrine-nome {
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin-top: 6px;
+  color: #202020;
+  min-height: 2.5em;
+}
+
+.vitrine-preco {
+  margin-top: 10px;
+  font-weight: 700;
+  color: #ec268f;
+}
+
+/* responsivo (grid fallback) */
+@media (max-width: 1024px) {
+  .vitrine-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .vitrine-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .vitrine-grid:not(.slick-initialized) {
+    gap: 1rem;
+    grid-template-columns: 1fr;
   }
 
   .vitrine-header {
-    margin-bottom: 1.4rem;
-  }
-
-  .vitrine-header__subtitle {
-    font-size: 0.98rem;
-  }
-
-  .vitrine-grid {
-    gap: 1rem;
-    grid-template-columns: 1fr; /* 1 por linha no celular */
-  }
-
-  .vitrine-card {
-    border-radius: 1.1rem;
-  }
-
-  .vitrine-card__content {
-    padding: 1rem 1.05rem 1.15rem;
-  }
-
-  .vitrine-card__badge {
-    top: 0.75rem;
-    left: 0.75rem;
-  }
-
-  .vitrine-card__image {
-    padding: 0.85rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
