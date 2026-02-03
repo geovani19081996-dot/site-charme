@@ -148,9 +148,81 @@
    ========================================================= */
 
 #promocoes .promos-grid {
-  gap: 10px;
+  gap: clamp(10px, 2vw, 16px);
   align-items: stretch;
-  justify-content: center;
+  justify-content: stretch;
+}
+
+/* Swiper */
+#promocoes .promos-grid.swiper {
+  display: block;
+  overflow: hidden;
+}
+
+#promocoes .promos-grid .swiper-wrapper {
+  align-items: stretch;
+}
+
+#promocoes .promos-grid .swiper-slide {
+  height: auto;
+}
+
+#promocoes .promos-grid .swiper-slide > .promo-card {
+  height: 100%;
+}
+
+#promocoes .promos-grid .swiper-button-prev,
+#promocoes .promos-grid .swiper-button-next {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--pink);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  z-index: 2;
+  opacity: 0.9;
+  transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#promocoes .promos-grid .swiper-button-prev::after,
+#promocoes .promos-grid .swiper-button-next::after {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+#promocoes .promos-grid .swiper-button-prev {
+  left: 6px;
+}
+
+#promocoes .promos-grid .swiper-button-next {
+  right: 6px;
+}
+
+#promocoes .promos-grid .swiper-button-prev:hover,
+#promocoes .promos-grid .swiper-button-next:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+}
+
+#promocoes .promos-grid .swiper-pagination {
+  position: static;
+  inset: auto;
+  width: 100%;
+  margin-top: 12px;
+}
+
+#promocoes .promos-grid .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--pink-soft);
+  opacity: 0.7;
+}
+
+#promocoes .promos-grid .swiper-pagination-bullet-active {
+  background: var(--pink);
+  opacity: 1;
 }
 
 /* =========================================================
@@ -421,6 +493,16 @@
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  #promocoes .promos-grid .swiper-button-prev {
+    left: 4px;
+  }
+
+  #promocoes .promos-grid .swiper-button-next {
+    right: 4px;
+  }
 }
 
 /* Ajustes finos pra telas muito estreitas */

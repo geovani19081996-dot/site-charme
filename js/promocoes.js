@@ -10,6 +10,81 @@
   const FETCH_TIMEOUT_MS = 8000;
   const PROMO_REFRESH_MS = 15000;
 
+  // ======== CARROSSEL (Swiper) - loader (sem mexer no HTML) ========
+  const SWIPER = {
+    cssLocal: "css/vendor/swiper-bundle.min.css",
+    jsLocal: "js/vendor/swiper-bundle.min.js",
+    // Fallback opcional (CDN)
+    cssCdn: "https://cdn.jsdelivr.net/npm/swiper@12.1.0/swiper-bundle.min.css",
+    jsCdn: "https://cdn.jsdelivr.net/npm/swiper@12.1.0/swiper-bundle.min.js",
+  };
+
+  function hasSwiper() {
+    return typeof window.Swiper === "function";
+  }
+
+  function loadCssOnce(href) {
+    try {
+      for (const ss of Array.from(document.styleSheets)) {
+        if (ss && ss.href === href) return;
+      }
+    } catch (_) {}
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.appendChild(link);
+  }
+
+  function loadScriptOnce(src) {
+    return new Promise((resolve, reject) => {
+      const existing = Array.from(document.scripts).find((s) => s.src === src);
+      if (existing) {
+        if (existing.dataset && existing.dataset.loaded === "1")
+          return resolve();
+        existing.addEventListener("load", () => resolve(), { once: true });
+        existing.addEventListener(
+          "error",
+          () => reject(new Error("Falhou: " + src)),
+          { once: true },
+        );
+        return;
+      }
+
+      const s = document.createElement("script");
+      s.src = src;
+      s.async = true;
+      s.dataset.loaded = "0";
+      s.onload = () => {
+        s.dataset.loaded = "1";
+        resolve();
+      };
+      s.onerror = () => reject(new Error("Falhou: " + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  function ensureSwiperLoaded() {
+    if (hasSwiper()) return Promise.resolve();
+    if (window.__charmeSwiperPromise) return window.__charmeSwiperPromise;
+
+    window.__charmeSwiperPromise = (async () => {
+      try {
+        loadCssOnce(SWIPER.cssLocal);
+        await loadScriptOnce(SWIPER.jsLocal);
+        return;
+      } catch (e) {
+        // se os locais não existirem (404), cai pro CDN
+      }
+
+      try {
+        loadCssOnce(SWIPER.cssCdn);
+      } catch (_) {}
+      await loadScriptOnce(SWIPER.jsCdn);
+    })();
+
+    return window.__charmeSwiperPromise;
+  }
+
   const DATA_BASES = resolveDataBases();
   const PROMOS_JSON_URLS = buildDataUrls(PROMOS_JSON_URL, PROMOS_JSON_URL);
 
@@ -118,6 +193,8 @@
       return;
     }
 
+    ensureSwiperLoaded().catch(() => {});
+
     // =====================================================
     //  ESTADO GLOBAL
     // =====================================================
@@ -154,6 +231,136 @@
       pageInfo: document.querySelector("#promos-page-info"),
       prev: document.querySelector("#promos-prev"),
       next: document.querySelector("#promos-next"),
+    };
+
+    // =====================================================
+    //  CARROSSEL (Swiper)
+    // =====================================================
+    const USE_CAROUSEL = true;
+    let swiperInstance = null;
+
+    const teardownSwiperStructure = (gridEl) => {
+      if (!gridEl) return;
+
+      const wrapper = gridEl.querySelector(":scope > .swiper-wrapper");
+      if (wrapper) {
+        const slides = Array.from(wrapper.children);
+        for (const slide of slides) {
+          slide.classList.remove("swiper-slide");
+          gridEl.appendChild(slide);
+        }
+        wrapper.remove();
+      }
+
+      gridEl
+        .querySelectorAll(
+          ":scope > .swiper-button-prev, :scope > .swiper-button-next, :scope > .swiper-pagination",
+        )
+        .forEach((el) => el.remove());
+
+      gridEl.classList.remove(
+        "swiper",
+        "swiper-initialized",
+        "swiper-horizontal",
+        "swiper-backface-hidden",
+      );
+      gridEl.removeAttribute("style");
+    };
+
+    const destroySwiperIfAny = (gridEl) => {
+      if (swiperInstance) {
+        try {
+          swiperInstance.destroy(true, true);
+        } catch (_) {}
+        swiperInstance = null;
+      }
+      teardownSwiperStructure(gridEl);
+    };
+
+    const buildSwiperStructure = (gridEl) => {
+      gridEl.classList.add("swiper");
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "swiper-wrapper";
+
+      const slides = Array.from(gridEl.children);
+      for (const slide of slides) {
+        slide.classList.add("swiper-slide");
+        wrapper.appendChild(slide);
+      }
+
+      gridEl.appendChild(wrapper);
+
+      const prev = document.createElement("button");
+      prev.className = "swiper-button-prev";
+      prev.type = "button";
+      prev.setAttribute("aria-label", "Anterior");
+
+      const next = document.createElement("button");
+      next.className = "swiper-button-next";
+      next.type = "button";
+      next.setAttribute("aria-label", "Próximo");
+
+      const pagination = document.createElement("div");
+      pagination.className = "swiper-pagination";
+
+      gridEl.appendChild(prev);
+      gridEl.appendChild(next);
+      gridEl.appendChild(pagination);
+
+      return { prev, next, pagination };
+    };
+
+    const initSwiper = (gridEl) => {
+      if (!hasSwiper()) return false;
+      if (!gridEl || gridEl.children.length < 2) return false;
+
+      const { prev, next, pagination } = buildSwiperStructure(gridEl);
+
+      try {
+        swiperInstance = new window.Swiper(gridEl, {
+          slidesPerView: 2,
+          slidesPerGroup: 2,
+          spaceBetween: 14,
+          loop: true,
+          watchOverflow: true,
+          pagination: {
+            el: pagination,
+            clickable: true,
+          },
+          navigation: {
+            nextEl: next,
+            prevEl: prev,
+          },
+          breakpoints: {
+            768: {
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+              spaceBetween: 16,
+            },
+            1024: {
+              slidesPerView: 4,
+              slidesPerGroup: 4,
+              spaceBetween: 18,
+            },
+          },
+        });
+
+        if (els.pagination) els.pagination.hidden = true;
+        return true;
+      } catch (_) {
+        teardownSwiperStructure(gridEl);
+        swiperInstance = null;
+        return false;
+      }
+    };
+
+    const maybeStartCarousel = (gridEl) => {
+      ensureSwiperLoaded()
+        .then(() => initSwiper(gridEl))
+        .catch(() => {
+          // se falhar, segue grid
+        });
     };
 
     // =====================================================
@@ -403,6 +610,12 @@
     //  CONTROLES DE PAGINAÇÃO
     // =====================================================
     const updatePaginationControls = () => {
+      if (USE_CAROUSEL) {
+        if (els.pagination) els.pagination.hidden = true;
+        if (els.pageInfo) els.pageInfo.textContent = "";
+        return;
+      }
+
       if (!els.pagination || !els.pageInfo || !els.prev || !els.next) return;
 
       const total = state.filteredPromos.length;
@@ -429,6 +642,7 @@
       const total = state.filteredPromos.length;
 
       if (total === 0) {
+        destroySwiperIfAny(els.grid);
         lastRenderKey = `EMPTY|${state.filters.search}|${state.filters.category}|${state.filters.sort}`;
         els.grid.innerHTML = "";
         state.timers = [];
@@ -440,15 +654,23 @@
         return;
       }
 
+      const useCarousel = USE_CAROUSEL;
+
       els.grid.hidden = false;
       if (els.empty) els.empty.hidden = true;
 
       const totalPages = getTotalPages();
-      if (state.page > totalPages) state.page = totalPages;
+      if (useCarousel) {
+        state.page = 1;
+      } else if (state.page > totalPages) {
+        state.page = totalPages;
+      }
 
       const start = (state.page - 1) * state.pageSize;
       const end = start + state.pageSize;
-      const pageItems = state.filteredPromos.slice(start, end);
+      const pageItems = useCarousel
+        ? state.filteredPromos
+        : state.filteredPromos.slice(start, end);
 
       const keyText = (s) =>
         String(s || "")
@@ -478,6 +700,7 @@
 
       lastRenderKey = pageKey;
 
+      destroySwiperIfAny(els.grid);
       els.grid.innerHTML = "";
       state.timers = [];
 
@@ -490,6 +713,7 @@
 
       updateFilterLabel();
       updatePaginationControls();
+      if (useCarousel) maybeStartCarousel(els.grid);
     };
 
     // =====================================================
