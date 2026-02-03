@@ -10,6 +10,23 @@
   const FETCH_TIMEOUT_MS = 8000;
   const PROMO_REFRESH_MS = 15000;
 
+  // ======== Analytics (sem PII) ========
+  function trackEvent(name, payload) {
+    const analytics = window.CharmeAnalytics;
+    if (analytics && typeof analytics.track === "function") {
+      analytics.track(name, payload);
+    }
+  }
+
+  function trackSectionView(sectionId, eventName) {
+    const analytics = window.CharmeAnalytics;
+    if (analytics && typeof analytics.trackSectionView === "function") {
+      analytics.trackSectionView(sectionId, eventName);
+    } else if (analytics && typeof analytics.track === "function") {
+      analytics.track(eventName, { section: sectionId });
+    }
+  }
+
   // ======== CARROSSEL (Swiper) - loader (sem mexer no HTML) ========
   const SWIPER = {
     cssLocal: "css/vendor/swiper-bundle.min.css",
@@ -194,6 +211,23 @@
     }
 
     ensureSwiperLoaded().catch(() => {});
+    trackSectionView("promocoes", "view_promocoes");
+
+    if (grid && !grid.dataset.analyticsBound) {
+      grid.dataset.analyticsBound = "1";
+      grid.addEventListener("click", (event) => {
+        const target = event.target && event.target.closest
+          ? event.target.closest(".promo-card")
+          : null;
+        if (!target) return;
+        const productId = target.dataset.productId || target.dataset.codigo;
+        const value = Number(target.dataset.productValue);
+        const payload = { section: "promocoes" };
+        if (productId) payload.product_id = productId;
+        if (Number.isFinite(value)) payload.value = value;
+        trackEvent("select_promo", payload);
+      });
+    }
 
     // =====================================================
     //  ESTADO GLOBAL
@@ -723,6 +757,9 @@
       const el = document.createElement("article");
       el.className = "promo-card fade-in-up";
       el.dataset.codigo = String(p.codigo ?? "");
+      if (p.codigo != null) el.dataset.productId = String(p.codigo);
+      if (Number.isFinite(Number(p.preco_promo)))
+        el.dataset.productValue = String(Number(p.preco_promo));
       if (p.categoria) el.dataset.categoria = String(p.categoria);
 
       const imgName =

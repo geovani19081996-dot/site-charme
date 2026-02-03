@@ -8,6 +8,9 @@
 const PRODUCTS_URL = "../data/produtos.json";
 const PROMOS_URL   = "../data/promocoes_site.json";
 const WHATSAPP_NUMBER = "556535494404"; // DDI + DDD + número (configure aqui)
+const ANALYTICS_KEY = "charme_session_id";
+const TELEMETRY_ENDPOINT =
+  typeof window !== "undefined" ? window.CHARME_TELEMETRY_ENDPOINT : null;
 
 const STORAGE_KEY = "charme_orcamento_state_v2";
 const URL_PARAM_CART = "c"; // ?c=...
@@ -27,6 +30,84 @@ let state = {
   clienteFone: "",
   clienteObs: "",
 };
+
+// ===== Analytics (sem PII) =====
+function getSessionId() {
+  try {
+    let sid = localStorage.getItem(ANALYTICS_KEY);
+    if (!sid) {
+      sid =
+        "s_" +
+        Math.random().toString(36).slice(2, 10) +
+        Date.now().toString(36);
+      localStorage.setItem(ANALYTICS_KEY, sid);
+    }
+    return sid;
+  } catch {
+    return "s_" + Math.random().toString(36).slice(2, 10);
+  }
+}
+
+function buildEvent(eventName, payload) {
+  const evt = {
+    event_name: eventName,
+    timestamp: new Date().toISOString(),
+    page: window.location && window.location.pathname ? window.location.pathname : "/",
+    session_id: getSessionId(),
+  };
+
+  if (payload && payload.section) evt.section = payload.section;
+  if (payload && payload.product_id != null)
+    evt.product_id = String(payload.product_id);
+  if (payload && Number.isFinite(payload.value)) evt.value = Number(payload.value);
+  return evt;
+}
+
+function trackEvent(eventName, payload) {
+  const evt = buildEvent(eventName, payload);
+
+  if (typeof window.gtag === "function") {
+    const gtagPayload = {
+      session_id: evt.session_id,
+      page: evt.page,
+    };
+    if (evt.section) gtagPayload.section = evt.section;
+    if (evt.product_id) gtagPayload.product_id = evt.product_id;
+    if (typeof evt.value === "number") gtagPayload.value = evt.value;
+
+    if (eventName === "web_vitals") {
+      if (evt.section) gtagPayload.metric_name = evt.section;
+      if (typeof evt.value === "number") gtagPayload.metric_value = evt.value;
+    }
+
+    window.gtag("event", eventName, gtagPayload);
+  } else if (window.console && console.debug) {
+    console.debug("[analytics]", evt);
+  }
+
+  if (TELEMETRY_ENDPOINT) {
+    fetch(TELEMETRY_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(evt),
+      keepalive: true,
+    }).catch(() => {});
+  }
+}
+
+function initWebVitals() {
+  if (!window.webVitals) return;
+  const send = (metric) => {
+    if (!metric || !metric.name) return;
+    trackEvent("web_vitals", {
+      section: metric.name,
+      value: Math.round(metric.value * 100) / 100,
+    });
+  };
+  window.webVitals.onLCP(send);
+  window.webVitals.onCLS(send);
+  window.webVitals.onINP(send);
+}
 
 // ===== Util =====
 function brl(v){
@@ -386,6 +467,21 @@ function addToCart(codigo, delta){
 
   state.cart[codigo].qtd = qtd;
 
+  if (p && delta > 0) {
+    trackEvent("add_to_cart", {
+      section: "orcamento",
+      product_id: codigo,
+      value: Number(getPreco(p)),
+    });
+  }
+  if (p && delta < 0) {
+    trackEvent("remove_from_cart", {
+      section: "orcamento",
+      product_id: codigo,
+      value: Number(getPreco(p)),
+    });
+  }
+
   persistState();
   renderCart();
 
@@ -396,7 +492,15 @@ function addToCart(codigo, delta){
 
 function removeFromCart(codigo){
   codigo = int(codigo);
+  const p = produtos.find(x => x.codigo === codigo);
   delete state.cart[codigo];
+  if (p) {
+    trackEvent("remove_from_cart", {
+      section: "orcamento",
+      product_id: codigo,
+      value: Number(getPreco(p)),
+    });
+  }
   persistState();
   renderCart();
 }
@@ -449,6 +553,8 @@ function openWhats(){
     alert("Número do vendedor não configurado.");
     return;
   }
+  trackEvent("click_whatsapp", { section: "orcamento" });
+  trackEvent("generate_lead", { section: "orcamento", value: cartTotal() });
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank", "noopener");
 }
@@ -538,6 +644,7 @@ async function fetchJson(url){
 }
 
 async function boot(){
+  initWebVitals();
   loadState();
 
   const payload = decodeStateFromUrl();
@@ -669,6 +776,10 @@ async function boot(){
         ])
         .onSuccess((event) => {
           event.preventDefault();
+          trackEvent("begin_checkout", {
+            section: "orcamento",
+            value: cartTotal(),
+          });
           openWhats();
         });
     } else {
@@ -684,6 +795,10 @@ async function boot(){
           alert("Informe um telefone válido.");
           return;
         }
+        trackEvent("begin_checkout", {
+          section: "orcamento",
+          value: cartTotal(),
+        });
         openWhats();
       });
     }

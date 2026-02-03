@@ -10,6 +10,23 @@
   const ENDPOINT = "/data/produtos.json"; // vindo do live-data
   const MAX_ITEMS = 12;
 
+  // ======== Analytics (sem PII) ========
+  function trackEvent(name, payload) {
+    const analytics = window.CharmeAnalytics;
+    if (analytics && typeof analytics.track === "function") {
+      analytics.track(name, payload);
+    }
+  }
+
+  function trackSectionView(sectionId, eventName) {
+    const analytics = window.CharmeAnalytics;
+    if (analytics && typeof analytics.trackSectionView === "function") {
+      analytics.trackSectionView(sectionId, eventName);
+    } else if (analytics && typeof analytics.track === "function") {
+      analytics.track(eventName, { section: sectionId });
+    }
+  }
+
   // ======== CARROSSEL (Swiper) - loader (sem mexer no HTML) ========
   // Carrega Swiper local e aplica no grid da vitrine, com fallback (se falhar, fica grid mesmo).
   const SWIPER = {
@@ -263,9 +280,14 @@
       const preco = moneyBRL(p?.preco);
       const url = safeText(p?.url) || "#";
       const imgUrl = safeText(p?.imagem) || "/img/placeholder_produto.png";
+      const productId = p?.codigo ?? p?.id ?? "";
+      const productValue = Number(p?.preco);
 
       const card = document.createElement("article");
       card.className = "vitrine-card";
+      if (productId !== "") card.dataset.productId = String(productId);
+      if (Number.isFinite(productValue))
+        card.dataset.productValue = String(productValue);
 
       card.innerHTML = `
         <a class="vitrine-link" href="${url}" target="_blank" rel="noopener">
@@ -318,6 +340,27 @@
     // Carrega Swiper em paralelo (tenta local e cai pro CDN). Depois do load dá pra testar:
     // typeof window.Swiper === "function"
     ensureSwiperLoaded().catch(() => {});
+
+    trackSectionView("vitrine", "view_vitrine");
+
+    const grid = document.getElementById("vitrine-grid");
+    if (grid && !grid.dataset.analyticsBound) {
+      grid.dataset.analyticsBound = "1";
+      grid.addEventListener("click", (event) => {
+        const link = event.target && event.target.closest
+          ? event.target.closest("a.vitrine-link")
+          : null;
+        if (!link) return;
+        const card = link.closest(".vitrine-card");
+        if (!card) return;
+        const productId = card.dataset.productId;
+        const value = Number(card.dataset.productValue);
+        const payload = { section: "vitrine" };
+        if (productId) payload.product_id = productId;
+        if (Number.isFinite(value)) payload.value = value;
+        trackEvent("select_item", payload);
+      });
+    }
 
     loadVitrine();
     scheduleRefresh();
