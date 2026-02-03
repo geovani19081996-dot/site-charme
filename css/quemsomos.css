@@ -6,56 +6,17 @@
    ======================================================= */
 
 /* =======================================================
-   COMPAT: aliases de variaveis (pra nao depender de base.css antigo)
-   ======================================================= */
-:root {
-  /* Paleta (base.css novo) */
-  --pink: var(--pink, #ec268f);
-  --pink-dark: var(--pink-dark, #d51f7e);
-  --pink-light: var(--pink-light, #fdeff6);
-  --gold: var(--gold, #c49332);
-
-  /* Textos */
-  --text-dark: var(--text-dark, #222);
-  --text-light: var(--text-light, rgba(0, 0, 0, 0.62));
-  --white: var(--white, #fff);
-
-  /* Antigos -> novos */
-  --rosa-intenso: var(--pink);
-  --rosa-medio: var(--pink-dark);
-  --rosa-claro: var(--pink-light);
-  --preto-suave: var(--text-dark);
-  --cinza-texto: var(--text-light);
-
-  /* Aux */
-  --pink-soft: var(--pink-soft, rgba(236, 38, 143, 0.18));
-  --border-soft: rgba(0, 0, 0, 0.06);
-  --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.06);
-}
-
-/* =======================================================
    GRIDS GENERICOS (USADOS EM QUEM SOMOS)
    ======================================================= */
 
 .grid {
   display: grid;
-  gap: 1.8rem;
+  gap: var(--grid-gap);
 }
 
 /* 2 colunas: texto + card / texto + texto */
 .grid--2cols {
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   align-items: flex-start;
-}
-
-/* 3 colunas: valores */
-.grid--3cols {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-/* 4 colunas: familia/equipe */
-.grid--4cols {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 /* Pequeno respiro extra na secao de valores */
@@ -68,15 +29,12 @@
    ======================================================= */
 
 .hero--interno {
-  background: linear-gradient(180deg, var(--rosa-claro) 0%, #ffffff 46%);
-  padding-block: 4rem 3rem;
+  background: linear-gradient(180deg, var(--pink-light) 0%, var(--white) 46%);
+  padding-block: clamp(2.8rem, 6vw, 4rem) clamp(2.2rem, 5vw, 3rem);
 }
 
 .hero--interno .hero__inner {
-  max-width: 900px;
-  margin: 0 auto;
   text-align: center;
-  padding-inline: 1rem;
 }
 
 .hero--interno .hero__label {
@@ -84,22 +42,22 @@
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--rosa-intenso);
+  color: var(--pink);
   margin: 0 0 0.75rem;
 }
 
 .hero--interno .hero__title {
-  font-family: "Poppins", system-ui, sans-serif;
-  font-size: 2.05rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3.6vw, 2.35rem);
   line-height: 1.18;
-  color: var(--preto-suave);
+  color: var(--text-strong);
   margin: 0 0 0.9rem;
 }
 
 .hero--interno .hero__text {
-  font-size: 1.02rem;
-  color: var(--cinza-texto);
-  max-width: 720px;
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 70ch;
   margin: 0 auto 1.6rem;
 }
 
@@ -115,15 +73,13 @@
    ======================================================= */
 
 .sobre__grid {
-  max-width: 960px;
-  margin: 0 auto;
   display: grid;
-  gap: 2rem;
+  gap: var(--grid-gap);
 }
 
 .sobre__texto {
   font-size: 1rem;
-  color: var(--text-light);
+  color: var(--muted);
 }
 
 .sobre__texto p {
@@ -155,13 +111,13 @@
 .timeline__titulo {
   font-size: 0.98rem;
   font-weight: 800;
-  color: var(--text-dark);
+  color: var(--text-strong);
   margin-top: 0.2rem;
 }
 
 .timeline__texto {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--muted);
   margin-top: 0.35rem;
   line-height: 1.55;
 }
@@ -181,10 +137,8 @@
    ======================================================= */
 
 .essencia__grid {
-  max-width: 960px;
-  margin: 0 auto;
   display: grid;
-  gap: 1.5rem;
+  gap: var(--grid-gap);
 }
 
 .essencia__bloco {
@@ -192,19 +146,19 @@
   border-radius: 0.95rem;
   padding: 1.5rem 1.6rem;
   box-shadow: var(--shadow-soft);
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
 }
 
 .essencia__bloco h3 {
-  font-family: "Poppins", system-ui, sans-serif;
+  font-family: var(--font-display);
   font-size: 1.1rem;
-  color: var(--text-dark);
+  color: var(--text-strong);
   margin: 0 0 0.6rem;
 }
 
 .essencia__bloco p {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--muted);
   margin: 0;
   line-height: 1.55;
 }
@@ -218,7 +172,7 @@
 
 .valores__lista li {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--muted);
   padding-left: 1.1rem;
   position: relative;
   line-height: 1.45;
@@ -242,10 +196,8 @@
    ======================================================= */
 
 .equipe {
-  max-width: 960px;
-  margin: 0 auto;
   display: grid;
-  gap: 1.2rem;
+  gap: var(--grid-gap);
 }
 
 .equipe__item {
@@ -253,20 +205,23 @@
   border-radius: 0.95rem;
   padding: 1.1rem 1.4rem;
   box-shadow: var(--shadow-soft);
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .equipe__foto {
-  width: 190px;
-  height: 190px;
+  width: clamp(120px, 30vw, 180px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
   background: var(--pink-light);
-  box-shadow: 0 0 0 3px var(--pink-soft);
+  box-shadow: 0 0 0 3px var(--border-pink);
 }
 
 .equipe__info {
@@ -275,9 +230,9 @@
 }
 
 .equipe__nome {
-  font-family: "Poppins", system-ui, sans-serif;
+  font-family: var(--font-display);
   font-size: 1.08rem;
-  color: var(--text-dark);
+  color: var(--text-strong);
   margin: 0;
 }
 
@@ -291,7 +246,7 @@
 .equipe__texto,
 .equipe__info p {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--muted);
   margin: 0;
   line-height: 1.55;
 }
@@ -306,10 +261,9 @@
 
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
-  max-width: 1040px;
-  margin: 2.3rem auto 0;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--grid-gap);
+  margin: 2.3rem 0 0;
 }
 
 .why-card {
@@ -317,7 +271,7 @@
   border-radius: 18px;
   padding: 1.7rem 1.8rem;
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(236, 38, 143, 0.1);
+  border: 1px solid var(--border-pink);
 }
 
 .why-card__label {
@@ -331,7 +285,7 @@
 
 .why-card__text {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--muted);
   margin: 0;
   line-height: 1.55;
 }
@@ -340,7 +294,7 @@
   margin-top: 0.9rem;
   padding-left: 1.1rem;
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--muted);
 }
 
 .why-card__list li + li {
@@ -351,39 +305,7 @@
    RESPONSIVIDADE - QUEM SOMOS
    ======================================================= */
 
-@media (max-width: 960px) {
-  .grid--2cols {
-    grid-template-columns: 1fr;
-  }
-
-  .hero--interno {
-    padding-block: 3.4rem 2.6rem;
-  }
-
-  .hero--interno .hero__title {
-    font-size: 1.85rem;
-  }
-
-  .why-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 900px) {
-  .grid--3cols {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .grid--4cols {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 768px) {
-  .hero--interno .hero__title {
-    font-size: 1.7rem;
-  }
-
   /* Timeline mais legivel no mobile */
   .timeline {
     padding-left: 1.15rem;
@@ -392,41 +314,12 @@
   .timeline__texto {
     font-size: 0.95rem;
   }
-
-  /* Equipe: ainda em linha no tablet */
-  .equipe__item {
-    flex-direction: row;
-  }
-}
-
-@media (max-width: 640px) {
-  .why-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .grid--3cols,
-  .grid--4cols {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 480px) {
-  .hero--interno {
-    padding-block: 3rem 2.2rem;
-  }
-
-  .hero--interno .hero__title {
-    font-size: 1.55rem;
-  }
-
   .equipe__item {
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
-
-  .equipe__foto {
-    width: 160px;
-    height: 160px;
   }
 }
