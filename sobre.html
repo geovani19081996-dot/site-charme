@@ -23,6 +23,18 @@
       rel="stylesheet"
     />
 
+    <!-- Shoelace (Drawer) -->
+    <link
+      rel="stylesheet"
+      href="css/vendor/shoelace/shoelace-light.css"
+      onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css';"
+    />
+    <script
+      type="module"
+      src="js/vendor/shoelace/shoelace.js"
+      onerror="this.onerror=null;var s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js';document.head.appendChild(s);"
+    ></script>
+
     <!-- CSS base + específico da página Sobre -->
     <link rel="stylesheet" href="css/base.css?v=202601310123" />
     <link rel="stylesheet" href="css/avisos.css?v=202601310123" />
@@ -106,7 +118,55 @@
 
   <body>
     <!-- Header / Topbar igual da home -->
-    <header class="topbar">
+    <header class="topbar-mobile">
+      <div class="topbar-mobile__inner">
+        <button
+          class="topbar-mobile__icon"
+          type="button"
+          aria-label="Abrir menu"
+          data-mobile-drawer-open
+        >
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+
+        <a
+          class="topbar-mobile__logo"
+          href="index.html"
+          aria-label="Voltar para a página inicial"
+        >
+          <img
+            src="img/logo-charme.png"
+            alt="Charme Cosméticos"
+            class="topbar-mobile__logo-img"
+          />
+        </a>
+
+        <div class="topbar-mobile__actions">
+          <a
+            class="topbar-mobile__icon topbar-mobile__icon--whats"
+            href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20da%20Charme%20Cosm%C3%A9ticos"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Falar com a Charme pelo WhatsApp"
+          >
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <sl-drawer class="mobile-drawer" id="mobile-drawer" placement="start" label="Menu">
+      <nav class="mobile-menu" aria-label="Menu mobile">
+        <a href="index.html#inicio" data-drawer-close>Início</a>
+        <a href="index.html#lojas" data-drawer-close>Lojas</a>
+        <a href="index.html#produtos" data-drawer-close>Produtos</a>
+        <a href="index.html#promocoes" data-drawer-close>Promoções</a>
+        <a href="sobre.html#historia" data-drawer-close>Quem somos</a>
+        <a href="index.html#contato" data-drawer-close>Contato</a>
+      </nav>
+    </sl-drawer>
+
+    <header class="topbar topbar--desktop">
       <div class="container topbar__inner">
         <a
           class="logo"

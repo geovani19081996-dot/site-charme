@@ -825,6 +825,28 @@ section.section--white {
   }
 }
 
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .topbar {
+    display: none;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .logo__tagline {
+    display: none;
+  }
+
+  .topbar-mobile {
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --header-h: var(--header-mobile-h);

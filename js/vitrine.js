@@ -9,6 +9,7 @@
   // ======== CONFIG ========
   const ENDPOINT = "/data/produtos.json"; // vindo do live-data
   const MAX_ITEMS = 12;
+  const PLACEHOLDER_IMG = "/img/placeholder_produto.png";
 
   // ======== Analytics (sem PII) ========
   function trackEvent(name, payload) {
@@ -239,10 +240,31 @@
 
   function applyImageFallback(img) {
     if (!img) return;
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    const rawSrc = (img.getAttribute("src") || "").trim();
+    if (!rawSrc) {
+      img.src = PLACEHOLDER_IMG;
+    }
     img.onerror = () => {
-      img.onerror = null;
-      img.src = "/img/placeholder_produto.png";
+      if (img.dataset && img.dataset.fallbackApplied === "1") return;
+      if (img.dataset) img.dataset.fallbackApplied = "1";
+      img.src = PLACEHOLDER_IMG;
     };
+  }
+
+  function normalizeImageUrl(raw) {
+    let url = safeText(raw);
+    if (!url) return PLACEHOLDER_IMG;
+    if (
+      window.location &&
+      window.location.protocol === "https:" &&
+      url.startsWith("http://")
+    ) {
+      url = "https://" + url.slice(7);
+    }
+    return url;
   }
 
   // ======== RENDER ========
@@ -279,7 +301,7 @@
       const marca = safeText(p?.marca);
       const preco = moneyBRL(p?.preco);
       const url = safeText(p?.url) || "#";
-      const imgUrl = safeText(p?.imagem) || "/img/placeholder_produto.png";
+      const imgUrl = normalizeImageUrl(p?.imagem);
       const productId = p?.codigo ?? p?.id ?? "";
       const productValue = Number(p?.preco);
 

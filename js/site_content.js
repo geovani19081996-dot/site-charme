@@ -131,6 +131,34 @@ function initClickTracking() {
   });
 }
 
+function initMobileDrawer() {
+  const drawer = document.getElementById("mobile-drawer");
+  if (!drawer) return;
+
+  const openers = document.querySelectorAll("[data-mobile-drawer-open]");
+  openers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (typeof drawer.show === "function") {
+        drawer.show();
+      } else {
+        drawer.setAttribute("open", "true");
+      }
+    });
+  });
+
+  drawer.addEventListener("click", (event) => {
+    const link = event.target && event.target.closest
+      ? event.target.closest("[data-drawer-close]")
+      : null;
+    if (!link) return;
+    if (typeof drawer.hide === "function") {
+      drawer.hide();
+    } else {
+      drawer.removeAttribute("open");
+    }
+  });
+}
+
 window.CharmeAnalytics = window.CharmeAnalytics || {};
 window.CharmeAnalytics.getSessionId = getSessionId;
 window.CharmeAnalytics.track = track;
@@ -475,6 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
   scheduleRefresh();
   initWebVitals();
   initClickTracking();
+  initMobileDrawer();
 
   const path = window.location && window.location.pathname ? window.location.pathname : "/";
   const isHome = path === "/" || path.endsWith("/index.html");
