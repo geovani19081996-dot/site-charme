@@ -24,43 +24,26 @@
   font-size: 0.95rem;
 }
 
-/* fallback grid (sem slick) */
-.vitrine-grid:not(.slick-initialized) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: clamp(12px, 2vw, 20px);
+/* fallback grid via base.css */
+/* =========================
+   VITRINE EM CARROSSEL (Swiper)
+   - Se Swiper inicializa, vira carrossel; se falhar, segue grid (base.css)
+   ========================= */
+.vitrine-grid.swiper {
+  position: relative;
+}
+
+.vitrine-grid .swiper-wrapper {
   align-items: stretch;
 }
 
-/* =========================
-   VITRINE EM CARROSSEL (Slick)
-   - Quando Slick inicializa, ele cria .slick-list / .slick-track / .slick-slide
-   - Precisamos "desligar" o grid e dar espaçamento por padding (gutter)
-   ========================= */
-.vitrine-grid.slick-initialized {
-  display: block; /* cancela o display:grid */
-}
-
-.vitrine-grid.slick-initialized .slick-list {
-  margin: 0 -0.6rem;
-}
-
-.vitrine-grid.slick-initialized .slick-slide {
-  padding: 0 0.6rem;
+.vitrine-grid .swiper-slide {
   height: auto;
 }
 
-.vitrine-grid.slick-initialized .slick-track {
-  display: flex;
-}
-
-.vitrine-grid.slick-initialized .vitrine-card {
-  height: 100%;
-}
-
 /* setas */
-.vitrine-grid .slick-prev,
-.vitrine-grid .slick-next {
+.vitrine-grid .swiper-button-prev,
+.vitrine-grid .swiper-button-next {
   width: 36px;
   height: 36px;
   border-radius: 999px;
@@ -73,44 +56,53 @@
   transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.vitrine-grid .slick-prev:before,
-.vitrine-grid .slick-next:before {
-  color: var(--pink); /* alguns temas usam ::before */
+.vitrine-grid .swiper-button-prev::after,
+.vitrine-grid .swiper-button-next::after {
+  font-size: 14px;
+  font-weight: 800;
 }
 
-.vitrine-grid .slick-prev {
-  left: -14px;
+.vitrine-grid .swiper-button-prev {
+  left: 6px;
 }
 
-.vitrine-grid .slick-next {
-  right: -14px;
+.vitrine-grid .swiper-button-next {
+  right: 6px;
 }
 
-.vitrine-grid .slick-prev:hover,
-.vitrine-grid .slick-next:hover {
+.vitrine-grid .swiper-button-prev:hover,
+.vitrine-grid .swiper-button-next:hover {
   opacity: 1;
   transform: translateY(-1px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
 }
 
 /* bolinhas */
-.vitrine-grid .slick-dots li button:before {
-  color: var(--pink-soft);
-  opacity: 0.7;
-  font-size: 8px;
+.vitrine-grid.swiper .swiper-pagination {
+  position: static;
+  inset: auto;
+  width: 100%;
+  margin-top: 12px;
 }
 
-.vitrine-grid .slick-dots li.slick-active button:before {
-  color: var(--pink);
+.vitrine-grid .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--pink-soft);
+  opacity: 0.7;
+}
+
+.vitrine-grid .swiper-pagination-bullet-active {
+  background: var(--pink);
   opacity: 1;
 }
 
 @media (max-width: 640px) {
-  .vitrine-grid .slick-prev {
-    left: -8px;
+  .vitrine-grid .swiper-button-prev {
+    left: 4px;
   }
-  .vitrine-grid .slick-next {
-    right: -8px;
+  .vitrine-grid .swiper-button-next {
+    right: 4px;
   }
 }
 

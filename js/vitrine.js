@@ -1,7 +1,7 @@
 /*!
   Charme Cosméticos - Vitrine (ao vivo)
   - Renderiza cards a partir do JSON do live-data
-  - Agora também pode virar carrossel (Slick), como a Sephora
+  - Agora também pode virar carrossel (Swiper), como a Sephora
 */
 (function () {
   "use strict";
@@ -10,31 +10,18 @@
   const ENDPOINT = "/data/produtos.json"; // vindo do live-data
   const MAX_ITEMS = 12;
 
-  // ======== CARROSSEL (Slick) - loader (sem mexer no HTML) ========
-  // O site da Sephora usa Slick: ele clona slides e usa translateX pra "pular" os clones.
-  // Aqui a gente carrega Slick e aplica no grid da vitrine, com fallback (se falhar, fica grid mesmo).
-  const SLICK = {
-    // Preferência: arquivos locais (mais "à prova de susto" que depender de CDN)
-    jqLocal: "js/vendor/jquery-3.7.1.min.js",
-    slickJsLocal: "js/vendor/slick.min.js",
-    cssLocal: ["css/vendor/slick.css", "css/vendor/slick-theme.css"],
-
-    // Fallback: CDN (caso os locais não existam)
-    jqCdn: "https://code.jquery.com/jquery-3.7.1.min.js",
-    slickJsCdn:
-      "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js",
-    cssCdn: [
-      "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css",
-      "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css",
-    ],
+  // ======== CARROSSEL (Swiper) - loader (sem mexer no HTML) ========
+  // Carrega Swiper local e aplica no grid da vitrine, com fallback (se falhar, fica grid mesmo).
+  const SWIPER = {
+    cssLocal: "css/vendor/swiper-bundle.min.css",
+    jsLocal: "js/vendor/swiper-bundle.min.js",
+    // Fallback opcional (CDN)
+    cssCdn: "https://cdn.jsdelivr.net/npm/swiper@12.1.0/swiper-bundle.min.css",
+    jsCdn: "https://cdn.jsdelivr.net/npm/swiper@12.1.0/swiper-bundle.min.js",
   };
 
-  function hasSlick() {
-    return !!(
-      window.jQuery &&
-      window.jQuery.fn &&
-      typeof window.jQuery.fn.slick === "function"
-    );
+  function hasSwiper() {
+    return typeof window.Swiper === "function";
   }
 
   function loadCssOnce(href) {
@@ -78,82 +65,145 @@
     });
   }
 
-  function ensureSlickLoaded() {
-    if (hasSlick()) return Promise.resolve();
-    if (window.__charmeSlickPromise) return window.__charmeSlickPromise;
+  function ensureSwiperLoaded() {
+    if (hasSwiper()) return Promise.resolve();
+    if (window.__charmeSwiperPromise) return window.__charmeSwiperPromise;
 
-    window.__charmeSlickPromise = (async () => {
+    window.__charmeSwiperPromise = (async () => {
       try {
-        SLICK.cssLocal.forEach(loadCssOnce);
-        await loadScriptOnce(SLICK.jqLocal);
-        await loadScriptOnce(SLICK.slickJsLocal);
+        loadCssOnce(SWIPER.cssLocal);
+        await loadScriptOnce(SWIPER.jsLocal);
         return;
       } catch (e) {
         // se os locais não existirem (404), cai pro CDN
       }
 
       try {
-        SLICK.cssCdn.forEach(loadCssOnce);
+        loadCssOnce(SWIPER.cssCdn);
       } catch (_) {}
-      await loadScriptOnce(SLICK.jqCdn);
-      await loadScriptOnce(SLICK.slickJsCdn);
+      await loadScriptOnce(SWIPER.jsCdn);
     })();
 
-    return window.__charmeSlickPromise;
+    return window.__charmeSwiperPromise;
   }
 
-  function destroySlickIfAny(el) {
-    if (!hasSlick()) return;
-    const $ = window.jQuery;
-    const $el = $(el);
-    if ($el.hasClass("slick-initialized")) {
+  let swiperInstance = null;
+
+  function teardownSwiperStructure(grid) {
+    if (!grid) return;
+
+    const wrapper = grid.querySelector(":scope > .swiper-wrapper");
+    if (wrapper) {
+      const slides = Array.from(wrapper.children);
+      for (const slide of slides) {
+        slide.classList.remove("swiper-slide");
+        grid.appendChild(slide);
+      }
+      wrapper.remove();
+    }
+
+    grid
+      .querySelectorAll(
+        ":scope > .swiper-button-prev, :scope > .swiper-button-next, :scope > .swiper-pagination",
+      )
+      .forEach((el) => el.remove());
+
+    grid.classList.remove(
+      "swiper",
+      "swiper-initialized",
+      "swiper-horizontal",
+      "swiper-backface-hidden",
+    );
+    grid.removeAttribute("style");
+  }
+
+  function destroySwiperIfAny(grid) {
+    if (swiperInstance) {
       try {
-        $el.slick("unslick");
+        swiperInstance.destroy(true, true);
       } catch (_) {}
+      swiperInstance = null;
+    }
+    teardownSwiperStructure(grid);
+  }
+
+  function buildSwiperStructure(grid) {
+    grid.classList.add("swiper");
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "swiper-wrapper";
+
+    const slides = Array.from(grid.children);
+    for (const slide of slides) {
+      slide.classList.add("swiper-slide");
+      wrapper.appendChild(slide);
+    }
+
+    grid.appendChild(wrapper);
+
+    const prev = document.createElement("button");
+    prev.className = "swiper-button-prev";
+    prev.type = "button";
+    prev.setAttribute("aria-label", "Anterior");
+
+    const next = document.createElement("button");
+    next.className = "swiper-button-next";
+    next.type = "button";
+    next.setAttribute("aria-label", "Próximo");
+
+    const pagination = document.createElement("div");
+    pagination.className = "swiper-pagination";
+
+    grid.appendChild(prev);
+    grid.appendChild(next);
+    grid.appendChild(pagination);
+
+    return { prev, next, pagination };
+  }
+
+  function initSwiper(grid) {
+    if (!hasSwiper()) return;
+    if (!grid || grid.children.length < 2) return;
+
+    const { prev, next, pagination } = buildSwiperStructure(grid);
+
+    try {
+      swiperInstance = new window.Swiper(grid, {
+        slidesPerView: 2,
+        slidesPerGroup: 2,
+        spaceBetween: 16,
+        loop: true,
+        watchOverflow: true,
+        pagination: {
+          el: pagination,
+          clickable: true,
+        },
+        navigation: {
+          nextEl: next,
+          prevEl: prev,
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+            spaceBetween: 18,
+          },
+          1024: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+            spaceBetween: 20,
+          },
+        },
+      });
+    } catch (_) {
+      teardownSwiperStructure(grid);
+      swiperInstance = null;
     }
   }
 
-  function initSlick(el) {
-    if (!hasSlick()) return;
-    const $ = window.jQuery;
-    const $el = $(el);
-
-    destroySlickIfAny(el);
-
-    // pouco item? fica grid mesmo
-    if ($el.children().length < 2) return;
-
-    $el.slick({
-      infinite: true,
-      centerMode: false,
-      variableWidth: false,
-
-      // estilo Sephora: "páginas" (4 por vez no desktop)
-      slidesToShow: 4,
-      slidesToScroll: 4,
-
-      dots: true,
-      arrows: true,
-      adaptiveHeight: false,
-      swipeToSlide: true,
-      speed: 250,
-
-      prevArrow:
-        '<button type="button" class="slick-prev" aria-label="Anterior">‹</button>',
-      nextArrow:
-        '<button type="button" class="slick-next" aria-label="Próximo">›</button>',
-
-      // responsivo: tablet e mobile
-      responsive: [
-        { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } },
-        { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 2 } },
-      ],
-    });
-  }
-
   function maybeStartCarousel(gridEl) {
-    ensureSlickLoaded()
-      .then(() => initSlick(gridEl))
+    ensureSwiperLoaded()
+      .then(() => initSwiper(gridEl))
       .catch(() => {
         // se falhar, paciência: continua como grid
       });
@@ -186,7 +236,7 @@
     if (!grid) return;
 
     // Se já estava como carrossel, desmonta antes de re-renderizar
-    destroySlickIfAny(grid);
+    destroySwiperIfAny(grid);
 
     // Normaliza lista
     const list = Array.isArray(products) ? products : [];
@@ -238,7 +288,7 @@
 
     grid.appendChild(fragment);
 
-    // Transforma em carrossel (se Slick estiver disponível / carregar)
+    // Transforma em carrossel (se Swiper estiver disponível / carregar)
     maybeStartCarousel(grid);
   }
 
@@ -265,9 +315,9 @@
 
   // ======== BOOT ========
   const boot = () => {
-    // Carrega Slick em paralelo (tenta local e cai pro CDN). Depois do load dá pra testar no console:
-    // !!(window.jQuery && jQuery.fn && jQuery.fn.slick)
-    ensureSlickLoaded().catch(() => {});
+    // Carrega Swiper em paralelo (tenta local e cai pro CDN). Depois do load dá pra testar:
+    // typeof window.Swiper === "function"
+    ensureSwiperLoaded().catch(() => {});
 
     loadVitrine();
     scheduleRefresh();
