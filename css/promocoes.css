@@ -8,9 +8,9 @@
   padding: clamp(2rem, 3.6vw, 2.8rem) 0 clamp(1.8rem, 3.2vw, 2.4rem);
   background: linear-gradient(
     180deg,
-    rgba(247, 175, 213, 0.12) 0%,
-    rgba(253, 239, 246, 0.45) 55%,
-    #ffffff 100%
+    color-mix(in srgb, var(--pink-soft) 12%, transparent) 0%,
+    color-mix(in srgb, var(--pink-verysoft) 45%, transparent) 55%,
+    var(--white) 100%
   );
   overflow-x: hidden;
   font-size: 14px; /* densidade tipo e-commerce */
@@ -29,7 +29,7 @@
 
 #promocoes .promos-header__kicker {
   display: inline-block;
-  color: var(--pink, #ec268f);
+  color: var(--pink);
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -38,10 +38,10 @@
 }
 
 #promocoes .promos-header__title {
-  font-family: var(--font-display, system-ui);
+  font-family: var(--font-display);
   font-size: clamp(1.35rem, 3vw, 1.95rem);
   margin: 0.4rem 0 0.25rem;
-  color: var(--text-strong, var(--text, #222));
+  color: var(--text-strong);
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
@@ -49,7 +49,7 @@
 #promocoes .promos-header__subtitle {
   max-width: 70ch;
   margin: 0 auto;
-  color: var(--muted, #666);
+  color: var(--muted);
   font-size: 0.98rem;
   line-height: 1.55;
 }
@@ -81,9 +81,9 @@
   gap: 8px;
   padding: 0.48rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid var(--border-pink, rgba(236, 38, 143, 0.18));
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--pink, #ec268f);
+  border: 1px solid var(--border-pink);
+  background: color-mix(in srgb, var(--white) 90%, transparent);
+  color: var(--pink);
   font-weight: 900;
   font-size: 0.84rem;
   white-space: nowrap;
@@ -104,10 +104,10 @@
   min-height: 44px;
   padding: 0.66rem 0.95rem;
   border-radius: 999px;
-  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
-  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--white) 95%, transparent);
   font-size: 0.95rem;
-  color: var(--text-strong, var(--text, #222));
+  color: var(--text-strong);
   outline: none;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
@@ -116,8 +116,8 @@
 #promocoes .promos-select {
   padding-right: 2.6rem;
   background-image:
-    linear-gradient(45deg, transparent 50%, var(--pink, #ec268f) 50%),
-    linear-gradient(135deg, var(--pink, #ec268f) 50%, transparent 50%);
+    linear-gradient(45deg, transparent 50%, var(--pink) 50%),
+    linear-gradient(135deg, var(--pink) 50%, transparent 50%);
   background-position:
     calc(100% - 18px) 52%,
     calc(100% - 12px) 52%;
@@ -127,16 +127,16 @@
 
 #promocoes .promos-input:focus,
 #promocoes .promos-select:focus {
-  border-color: var(--border-pink, rgba(236, 38, 143, 0.28));
+  border-color: var(--border-pink);
   box-shadow:
     0 8px 16px rgba(0, 0, 0, 0.05),
-    0 0 0 4px rgba(236, 38, 143, 0.10);
+    0 0 0 4px color-mix(in srgb, var(--pink) 10%, transparent);
 }
 
 /* Label do filtro atual */
 #promocoes .promos-current-filter {
   margin: 0.2rem 0 0.75rem;
-  color: var(--muted, #666);
+  color: var(--muted);
   text-align: center;
   font-weight: 800;
   font-size: 0.9rem;
@@ -148,25 +148,9 @@
    ========================================================= */
 
 #promocoes .promos-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 tiles no mobile */
   gap: 10px;
   align-items: stretch;
   justify-content: center;
-}
-
-@media (min-width: 520px) {
-  #promocoes .promos-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-  }
-}
-
-@media (min-width: 900px) {
-  #promocoes .promos-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-  }
 }
 
 /* =========================================================
@@ -174,10 +158,10 @@
    ========================================================= */
 
 #promocoes .promo-card {
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: color-mix(in srgb, var(--white) 96%, transparent);
+  border: 1px solid var(--border);
   border-radius: 16px; /* menor que 24px */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-soft);
   overflow: hidden;
   position: relative;
   display: flex;
@@ -188,8 +172,8 @@
 
 #promocoes .promo-card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-  border-color: var(--border-pink, rgba(236, 38, 143, 0.18));
+  box-shadow: var(--shadow-strong);
+  border-color: var(--border-pink);
 }
 
 /* fita/badge compactos */
@@ -204,15 +188,19 @@
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
-  background: linear-gradient(135deg, var(--pink, #ec268f), var(--pink-strong, #d91f80));
-  box-shadow: 0 8px 14px rgba(236, 38, 143, 0.14);
+  color: var(--white);
+  background: linear-gradient(135deg, var(--pink), var(--pink-strong));
+  box-shadow: 0 8px 14px color-mix(in srgb, var(--pink) 18%, transparent);
 }
 
 /* imagem: quadrada tipo e-commerce, mas com padding baixo */
 #promocoes .promo-card__image-wrapper {
   position: relative;
-  background: linear-gradient(180deg, #ffffff 0%, rgba(253, 239, 246, 0.55) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--white) 0%,
+    color-mix(in srgb, var(--pink-verysoft) 55%, transparent) 100%
+  );
   padding: 10px 10px 8px;
 }
 
@@ -221,9 +209,11 @@
   aspect-ratio: 1 / 1; /* feeling sephora */
   object-fit: contain;
   border-radius: 12px;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--white);
+  border: 1px solid var(--border);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+  max-width: 100%;
+  height: auto;
 }
 
 #promocoes .promo-card__discount-tag {
@@ -232,9 +222,9 @@
   bottom: 10px;
   padding: 0.26rem 0.5rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid var(--border-pink, rgba(236, 38, 143, 0.18));
-  color: var(--pink, #ec268f);
+  background: color-mix(in srgb, var(--white) 94%, transparent);
+  border: 1px solid var(--border-pink);
+  color: var(--pink);
   font-weight: 900;
   font-size: 0.74rem;
 }
@@ -255,16 +245,16 @@
   font-size: 0.72rem;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.58);
+  color: color-mix(in srgb, var(--text) 70%, transparent);
 }
 
 /* título: 2 linhas no máximo */
 #promocoes .promo-card__title {
-  font-family: var(--font-display, system-ui);
+  font-family: var(--font-display);
   font-size: 0.95rem;
   line-height: 1.22;
   margin: 0;
-  color: var(--text-strong, var(--text, #222));
+  color: var(--text-strong);
   letter-spacing: -0.01em;
 
   display: -webkit-box;
@@ -276,7 +266,7 @@
 /* descrição: 1 linha */
 #promocoes .promo-card__subtitle {
   margin: 0;
-  color: var(--muted, #666);
+  color: var(--muted);
   font-size: 0.86rem;
   line-height: 1.45;
   min-height: 1em;
@@ -294,18 +284,18 @@
   justify-content: space-between;
   gap: 10px;
   padding: 0.55rem 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 #promocoes .promo-card__label {
-  color: rgba(0, 0, 0, 0.55);
+  color: color-mix(in srgb, var(--text) 65%, transparent);
   font-weight: 800;
   font-size: 0.78rem;
 }
 
 #promocoes .promo-card__price-current {
-  color: var(--pink, #ec268f);
+  color: var(--pink);
   font-weight: 900;
   font-size: 1.12rem;
   line-height: 1.05;
@@ -313,7 +303,7 @@
 
 #promocoes .promo-card__price-old {
   display: block;
-  color: rgba(0, 0, 0, 0.42);
+  color: color-mix(in srgb, var(--text) 55%, transparent);
   text-decoration: line-through;
   font-weight: 800;
   font-size: 0.82rem;
@@ -322,7 +312,7 @@
 
 #promocoes .promo-card__price-save {
   display: block;
-  color: rgba(0, 0, 0, 0.62);
+  color: color-mix(in srgb, var(--text) 72%, transparent);
   font-weight: 800;
   font-size: 0.82rem;
 }
@@ -335,14 +325,14 @@
 }
 
 #promocoes .promo-card__meta-item {
-  background: rgba(253, 239, 246, 0.55);
-  border: 1px solid rgba(236, 38, 143, 0.10);
+  background: color-mix(in srgb, var(--pink-verysoft) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pink) 10%, transparent);
   border-radius: 12px;
   padding: 0.45rem 0.55rem;
 }
 
 #promocoes .promo-card__meta-value {
-  color: var(--text-strong, var(--text, #222));
+  color: var(--text-strong);
   font-weight: 800;
   font-size: 0.82rem;
   line-height: 1.25;
@@ -351,7 +341,7 @@
 #promocoes .promo-card__timer {
   display: inline-block;
   margin-left: 0.25rem;
-  color: var(--pink, #ec268f);
+  color: var(--pink);
   font-weight: 900;
 }
 
@@ -375,9 +365,9 @@
   margin: 1.6rem 0 0;
   padding: 1.2rem;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  color: var(--muted, #666);
+  background: color-mix(in srgb, var(--white) 90%, transparent);
+  border: 1px solid var(--border);
+  color: var(--muted);
   text-align: center;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
 }
@@ -394,9 +384,9 @@
 
 #promocoes .promos-page-btn {
   min-height: 40px;
-  border: 1px solid var(--border-pink, rgba(236, 38, 143, 0.18));
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--pink, #ec268f);
+  border: 1px solid var(--border-pink);
+  background: color-mix(in srgb, var(--white) 92%, transparent);
+  color: var(--pink);
   font-weight: 900;
   padding: 0.6rem 0.95rem;
   border-radius: 999px;
@@ -407,7 +397,7 @@
 
 #promocoes .promos-page-btn:hover:not([disabled]) {
   transform: translateY(-1px);
-  background: rgba(253, 239, 246, 0.92);
+  background: color-mix(in srgb, var(--pink-verysoft) 92%, transparent);
   box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
 }
 
@@ -419,7 +409,7 @@
 }
 
 #promocoes .promos-page-info {
-  color: var(--muted, #666);
+  color: var(--muted);
   font-weight: 800;
 }
 
@@ -435,9 +425,6 @@
 
 /* Ajustes finos pra telas muito estreitas */
 @media (max-width: 360px) {
-  #promocoes .promos-grid {
-    grid-template-columns: 1fr; /* 320/360 muito apertado? vira 1 coluna */
-  }
   #promocoes .promo-card__meta {
     grid-template-columns: 1fr;
   }
