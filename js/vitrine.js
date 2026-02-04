@@ -10,6 +10,7 @@
   const ENDPOINT = "/data/produtos.json"; // vindo do live-data
   const MAX_ITEMS = 12;
   const PLACEHOLDER_IMG = "/img/placeholder_produto.png";
+  const IMG_BASE_PATH = "img/produtos/";
 
   // ======== Analytics (sem PII) ========
   function trackEvent(name, payload) {
@@ -106,6 +107,7 @@
   }
 
   let swiperInstance = null;
+  let slickInitialized = false;
 
   function teardownSwiperStructure(grid) {
     if (!grid) return;
@@ -145,6 +147,17 @@
     teardownSwiperStructure(grid);
   }
 
+  function destroySlickIfAny(grid) {
+    if (!grid) return;
+    if (slickInitialized && window.jQuery && window.jQuery.fn?.slick) {
+      try {
+        window.jQuery(grid).slick("unslick");
+      } catch (_) {}
+    }
+    slickInitialized = false;
+    grid.removeAttribute("style");
+  }
+
   function buildSwiperStructure(grid) {
     grid.classList.add("swiper");
 
@@ -180,16 +193,16 @@
   }
 
   function initSwiper(grid) {
-    if (!hasSwiper()) return;
-    if (!grid || grid.children.length < 2) return;
+    if (!hasSwiper()) return false;
+    if (!grid || grid.children.length < 2) return false;
 
     const { prev, next, pagination } = buildSwiperStructure(grid);
 
     try {
       swiperInstance = new window.Swiper(grid, {
-        slidesPerView: 2,
-        slidesPerGroup: 2,
-        spaceBetween: 16,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 12,
         loop: true,
         watchOverflow: true,
         pagination: {
@@ -201,35 +214,104 @@
           prevEl: prev,
         },
         breakpoints: {
+          360: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            spaceBetween: 14,
+          },
           768: {
             slidesPerView: 3,
             slidesPerGroup: 3,
-            spaceBetween: 18,
+            spaceBetween: 16,
           },
           1024: {
             slidesPerView: 4,
             slidesPerGroup: 4,
-            spaceBetween: 20,
+            spaceBetween: 18,
           },
         },
       });
+      return true;
     } catch (_) {
       teardownSwiperStructure(grid);
       swiperInstance = null;
+      return false;
     }
+  }
+
+  function loadSlickFallback(gridEl) {
+    if (!gridEl || gridEl.children.length < 2) return;
+    if (!(window.jQuery && window.jQuery.fn?.slick)) return;
+
+    try {
+      window.jQuery(gridEl).slick({
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        dots: true,
+        arrows: true,
+        infinite: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: { slidesToShow: 3, slidesToScroll: 3 },
+          },
+          {
+            breakpoint: 768,
+            settings: { slidesToShow: 2, slidesToScroll: 2 },
+          },
+          {
+            breakpoint: 360,
+            settings: { slidesToShow: 1, slidesToScroll: 1 },
+          },
+        ],
+      });
+      slickInitialized = true;
+    } catch (_) {
+      slickInitialized = false;
+    }
+  }
+
+  function ensureSlickLoaded() {
+    if (window.jQuery && window.jQuery.fn?.slick) return Promise.resolve(true);
+    if (!window.jQuery) return Promise.resolve(false);
+
+    loadCssOnce("css/vendor/slick.css");
+    loadCssOnce("css/vendor/slick-theme.css");
+    return loadScriptOnce("js/vendor/slick.min.js")
+      .then(() => Boolean(window.jQuery && window.jQuery.fn?.slick))
+      .catch(() => false);
   }
 
   function maybeStartCarousel(gridEl) {
     ensureSwiperLoaded()
-      .then(() => initSwiper(gridEl))
+      .then(() => {
+        const ok = initSwiper(gridEl);
+        if (!ok) {
+          return ensureSlickLoaded().then((ready) => {
+            if (ready) loadSlickFallback(gridEl);
+          });
+        }
+        return null;
+      })
       .catch(() => {
-        // se falhar, paciência: continua como grid
+        ensureSlickLoaded().then((ready) => {
+          if (ready) loadSlickFallback(gridEl);
+        });
       });
   }
 
   // ======== HELPERS ========
   function safeText(v) {
     return (v ?? "").toString().trim();
+  }
+
+  function escapeHtml(v) {
+    return String(v ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   function moneyBRL(v) {
@@ -257,6 +339,9 @@
   function normalizeImageUrl(raw) {
     let url = safeText(raw);
     if (!url) return PLACEHOLDER_IMG;
+    if (!/^https?:\/\//i.test(url) && !url.startsWith("/")) {
+      url = `${IMG_BASE_PATH}${url}`;
+    }
     if (
       window.location &&
       window.location.protocol === "https:" &&
@@ -276,6 +361,7 @@
 
     // Se já estava como carrossel, desmonta antes de re-renderizar
     destroySwiperIfAny(grid);
+    destroySlickIfAny(grid);
 
     // Normaliza lista
     const list = Array.isArray(products) ? products : [];
@@ -297,34 +383,64 @@
     const fragment = document.createDocumentFragment();
 
     for (const p of items) {
-      const nome = safeText(p?.nome);
-      const marca = safeText(p?.marca);
-      const preco = moneyBRL(p?.preco);
+      const nomeRaw = safeText(p?.nome) || "Produto";
+      const categoriaRaw = safeText(p?.categoria) || "Novidade";
+      const marcaRaw = safeText(p?.marca || p?.unidade);
+      const precoRaw = moneyBRL(p?.preco);
+      const nome = escapeHtml(nomeRaw);
+      const categoria = escapeHtml(categoriaRaw);
+      const marca = escapeHtml(marcaRaw);
+      const preco = escapeHtml(precoRaw || "Consulte");
       const url = safeText(p?.url) || "#";
+      const urlSafe = escapeHtml(url);
       const imgUrl = normalizeImageUrl(p?.imagem);
+      const imgUrlSafe = escapeHtml(imgUrl);
       const productId = p?.codigo ?? p?.id ?? "";
       const productValue = Number(p?.preco);
+      const estoqueTotal =
+        Number(p?.estoque_loja1 || 0) + Number(p?.estoque_loja2 || 0);
 
       const card = document.createElement("article");
-      card.className = "vitrine-card";
+      card.className = "promo-card fade-in-up";
       if (productId !== "") card.dataset.productId = String(productId);
       if (Number.isFinite(productValue))
         card.dataset.productValue = String(productValue);
 
       card.innerHTML = `
-        <a class="vitrine-link" href="${url}" target="_blank" rel="noopener">
-          <div class="vitrine-imgwrap">
-            <img class="vitrine-img" alt="${nome}" src="${imgUrl}">
+        <div class="promo-card__image-wrapper">
+          <img class="promo-card__image" alt="${nome}" src="${imgUrlSafe}">
+          <div class="promo-card__ribbon">Atualizado agora</div>
+        </div>
+
+        <div class="promo-card__content">
+          <div class="promo-card__category">${categoria}</div>
+          <h3 class="promo-card__title" title="${nome}">${nome}</h3>
+          ${marca ? `<p class="promo-card__subtitle">${marca}</p>` : ""}
+
+          <div class="promo-card__prices">
+            <div class="promo-card__price-main">
+              <span class="promo-card__label">Por</span>
+              <span class="promo-card__price-current">${preco}</span>
+            </div>
+            <div class="promo-card__price-extra"></div>
           </div>
-          <div class="vitrine-info">
-            <div class="vitrine-marca">${marca}</div>
-            <div class="vitrine-nome">${nome}</div>
-            <div class="vitrine-preco">${preco}</div>
+
+          <div class="promo-card__meta promo-card__meta--compact">
+            <div class="promo-card__meta-item">
+              <span class="promo-card__meta-value">Estoque: ${estoqueTotal}</span>
+            </div>
+            <div class="promo-card__meta-item">
+              <span class="promo-card__meta-value">Atualizado ao vivo</span>
+            </div>
           </div>
-        </a>
+
+          <a class="btn btn--outline promo-card__cta" href="${urlSafe}" target="_blank" rel="noopener">
+            Ver produto
+          </a>
+        </div>
       `;
 
-      const img = card.querySelector("img.vitrine-img");
+      const img = card.querySelector("img.promo-card__image");
       applyImageFallback(img);
 
       fragment.appendChild(card);
@@ -369,11 +485,9 @@
     if (grid && !grid.dataset.analyticsBound) {
       grid.dataset.analyticsBound = "1";
       grid.addEventListener("click", (event) => {
-        const link = event.target && event.target.closest
-          ? event.target.closest("a.vitrine-link")
+        const card = event.target && event.target.closest
+          ? event.target.closest(".promo-card")
           : null;
-        if (!link) return;
-        const card = link.closest(".vitrine-card");
         if (!card) return;
         const productId = card.dataset.productId;
         const value = Number(card.dataset.productValue);

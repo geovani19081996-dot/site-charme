@@ -42,6 +42,10 @@
   height: auto;
 }
 
+.vitrine-grid .swiper-slide > .promo-card {
+  height: 100%;
+}
+
 /* setas */
 .vitrine-grid .swiper-button-prev,
 .vitrine-grid .swiper-button-next {
@@ -107,88 +111,6 @@
   }
 }
 
-/* card */
-.vitrine-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  height: 100%;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.vitrine-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-strong);
-}
-
-.vitrine-link {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  color: inherit;
-  text-decoration: none;
-}
-
-.vitrine-imgwrap {
-  background: linear-gradient(
-    180deg,
-    var(--white),
-    var(--pink-verysoft) 100%
-  );
-  aspect-ratio: 4 / 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(10px, 2vw, 16px);
-}
-
-.vitrine-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
-.vitrine-info {
-  padding: 12px 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.vitrine-marca {
-  font-size: 0.78rem;
-  color: var(--pink);
-  font-weight: 800;
-  opacity: 0.95;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.vitrine-nome {
-  font-size: 0.95rem;
-  line-height: 1.3;
-  margin-top: 2px;
-  color: var(--text-strong);
-  min-height: 2.6em;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.vitrine-preco {
-  margin-top: auto;
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: var(--pink);
-}
-
 @media (max-width: 768px) {
   .vitrine-grid.swiper {
     padding-inline: 2px;
@@ -208,40 +130,6 @@
 
   .vitrine-grid.swiper .swiper-pagination {
     margin-top: 8px;
-  }
-
-  .vitrine-card {
-    border-radius: 14px;
-  }
-
-  .vitrine-imgwrap {
-    aspect-ratio: auto;
-    height: clamp(140px, 46vw, 180px);
-    padding: 8px;
-  }
-
-  .vitrine-img {
-    object-fit: cover;
-    border-radius: 8px;
-  }
-
-  .vitrine-info {
-    padding: 10px 12px 12px;
-    gap: 4px;
-  }
-
-  .vitrine-marca {
-    font-size: 0.7rem;
-  }
-
-  .vitrine-nome {
-    font-size: var(--fs-card-title);
-    line-height: 1.25;
-    min-height: 2.4em;
-  }
-
-  .vitrine-preco {
-    font-size: var(--fs-card-price);
   }
 }
 

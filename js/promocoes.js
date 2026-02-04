@@ -445,6 +445,13 @@
       return Math.ceil(total / state.pageSize);
     };
 
+    const updateSingleGridMode = (gridEl) => {
+      if (!gridEl) return;
+      const totalCards = gridEl.querySelectorAll(".promo-card").length;
+      if (totalCards === 1) gridEl.classList.add("promos-grid--single");
+      else gridEl.classList.remove("promos-grid--single");
+    };
+
     const scrollToPromosTop = () => {
       const section = document.querySelector("#promocoes");
       if (!section) return;
@@ -681,6 +688,7 @@
         els.grid.innerHTML = "";
         state.timers = [];
         els.grid.hidden = true;
+        updateSingleGridMode(els.grid);
         if (els.empty) els.empty.hidden = false;
         els.count.textContent = "Nenhuma promoção ativa";
         if (els.pagination) els.pagination.hidden = true;
@@ -727,6 +735,7 @@
       if (reason === "refresh" && pageKey === lastRenderKey) {
         const qtd = pageItems.length;
         els.count.textContent = `${qtd} de ${total} promoção${total > 1 ? "es" : ""} ativas`;
+        updateSingleGridMode(els.grid);
         updateFilterLabel();
         updatePaginationControls();
         return;
@@ -745,6 +754,7 @@
       pageItems.forEach((p) => fragment.appendChild(makeCard(p)));
       els.grid.appendChild(fragment);
 
+      updateSingleGridMode(els.grid);
       updateFilterLabel();
       updatePaginationControls();
       if (useCarousel) maybeStartCarousel(els.grid);
