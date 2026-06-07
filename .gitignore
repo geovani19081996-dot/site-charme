@@ -1,1 +1,7 @@
 data/private/vitrine_state.json
+
+# Interno - nao publicar no site
+scripts/
+data/private/
+*.bak_*
+site-charme-sem-img.zip
