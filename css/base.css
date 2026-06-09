@@ -903,3 +903,144 @@ section.section--white {
     animation-duration: 0.001ms !important;
   }
 }
+
+
+/* =======================================================
+   CSS migrado de index.html
+   ======================================================= */
+:root {
+        /* Paleta oficial (mantém tudo consistente) */
+        --rosa-intenso: #ec268f;
+        --rosa-medio: #f7afd5;
+        --rosa-claro: #fdeff6;
+        --dourado: #c49332;
+
+        --cinza-texto: #4a4a4a;
+        --preto-suave: #222222;
+        --branco: #ffffff;
+
+        /* Alias/compatibilidade (arquivos misturados) */
+        --pink: #ec268f;
+        --pink-dark: #d51f7e;
+        --pink-light: #fdeff6;
+
+        --white: #ffffff;
+        --text-dark: #222222;
+        --gray: #666666;
+        --text-light: #666666;
+
+        --pink-soft: rgba(236, 38, 143, 0.12);
+        --pink-soft-2: #fdeff6;
+
+        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Faixa rosa no topo (sem depender do humor do CSS) */
+      .topbar {
+        background: linear-gradient(
+          90deg,
+          var(--rosa-intenso),
+          var(--pink-dark)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
+      }
+
+      .topbar .logo__tagline {
+        color: rgba(255, 255, 255, 0.92) !important;
+        font-weight: 700;
+      }
+
+      .nav a {
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+      .nav a:hover {
+        color: #ffffff !important;
+      }
+      .nav a.active::after {
+        background: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      /* Âncoras não ficam escondidas pelo header sticky */
+      #inicio,
+      #lojas,
+      #produtos,
+      #vitrine,
+      #promocoes,
+      #contato {
+        scroll-margin-top: 120px;
+      }
+
+      @media (max-width: 768px) {
+        #inicio,
+        #lojas,
+        #produtos,
+        #vitrine,
+        #promocoes,
+        #contato {
+          scroll-margin-top: 140px;
+        }
+      }
+
+
+/* =======================================================
+   CSS migrado de sobre.html
+   ======================================================= */
+.topbar {
+        background: linear-gradient(135deg, #ec268f, #d51f7e) !important;
+        backdrop-filter: none !important;
+        border-bottom: none !important;
+      }
+      .topbar .container.topbar__inner {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      .topbar .logo__tagline {
+        color: rgba(255, 255, 255, 0.92) !important;
+        font-weight: 700 !important;
+      }
+      .topbar .nav a {
+        color: rgba(255, 255, 255, 0.92) !important;
+      }
+      .topbar .nav a:hover {
+        color: #fff !important;
+      }
+      .topbar .nav a.active {
+        background: rgba(255, 255, 255, 0.18) !important;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14) !important;
+      }
+
+      .topbar .logo__img {
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
+      }
+
+      @media (max-width: 768px) {
+        .topbar .container.topbar__inner {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+        .topbar .nav {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          gap: 10px;
+          padding-bottom: 6px;
+        }
+        .topbar .nav::-webkit-scrollbar {
+          display: none;
+        }
+        .topbar .nav a {
+          white-space: nowrap;
+          padding: 8px 10px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.14);
+        }
+        .topbar .logo {
+          justify-content: center;
+        }
+      }

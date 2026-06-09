@@ -211,87 +211,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
-    <!-- =======================================================
-         HOTFIX (mínimo necessário)
-         - Mapeia variáveis antigas (rosa-*) e novas (pink-*)
-         - Garante faixa rosa no topo e links legíveis
-         - Melhora ancoragem com header sticky
-         ======================================================= -->
-    <style>
-      :root {
-        /* Paleta oficial (mantém tudo consistente) */
-        --rosa-intenso: #ec268f;
-        --rosa-medio: #f7afd5;
-        --rosa-claro: #fdeff6;
-        --dourado: #c49332;
-
-        --cinza-texto: #4a4a4a;
-        --preto-suave: #222222;
-        --branco: #ffffff;
-
-        /* Alias/compatibilidade (arquivos misturados) */
-        --pink: #ec268f;
-        --pink-dark: #d51f7e;
-        --pink-light: #fdeff6;
-
-        --white: #ffffff;
-        --text-dark: #222222;
-        --gray: #666666;
-        --text-light: #666666;
-
-        --pink-soft: rgba(236, 38, 143, 0.12);
-        --pink-soft-2: #fdeff6;
-
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-      }
-
-      /* Faixa rosa no topo (sem depender do humor do CSS) */
-      .topbar {
-        background: linear-gradient(
-          90deg,
-          var(--rosa-intenso),
-          var(--pink-dark)
-        ) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
-      }
-
-      .topbar .logo__tagline {
-        color: rgba(255, 255, 255, 0.92) !important;
-        font-weight: 700;
-      }
-
-      .nav a {
-        color: rgba(255, 255, 255, 0.95) !important;
-      }
-      .nav a:hover {
-        color: #ffffff !important;
-      }
-      .nav a.active::after {
-        background: rgba(255, 255, 255, 0.95) !important;
-      }
-
-      /* Âncoras não ficam escondidas pelo header sticky */
-      #inicio,
-      #lojas,
-      #produtos,
-      #vitrine,
-      #promocoes,
-      #contato {
-        scroll-margin-top: 120px;
-      }
-
-      @media (max-width: 768px) {
-        #inicio,
-        #lojas,
-        #produtos,
-        #vitrine,
-        #promocoes,
-        #contato {
-          scroll-margin-top: 140px;
-        }
-      }
-    </style>
   </head>
 
   <body>
@@ -885,5 +804,3 @@
     <script src="js/promocoes.js?v=20260102-2154"></script>
   </body>
 </html>
-
-
