@@ -235,11 +235,10 @@
 }
 
 /* =========================================================
-   CARD: menos raio, menos sombra, menos padding (premium denso)
+   CARD DE PROMOÇÕES: compacto, denso e responsivo
    ========================================================= */
 
-#promocoes .promo-card,
-#vitrine .promo-card {
+#promocoes .promo-card {
   background: color-mix(in srgb, var(--white) 96%, transparent);
   border: 1px solid var(--border);
   border-radius: 16px; /* menor que 24px */
@@ -252,16 +251,14 @@
   transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
 }
 
-#promocoes .promo-card:hover,
-#vitrine .promo-card:hover {
+#promocoes .promo-card:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-strong);
   border-color: var(--border-pink);
 }
 
 /* fita/badge compactos */
-#promocoes .promo-card__ribbon,
-#vitrine .promo-card__ribbon {
+#promocoes .promo-card__ribbon {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -278,8 +275,7 @@
 }
 
 /* imagem: quadrada tipo e-commerce, mas com padding baixo */
-#promocoes .promo-card__image-wrapper,
-#vitrine .promo-card__image-wrapper {
+#promocoes .promo-card__image-wrapper {
   position: relative;
   background: linear-gradient(
     180deg,
@@ -289,8 +285,7 @@
   padding: 10px 10px 8px;
 }
 
-#promocoes .promo-card__image,
-#vitrine .promo-card__image {
+#promocoes .promo-card__image {
   width: 100%;
   aspect-ratio: 1 / 1; /* feeling sephora */
   object-fit: contain;
@@ -302,8 +297,7 @@
   height: auto;
 }
 
-#promocoes .promo-card__discount-tag,
-#vitrine .promo-card__discount-tag {
+#promocoes .promo-card__discount-tag {
   position: absolute;
   right: 10px;
   bottom: 10px;
@@ -317,8 +311,7 @@
 }
 
 /* conteúdo: compacto */
-#promocoes .promo-card__content,
-#vitrine .promo-card__content {
+#promocoes .promo-card__content {
   padding: 10px 12px 12px;
   display: flex;
   flex-direction: column;
@@ -327,8 +320,7 @@
   min-width: 0;
 }
 
-#promocoes .promo-card__link,
-#vitrine .promo-card__link {
+#promocoes .promo-card__link {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -337,8 +329,7 @@
 }
 
 /* categoria (vem do JS novo) */
-#promocoes .promo-card__category,
-#vitrine .promo-card__category {
+#promocoes .promo-card__category {
   font-weight: 900;
   font-size: 0.72rem;
   letter-spacing: 0.10em;
@@ -347,8 +338,7 @@
 }
 
 /* título: 2 linhas no máximo */
-#promocoes .promo-card__title,
-#vitrine .promo-card__title {
+#promocoes .promo-card__title {
   font-family: var(--font-display);
   font-size: 0.95rem;
   line-height: 1.22;
@@ -363,8 +353,7 @@
 }
 
 /* descrição: 1 linha */
-#promocoes .promo-card__subtitle,
-#vitrine .promo-card__subtitle {
+#promocoes .promo-card__subtitle {
   margin: 0;
   color: var(--muted);
   font-size: 0.86rem;
@@ -378,8 +367,7 @@
 }
 
 /* preços: mais enxuto */
-#promocoes .promo-card__prices,
-#vitrine .promo-card__prices {
+#promocoes .promo-card__prices {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -389,23 +377,20 @@
   border-bottom: 1px solid var(--border);
 }
 
-#promocoes .promo-card__label,
-#vitrine .promo-card__label {
+#promocoes .promo-card__label {
   color: color-mix(in srgb, var(--text) 65%, transparent);
   font-weight: 800;
   font-size: 0.78rem;
 }
 
-#promocoes .promo-card__price-current,
-#vitrine .promo-card__price-current {
+#promocoes .promo-card__price-current {
   color: var(--pink);
   font-weight: 900;
   font-size: 1.12rem;
   line-height: 1.05;
 }
 
-#promocoes .promo-card__price-old,
-#vitrine .promo-card__price-old {
+#promocoes .promo-card__price-old {
   display: block;
   color: color-mix(in srgb, var(--text) 55%, transparent);
   text-decoration: line-through;
@@ -414,8 +399,7 @@
   margin-bottom: 0.18rem;
 }
 
-#promocoes .promo-card__price-save,
-#vitrine .promo-card__price-save {
+#promocoes .promo-card__price-save {
   display: block;
   color: color-mix(in srgb, var(--text) 72%, transparent);
   font-weight: 800;
@@ -423,31 +407,27 @@
 }
 
 /* meta compacta (JS novo usa promo-card__meta--compact) */
-#promocoes .promo-card__meta,
-#vitrine .promo-card__meta {
+#promocoes .promo-card__meta {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
-#promocoes .promo-card__meta-item,
-#vitrine .promo-card__meta-item {
+#promocoes .promo-card__meta-item {
   background: color-mix(in srgb, var(--pink-verysoft) 55%, transparent);
   border: 1px solid color-mix(in srgb, var(--pink) 10%, transparent);
   border-radius: 12px;
   padding: 0.45rem 0.55rem;
 }
 
-#promocoes .promo-card__meta-value,
-#vitrine .promo-card__meta-value {
+#promocoes .promo-card__meta-value {
   color: var(--text-strong);
   font-weight: 800;
   font-size: 0.82rem;
   line-height: 1.25;
 }
 
-#promocoes .promo-card__timer,
-#vitrine .promo-card__timer {
+#promocoes .promo-card__timer {
   display: inline-block;
   margin-left: 0.25rem;
   color: var(--pink);
@@ -455,15 +435,13 @@
 }
 
 /* CTA: menos alto, mais “botão de catálogo” */
-#promocoes .promo-card__cta,
-#vitrine .promo-card__cta {
+#promocoes .promo-card__cta {
   width: 100%;
   text-align: center;
   margin-top: auto;
 }
 
-#promocoes .promo-card__cta.btn,
-#vitrine .promo-card__cta.btn {
+#promocoes .promo-card__cta.btn {
   width: 100%;
   min-height: 40px;
   padding: 10px 14px;
@@ -525,8 +503,7 @@
 }
 
 /* Animação leve (respeita reduce-motion abaixo) */
-#promocoes .fade-in-up,
-#vitrine .fade-in-up {
+#promocoes .fade-in-up {
   animation: fadeInUp 320ms ease-out both;
 }
 
@@ -570,75 +547,62 @@
     margin-top: 8px;
   }
 
-  #promocoes .promo-card,
-  #vitrine .promo-card {
+  #promocoes .promo-card {
     border-radius: 14px;
   }
 
-  #promocoes .promo-card__image-wrapper,
-  #vitrine .promo-card__image-wrapper {
+  #promocoes .promo-card__image-wrapper {
     padding: 8px;
     height: clamp(140px, 44vw, 170px);
   }
 
-  #promocoes .promo-card__image,
-  #vitrine .promo-card__image {
+  #promocoes .promo-card__image {
     aspect-ratio: auto;
     height: 100%;
     object-fit: contain;
     border-radius: 10px;
   }
 
-  #promocoes .promo-card__discount-tag,
-  #vitrine .promo-card__discount-tag {
+  #promocoes .promo-card__discount-tag {
     right: 8px;
     bottom: 8px;
   }
 
-  #promocoes .promo-card__content,
-  #vitrine .promo-card__content {
+  #promocoes .promo-card__content {
     padding: 8px 10px 12px;
     gap: 4px;
   }
 
-  #promocoes .promo-card__category,
-  #vitrine .promo-card__category {
+  #promocoes .promo-card__category {
     font-size: 0.68rem;
   }
 
-  #promocoes .promo-card__title,
-  #vitrine .promo-card__title {
+  #promocoes .promo-card__title {
     font-size: var(--fs-card-title);
     line-height: 1.22;
   }
 
-  #promocoes .promo-card__subtitle,
-  #vitrine .promo-card__subtitle {
+  #promocoes .promo-card__subtitle {
     font-size: 0.82rem;
   }
 
-  #promocoes .promo-card__prices,
-  #vitrine .promo-card__prices {
+  #promocoes .promo-card__prices {
     padding: 0.45rem 0;
   }
 
-  #promocoes .promo-card__price-current,
-  #vitrine .promo-card__price-current {
+  #promocoes .promo-card__price-current {
     font-size: var(--fs-card-price);
   }
 
-  #promocoes .promo-card__meta,
-  #vitrine .promo-card__meta {
+  #promocoes .promo-card__meta {
     gap: 6px;
   }
 
-  #promocoes .promo-card__meta-item,
-  #vitrine .promo-card__meta-item {
+  #promocoes .promo-card__meta-item {
     padding: 0.4rem 0.5rem;
   }
 
-  #promocoes .promo-card__cta.btn,
-  #vitrine .promo-card__cta.btn {
+  #promocoes .promo-card__cta.btn {
     min-height: 38px;
     padding: 9px 12px;
     font-size: var(--fs-card-cta);
@@ -647,8 +611,7 @@
 
 /* Ajustes finos pra telas muito estreitas */
 @media (max-width: 360px) {
-  #promocoes .promo-card__meta,
-  #vitrine .promo-card__meta {
+  #promocoes .promo-card__meta {
     grid-template-columns: 1fr;
   }
 }
@@ -656,15 +619,12 @@
 /* Acessibilidade: reduzir movimento */
 @media (prefers-reduced-motion: reduce) {
   #promocoes .promo-card,
-  #vitrine .promo-card,
   #promocoes .promos-page-btn,
   #promocoes .promos-input,
   #promocoes .promos-select { transition: none; }
 
-  #promocoes .fade-in-up,
-  #vitrine .fade-in-up { animation: none; }
+  #promocoes .fade-in-up { animation: none; }
 
   #promocoes .promo-card:hover,
-  #vitrine .promo-card:hover,
   #promocoes .promos-page-btn:hover:not([disabled]) { transform: none; }
 }
