@@ -207,12 +207,11 @@
       "
     ></script>
 
-    <!-- CSS base + home + promoções -->
+    <!-- CSS base + home + vitrine -->
     <link rel="stylesheet" href="css/base.css?v=20260609-001" />
     <link rel="stylesheet" href="css/avisos.css?v=20260609-001" />
     <link rel="stylesheet" href="css/home.css?v=20260609-001" />
     <link rel="stylesheet" href="css/vitrine.css?v=20260609-001" />
-    <link rel="stylesheet" href="css/promocoes.css?v=20260609-001" />
 
     <!-- Font Awesome (ícones Whats/Instagram) -->
     <link
@@ -521,7 +520,7 @@
             </h2>
             <p class="vitrine-header__subtitle" id="vitrine-subtitle">
               Confira as novidades e reposições que acabaram de chegar nas
-              nossas prateleiras. Role para baixo e aproveite as promoções!
+              nossas prateleiras.
             </p>
           </header>
 
@@ -534,101 +533,6 @@
           <div id="vitrine-grid" class="vitrine-grid"></div>
           <div id="vitrine-empty" class="vitrine-empty" hidden>
             Nenhum produto disponivel no momento.
-          </div>
-        </div>
-      </section>
-
-      <!-- ---------------------------------------------------
-           BLOCO 03.4 • SEÇÃO PROMOÇÕES PREMIUM
-           (listagem dinâmica via promocoes.js)
-           --------------------------------------------------- -->
-      <section id="promocoes" class="secao-promocoes">
-        <div class="container">
-          <header class="promos-header">
-            <div class="promos-header__kicker" id="promos-kicker">
-              Ofertas selecionadas da Charme Cosméticos
-            </div>
-            <h2 class="promos-header__title" id="promos-title">
-              Promoções ativas
-            </h2>
-            <p class="promos-header__subtitle" id="promos-subtitle">
-              Preço bom, prazo limitado e estoque real das lojas — viu, gostou,
-              manda WhatsApp 💗.
-            </p>
-          </header>
-
-          <div class="promos-toolbar">
-            <div class="promos-toolbar__left">
-              <span id="promos-count" class="promos-pill"
-                >Carregando promoções...</span
-              >
-            </div>
-
-            <div class="promos-toolbar__right">
-              <div class="promos-field">
-                <input
-                  type="text"
-                  id="promo-search"
-                  class="promos-input"
-                  placeholder="Buscar promoção..."
-                />
-              </div>
-
-              <div class="promos-field">
-                <select id="promo-category" class="promos-select">
-                  <option value="">Todas as categorias</option>
-                </select>
-              </div>
-
-              <div class="promos-field">
-                <select id="promo-sort" class="promos-select">
-                  <option value="urgency">Mais urgentes</option>
-                  <option value="discountPercent">Maior desconto %</option>
-                  <option value="discountValue">Maior desconto R$</option>
-                  <option value="priceAsc">Menor preço</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div id="promos-current-filter" class="promos-current-filter" hidden>
-            Todas as categorias
-          </div>
-
-          <div id="promocoes-grid" class="promos-grid"></div>
-
-          <div id="promocoes-empty" class="promos-empty" hidden>
-            <div class="promos-empty__badge" id="promos-empty-badge">
-              Ops...
-            </div>
-            <h3 class="promos-empty__title" id="promos-empty-title">
-              Nenhuma promoção ativa no momento
-            </h3>
-            <p class="promos-empty__text" id="promos-empty-text">
-              Estamos preparando novas ofertas. Volte amanhã ou chame no
-              WhatsApp 💬.
-            </p>
-
-            <a
-              href="https://wa.me/556535494404?text=Oi%20vim%20pelo%20site%20e%20quero%20saber%20das%20promoções"
-              target="_blank"
-              class="btn btn--whats promos-empty__btn"
-              id="promos-empty-button"
-            >
-              Falar com a Charme
-            </a>
-          </div>
-
-          <div class="promos-pagination" id="promos-pagination">
-            <button id="promos-prev" class="promos-page-btn" type="button">
-              ← Promoções anteriores
-            </button>
-
-            <span id="promos-page-info" class="promos-page-info"></span>
-
-            <button id="promos-next" class="promos-page-btn" type="button">
-              Ver mais promoções →
-            </button>
           </div>
         </div>
       </section>
@@ -838,6 +742,5 @@
     ></script>
     <script src="js/site_content.js?v=20260102-2154"></script>
     <script src="js/vitrine.js?v=20260202-0001"></script>
-    <script src="js/promocoes.js?v=20260609-002"></script>
 </body>
 </html>
