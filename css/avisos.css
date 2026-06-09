@@ -1,54 +1,68 @@
 /* =======================================================
-   CHARME | AVISOS AO VIVO (avisos.css)
-   Barra abaixo do topo (avisos dinâmicos)
+   CHARME COSMÉTICOS — AVISOS.CSS
+   Barra de avisos dinâmicos abaixo do topo
+
+   Escopo:
+   - #site-avisos
+   - .avisos-bar
+   - .avisos-item
    ======================================================= */
 
-/* Fallback de variáveis (pra nao depender de base.css 100%) */
-:root {
-  --pink: var(--pink, #ec268f);
-  --pink-dark: var(--pink-dark, #d51f7e);
-  --white: var(--white, #ffffff);
-}
+/* =======================================================
+   Barra de avisos
+   ======================================================= */
 
-/* Live avisos bar */
+#site-avisos.avisos-bar,
 .avisos-bar {
   background: linear-gradient(90deg, var(--pink), var(--pink-dark));
   color: var(--white);
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* Conteúdo interno */
+#site-avisos[hidden],
+.avisos-bar[hidden] {
+  display: none !important;
+}
+
+/* =======================================================
+   Conteúdo interno
+   ======================================================= */
+
 .avisos-bar__inner {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 0.75rem;
   align-items: center;
-  padding: 0.6rem 0;
+  padding-block: 0.6rem;
   font-size: 0.95rem;
 }
 
-/* Item */
+/* =======================================================
+   Item de aviso
+   ======================================================= */
+
 .avisos-item {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  padding: 0.28rem 0.65rem;
-  border-radius: 999px;
   max-width: 100%;
   min-width: 0;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-/* Badge */
 .avisos-item__badge {
-  font-weight: 900;
-  text-transform: uppercase;
+  flex: 0 0 auto;
   font-size: 0.7rem;
+  font-weight: 900;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* Título e mensagem: evita estourar no mobile */
 .avisos-item__title,
 .avisos-item__message {
   min-width: 0;
@@ -65,7 +79,10 @@
   opacity: 0.92;
 }
 
-/* Severidade */
+/* =======================================================
+   Severidade
+   ======================================================= */
+
 .avisos-item--warning {
   background: rgba(255, 214, 138, 0.25);
 }
@@ -74,19 +91,21 @@
   background: rgba(255, 140, 140, 0.25);
 }
 
-/* Mobile: menos altura, texto menor e permite quebrar se necessário */
+/* =======================================================
+   Responsividade
+   ======================================================= */
+
 @media (max-width: 720px) {
   .avisos-bar__inner {
-    padding: 0.5rem 0;
-    font-size: 0.9rem;
     gap: 0.45rem 0.6rem;
+    padding-block: 0.5rem;
+    font-size: 0.9rem;
   }
 
   .avisos-item {
     padding: 0.26rem 0.6rem;
   }
 
-  /* No celular, se a mensagem for gigante, deixa quebrar */
   .avisos-item__title,
   .avisos-item__message {
     white-space: normal;
@@ -94,7 +113,6 @@
   }
 }
 
-/* Celular pequeno: pílulas mais compactas */
 @media (max-width: 420px) {
   .avisos-bar__inner {
     font-size: 0.86rem;
