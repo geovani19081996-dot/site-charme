@@ -1,12 +1,17 @@
 /* =======================================================
-   CHARME COSMETICOS - QUEM SOMOS
-   Estilos compartilhados entre:
-   - index.html (blocos: #sobre, #essencia, #equipe)
-   - sobre.html (pagina completa Quem somos)
+   CHARME COSMÉTICOS — QUEM SOMOS
+   Página: sobre.html
+
+   Este arquivo cuida apenas da página institucional:
+   - Hero interno
+   - História e linha do tempo
+   - Propósito, missão e visão
+   - Identificação comercial
+   - Família Charme
    ======================================================= */
 
 /* =======================================================
-   GRIDS GENERICOS (USADOS EM QUEM SOMOS)
+   Grids da página Sobre
    ======================================================= */
 
 .grid {
@@ -14,18 +19,17 @@
   gap: var(--grid-gap);
 }
 
-/* 2 colunas: texto + card / texto + texto */
 .grid--2cols {
   align-items: flex-start;
 }
 
-/* Pequeno respiro extra na secao de valores */
-.valores {
-  margin-top: 1.8rem;
+.sobre__grid {
+  display: grid;
+  gap: var(--grid-gap);
 }
 
 /* =======================================================
-   HERO INTERNO (TOPO SOBRE.HTML)
+   Hero interno
    ======================================================= */
 
 .hero--interno {
@@ -69,13 +73,8 @@
 }
 
 /* =======================================================
-   BLOCO HISTORIA / SECAO SOBRE (#sobre)
+   História / texto institucional
    ======================================================= */
-
-.sobre__grid {
-  display: grid;
-  gap: var(--grid-gap);
-}
 
 .sobre__texto {
   font-size: 1rem;
@@ -90,7 +89,24 @@
   margin-top: 0.8rem;
 }
 
-/* Linha do tempo */
+.sobre__texto strong {
+  color: var(--text-strong);
+  font-weight: 900;
+}
+
+.section__subtitle--small {
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pink);
+  margin-bottom: 0.25rem;
+}
+
+/* =======================================================
+   Linha do tempo
+   ======================================================= */
+
 .timeline {
   border-left: 3px solid var(--pink);
   padding-left: 1.4rem;
@@ -98,6 +114,10 @@
 
 .timeline__item {
   margin-bottom: 1.4rem;
+}
+
+.timeline__item:last-child {
+  margin-bottom: 0;
 }
 
 .timeline__ano {
@@ -122,18 +142,58 @@
   line-height: 1.55;
 }
 
-/* Subtitulo menor (ex: Mariana, Ana...) */
-.section__subtitle--small {
-  font-size: 0.9rem;
-  font-weight: 900;
+/* =======================================================
+   Por que a Charme existe
+   ======================================================= */
+
+.section--why {
+  background: var(--white);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--grid-gap);
+  margin: 2.3rem 0 0;
+}
+
+.why-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 1.7rem 1.8rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-pink);
+}
+
+.why-card__label {
+  font-size: 0.82rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: var(--pink);
-  margin-bottom: 0.25rem;
+  margin: 0 0 0.45rem;
+  font-weight: 900;
+}
+
+.why-card__text {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.why-card__list {
+  margin-top: 0.9rem;
+  padding-left: 1.1rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.why-card__list li + li {
+  margin-top: 0.35rem;
 }
 
 /* =======================================================
-   ESSENCIA / VALORES (#essencia)
+   Essência / valores
    ======================================================= */
 
 .essencia__grid {
@@ -163,7 +223,10 @@
   line-height: 1.55;
 }
 
-/* Lista de valores */
+.valores {
+  margin-top: 1.8rem;
+}
+
 .valores__lista {
   list-style: none;
   margin-top: 0.9rem;
@@ -192,7 +255,7 @@
 }
 
 /* =======================================================
-   FAMILIA / EQUIPE (#equipe / #familia)
+   Família Charme
    ======================================================= */
 
 .equipe {
@@ -252,61 +315,10 @@
 }
 
 /* =======================================================
-   BLOCO "POR QUE A CHARME EXISTE"
-   ======================================================= */
-
-.section--why {
-  background: var(--white);
-}
-
-.why-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--grid-gap);
-  margin: 2.3rem 0 0;
-}
-
-.why-card {
-  background: var(--white);
-  border-radius: 18px;
-  padding: 1.7rem 1.8rem;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid var(--border-pink);
-}
-
-.why-card__label {
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--pink);
-  margin: 0 0 0.45rem;
-  font-weight: 900;
-}
-
-.why-card__text {
-  font-size: 0.95rem;
-  color: var(--muted);
-  margin: 0;
-  line-height: 1.55;
-}
-
-.why-card__list {
-  margin-top: 0.9rem;
-  padding-left: 1.1rem;
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-.why-card__list li + li {
-  margin-top: 0.35rem;
-}
-
-/* =======================================================
-   RESPONSIVIDADE - QUEM SOMOS
+   Responsividade
    ======================================================= */
 
 @media (max-width: 768px) {
-  /* Timeline mais legivel no mobile */
   .timeline {
     padding-left: 1.15rem;
   }

@@ -1,54 +1,136 @@
-/* =========================
-   VITRINE (home)
-   ========================= */
+/* =======================================================
+   CHARME COSMÉTICOS — VITRINE.CSS
+   Página inicial: seção #vitrine
 
-.vitrine {
-  margin: 2rem 0;
+   Este arquivo cuida da vitrine ao vivo:
+   - Cabeçalho da seção
+   - Contador de novidades
+   - Grid/carrossel Swiper
+   - Estado vazio
+   ======================================================= */
+
+/* =======================================================
+   Seção Vitrine
+   ======================================================= */
+
+#vitrine.secao-vitrine {
+  padding: clamp(2.25rem, 4vw, 3rem) 0 clamp(2.4rem, 4.5vw, 3.4rem);
+  background: linear-gradient(
+    180deg,
+    var(--white) 0%,
+    color-mix(in srgb, var(--pink-verysoft) 52%, transparent) 58%,
+    var(--white) 100%
+  );
+  overflow-x: hidden;
 }
 
-.vitrine-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+#vitrine .container {
+  max-width: 1040px;
 }
 
-.vitrine-header h2 {
-  font-size: 1.4rem;
-  margin: 0;
+/* =======================================================
+   Cabeçalho
+   ======================================================= */
+
+#vitrine .vitrine-header {
+  display: block;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 1rem;
 }
 
-.vitrine-header .vitrine-sub {
+#vitrine .vitrine-header__kicker {
+  display: inline-block;
+  color: var(--pink);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  opacity: 0.94;
+  margin-bottom: 0.42rem;
+}
+
+#vitrine .vitrine-header__title,
+#vitrine .vitrine-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  margin: 0 0 0.45rem;
+}
+
+#vitrine .vitrine-header__subtitle {
+  max-width: 70ch;
+  margin: 0 auto;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
-/* fallback grid via base.css */
-/* =========================
-   VITRINE EM CARROSSEL (Swiper)
-   - Se Swiper inicializa, vira carrossel; se falhar, segue grid (base.css)
-   ========================= */
-.vitrine-grid.swiper {
+/* =======================================================
+   Barra / contador
+   ======================================================= */
+
+#vitrine .vitrine-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0.95rem 0 0.9rem;
+}
+
+#vitrine .vitrine-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.48rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-pink);
+  background: color-mix(in srgb, var(--white) 92%, transparent);
+  color: var(--pink);
+  font-weight: 900;
+  font-size: 0.84rem;
+  white-space: nowrap;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* =======================================================
+   Grid / Carrossel
+   ======================================================= */
+
+#vitrine .vitrine-grid {
+  gap: clamp(10px, 2vw, 16px);
+  align-items: stretch;
+  justify-content: stretch;
+  justify-items: stretch;
+  align-content: start;
+  margin-top: 0.4rem;
+}
+
+/* Se Swiper inicializa, vira carrossel; se falhar, segue grid via base.css */
+#vitrine .vitrine-grid.swiper {
   position: relative;
+  display: block;
   overflow: hidden;
 }
 
-.vitrine-grid .swiper-wrapper {
+#vitrine .vitrine-grid .swiper-wrapper {
   align-items: stretch;
 }
 
-.vitrine-grid .swiper-slide {
+#vitrine .vitrine-grid .swiper-slide {
   height: auto;
 }
 
-.vitrine-grid .swiper-slide > .promo-card {
+#vitrine .vitrine-grid .swiper-slide > .promo-card {
   height: 100%;
 }
 
-/* setas */
-.vitrine-grid .swiper-button-prev,
-.vitrine-grid .swiper-button-next {
+/* Setas */
+#vitrine .vitrine-grid .swiper-button-prev,
+#vitrine .vitrine-grid .swiper-button-next {
   width: 36px;
   height: 36px;
   border-radius: 999px;
@@ -58,84 +140,134 @@
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
   z-index: 2;
   opacity: 0.9;
-  transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.vitrine-grid .swiper-button-prev::after,
-.vitrine-grid .swiper-button-next::after {
+#vitrine .vitrine-grid .swiper-button-prev::after,
+#vitrine .vitrine-grid .swiper-button-next::after {
   font-size: 14px;
   font-weight: 800;
 }
 
-.vitrine-grid .swiper-button-prev {
+#vitrine .vitrine-grid .swiper-button-prev {
   left: 6px;
 }
 
-.vitrine-grid .swiper-button-next {
+#vitrine .vitrine-grid .swiper-button-next {
   right: 6px;
 }
 
-.vitrine-grid .swiper-button-prev:hover,
-.vitrine-grid .swiper-button-next:hover {
+#vitrine .vitrine-grid .swiper-button-prev:hover,
+#vitrine .vitrine-grid .swiper-button-next:hover {
   opacity: 1;
   transform: translateY(-1px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
 }
 
-/* bolinhas */
-.vitrine-grid.swiper .swiper-pagination {
+/* Bolinhas */
+#vitrine .vitrine-grid.swiper .swiper-pagination {
   position: static;
   inset: auto;
   width: 100%;
   margin-top: 12px;
 }
 
-.vitrine-grid .swiper-pagination-bullet {
+#vitrine .vitrine-grid .swiper-pagination-bullet {
   width: 6px;
   height: 6px;
   background: var(--pink-soft);
   opacity: 0.7;
 }
 
-.vitrine-grid .swiper-pagination-bullet-active {
+#vitrine .vitrine-grid .swiper-pagination-bullet-active {
   background: var(--pink);
   opacity: 1;
 }
 
-@media (max-width: 640px) {
-  .vitrine-grid .swiper-button-prev {
-    left: 4px;
-  }
-  .vitrine-grid .swiper-button-next {
-    right: 4px;
-  }
+/* =======================================================
+   Estado vazio
+   ======================================================= */
+
+#vitrine .vitrine-empty {
+  margin: 1.4rem auto 0;
+  max-width: 520px;
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--white) 92%, transparent);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
 }
 
+/* =======================================================
+   Responsividade
+   ======================================================= */
+
 @media (max-width: 768px) {
-  .vitrine-grid.swiper {
+  #vitrine.secao-vitrine {
+    padding: clamp(2rem, 7vw, 2.7rem) 0;
+  }
+
+  #vitrine .vitrine-header {
+    text-align: left;
+    margin-inline: 0;
+  }
+
+  #vitrine .vitrine-header__subtitle {
+    margin-inline: 0;
+  }
+
+  #vitrine .vitrine-toolbar {
+    justify-content: flex-start;
+  }
+
+  #vitrine .vitrine-grid.swiper {
     padding-inline: 2px;
   }
 
-  .vitrine-grid .swiper-button-prev,
-  .vitrine-grid .swiper-button-next {
+  #vitrine .vitrine-grid .swiper-button-prev,
+  #vitrine .vitrine-grid .swiper-button-next {
     width: 30px;
     height: 30px;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
   }
 
-  .vitrine-grid .swiper-button-prev::after,
-  .vitrine-grid .swiper-button-next::after {
+  #vitrine .vitrine-grid .swiper-button-prev::after,
+  #vitrine .vitrine-grid .swiper-button-next::after {
     font-size: 12px;
   }
 
-  .vitrine-grid.swiper .swiper-pagination {
+  #vitrine .vitrine-grid.swiper .swiper-pagination {
     margin-top: 8px;
   }
 }
 
 @media (max-width: 640px) {
-  .vitrine-header {
-    flex-direction: column;
-    align-items: flex-start;
+  #vitrine .vitrine-grid .swiper-button-prev {
+    left: 4px;
+  }
+
+  #vitrine .vitrine-grid .swiper-button-next {
+    right: 4px;
+  }
+}
+
+/* =======================================================
+   Acessibilidade
+   ======================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  #vitrine .vitrine-grid .swiper-button-prev,
+  #vitrine .vitrine-grid .swiper-button-next {
+    transition: none;
+  }
+
+  #vitrine .vitrine-grid .swiper-button-prev:hover,
+  #vitrine .vitrine-grid .swiper-button-next:hover {
+    transform: none;
   }
 }
