@@ -6,10 +6,62 @@
 
     <meta
       name="description"
-      content="Conheça a história real da família por trás da Charme Cosméticos: de um CNPJ tímido e prateleiras contadas a duas lojas em Lucas do Rio Verde, com beleza acessível, fé, responsabilidade financeira e cuidado de família."
+      content="Conheça a história da Charme Cosméticos, loja de cosméticos em Lucas do Rio Verde - MT. Razão social: VIVIANE CANDIDA DE ALBUES SOUZA, CNPJ 22.698.923/0001-00."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#EC268F" />
+
+    <!-- JSON-LD (Schema.org) — Dados estruturados para SEO e verificação -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://charmecosmeticos.com/#org",
+            "name": "Charme Cosméticos",
+            "legalName": "VIVIANE CANDIDA DE ALBUES SOUZA",
+            "taxID": "22.698.923/0001-00",
+            "url": "https://charmecosmeticos.com/",
+            "logo": "https://charmecosmeticos.com/img/logo-charme.png",
+            "sameAs": [
+              "https://www.instagram.com/charmecosmeticoslrv/",
+              "https://www.facebook.com/charmecosmeticoslrv/"
+            ],
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "telephone": "+55-65-3549-4404",
+                "areaServed": "BR",
+                "availableLanguage": ["pt-BR"],
+                "url": "https://wa.me/556535494404"
+              }
+            ],
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Lucas do Rio Verde",
+              "addressRegion": "MT",
+              "addressCountry": "BR"
+            }
+          },
+          {
+            "@type": "AboutPage",
+            "@id": "https://charmecosmeticos.com/sobre.html#about",
+            "url": "https://charmecosmeticos.com/sobre.html",
+            "name": "Quem somos | Charme Cosméticos",
+            "isPartOf": {
+              "@type": "WebSite",
+              "@id": "https://charmecosmeticos.com/#website",
+              "url": "https://charmecosmeticos.com/",
+              "name": "Charme Cosméticos"
+            },
+            "about": { "@id": "https://charmecosmeticos.com/#org" },
+            "inLanguage": "pt-BR"
+          }
+        ]
+      }
+    </script>
 
     <!-- Favicon / Ícone da aba -->
     <link rel="icon" type="image/png" href="img/logo-charme-icon.png" />
@@ -18,7 +70,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -120,6 +172,7 @@
           <a href="index.html" id="nav-inicio">Início</a>
           <a href="index.html#lojas" id="nav-lojas">Lojas</a>
           <a href="index.html#produtos" id="nav-produtos">Produtos</a>
+          <a href="index.html#promocoes" id="nav-promocoes">Promoções</a>
           <a href="sobre.html#historia" id="nav-quem" class="active"
             >Quem somos</a
           >
@@ -344,9 +397,9 @@
             Pra quem a Charme abre as portas
           </h2>
           <p class="section__subtitle" id="sobre-para-subtitle">
-            A Charme foi desenhada para a rotina real de quem vive em Lucas do
-            Rio Verde: pouco tempo, muitos boletos e a vontade de se sentir bem
-            consigo mesmo sem gastar além do que dá.
+            A Charme foi pensada para a rotina real de Lucas do Rio Verde: gente
+            que trabalha muito, quer se cuidar, precisa de preço justo e valoriza
+            atendimento sincero.
           </p>
 
           <div class="grid grid--2cols sobre__grid">
@@ -355,10 +408,26 @@
                 class="section__subtitle section__subtitle--small"
                 id="sobre-para-small-title"
               >
-                Geovani queimando neuronios pra ver oque vai ter aqui.
+                Beleza acessível, com cuidado de família
               </h3>
               <p id="sobre-para-text-1">
-                Córtex Cerebral Carregando informação ....
+                Atendemos clientes que buscam produtos para cabelo, maquiagem,
+                unhas, pele, perfumaria e linha profissional, sem perder tempo e
+                sem comprar no escuro. A ideia é simples: orientar com honestidade,
+                indicar o que faz sentido e manter a loja próxima da vida de quem
+                compra aqui.
+              </p>
+            </div>
+
+            <div class="sobre__texto">
+              <h3 class="section__subtitle section__subtitle--small">
+                Identificação comercial
+              </h3>
+              <p>
+                <strong>Charme Cosméticos</strong><br />
+                Razão social: VIVIANE CANDIDA DE ALBUES SOUZA<br />
+                CNPJ: 22.698.923/0001-00<br />
+                Lucas do Rio Verde - MT
               </p>
             </div>
           </div>
@@ -441,11 +510,11 @@
                   Compras e mix de produtos
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-1-text">
-                  Eu, converso com representantes, avalio o que entra na loja,
-                  ajudo no estoque e faço o que for preciso no dia a dia. sou a
-                  coragem por trás da primeira porta aberta da Charme e o olhar
-                  atento para manter o mix equilibrado entre desejo das clientes
-                  e realidade do bolso.
+                  Viviane conversa com representantes, avalia o que entra na loja,
+                  ajuda no estoque e acompanha o dia a dia de perto. É a coragem
+                  por trás da primeira porta aberta da Charme e o olhar atento
+                  para manter o mix equilibrado entre desejo das clientes e
+                  realidade do bolso.
                 </p>
               </div>
             </article>
@@ -461,12 +530,12 @@
                 <h3 class="equipe__nome" id="sobre-equipe-2-nome">
                   Aparecido Francisco de Souza
                 </h3>
-                <p class="equipe__papel" id="sobre-equipe-2-papel"></p>
+                <p class="equipe__papel" id="sobre-equipe-2-papel">Financeiro, estrutura e manutenção</p>
                 <p class="equipe__texto" id="sobre-equipe-2-text">
-                  Eu, cuido das contas, do prédio, das reformas e de manter a
-                  casa de pé. Puxo para a economia e lembro o time que número
-                  também é cuidado. Sou o cara que garante que as luzes fiquem
-                  acesas enquanto a Charme cuida de beleza e autoestima. 🤪
+                  Aparecido cuida das contas, do prédio, das reformas e da
+                  estrutura que mantém a casa de pé. Puxa o time para a economia
+                  e lembra que número também é cuidado: uma loja saudável protege
+                  a família, a equipe e o futuro da Charme.
                 </p>
               </div>
             </article>
@@ -483,14 +552,14 @@
                   Geovani Cândido de Souza
                 </h3>
                 <p class="equipe__papel" id="sobre-equipe-3-papel">
-                  tecnolia, organização digital e futuo da marca
+                  Tecnologia, organização digital e futuro da marca
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-3-text">
-                  Me considero menor aprendiz de empresário , quero estar em
-                  tudo: sistema, dados, marketing e expansão. Sou a mente
-                  moderna lutando para empurrar a Charme para o próximo nível,
-                  virando madrugada estudando para que o trabalho da minha
-                  família renda ainda mais lá na frente
+                  Geovani atua na organização digital da Charme: sistemas, dados,
+                  site, processos e visão de futuro. É a ponte entre a rotina da
+                  loja e a tecnologia, estudando e ajustando ferramentas para que
+                  o trabalho da família renda melhor e a operação fique mais
+                  profissional.
                 </p>
               </div>
             </article>
@@ -507,20 +576,14 @@
                   Tamiris Candida de Souza
                 </h3>
                 <p class="equipe__papel" id="sobre-equipe-4-papel">
-                  Cota oficial de irmã adotada, estagiária da família e que
-                  pagou pra aparecer
+                  Apoio da família Charme
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-4-text">
-                  Ninguém sabe ao certo por que a Tamiris está aqui no site:
-                  alguns dizem que ela é adotada, outros juram que ela pagou uma
-                  taxa só pra garantir a foto bonita. Oficialmente, é a
-                  estagiária vitalícia da família Charme: não tem cargo
-                  definido, não tem horário, não recebe e ainda leva bronca. Já
-                  rodou por tudo – caixa, gôndola, estoque – e hoje atua no
-                  setor “faz nada, mas opina em tudo”. Se este texto ainda
-                  estiver aqui quando o site for pro ar de verdade, é porque ela
-                  renovou o plano “irmã favorita” e seguiu pagando pra aparecer.
-                  🤡❤️
+                  Tamiris faz parte da história da família e da rotina que cerca
+                  a Charme. Já acompanhou diferentes fases da loja, ajudou quando
+                  foi preciso e representa esse lado de família que aparece nos
+                  bastidores: opinião, presença, apoio e aquele empurrão discreto
+                  que também faz diferença.
                 </p>
               </div>
             </article>
@@ -528,24 +591,22 @@
             <article class="equipe__item">
               <img
                 src="img/Samantha.png"
-                alt="Samantha Bárbara Ulhmann Candido"
+                alt="Samantha, inspiração da família Charme"
                 class="equipe__foto"
                 id="sobre-equipe-5-foto"
               />
               <div class="equipe__info">
                 <h3 class="equipe__nome" id="sobre-equipe-5-nome">
-                  Samantha Bárbara Ulhmann Candido
+                  Samantha
                 </h3>
                 <p class="equipe__papel" id="sobre-equipe-5-papel">
                   Motivo e futuro da Charme
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-5-text">
-                  Com 3 anos, é a menor de todas e a maior razão de todo esse
-                  corre. É a mascote da famíliaCharme: quando aparece na loja,
-                  ganha colo das meninas, distribui abraços, risadas e lembra
-                  todo mundo por quem vale a pena trabalhar direito. No fim do
-                  dia, cada prateleira arrumada, cada boleto pago e cada sistema
-                  organizado tem um pouco de "feito por ela e por quem ama ela
+                  Samantha representa o futuro e o motivo por trás de muito do
+                  esforço da família. Ela lembra que cada prateleira organizada,
+                  cada boleto pago e cada melhoria feita na loja também carrega
+                  uma vontade simples: construir algo melhor para quem vem depois.
                 </p>
               </div>
             </article>
@@ -581,11 +642,20 @@
     <footer class="footer footer--bottom">
       <div class="container footer__inner">
         <span class="footer__brand" id="footer-brand">Charme Cosméticos</span>
+
+        <div
+          class="footer__tiny"
+          id="footer-legal"
+          aria-label="Dados legais da Charme Cosméticos"
+        >
+          <strong>Charme Cosméticos</strong><br />
+          Razão social: VIVIANE CANDIDA DE ALBUES SOUZA<br />
+          CNPJ: 22.698.923/0001-00<br />
+          Lucas do Rio Verde - MT
+        </div>
+
         <span class="footer__copy" id="footer-copy">
-          © <span id="ano-atual">2025</span> – Todos os direitos reservados.
-        </span>
-        <span class="footer__tiny" id="footer-tiny">
-          Site em desenvolvimento contínuo pelo time Charme + Geo 😄
+          © 2026 – Todos os direitos reservados.
         </span>
 
         <div class="footer__social">
@@ -613,13 +683,6 @@
       src="js/vendor/web-vitals/web-vitals.iife.min.js"
       onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/web-vitals@3.5.0/dist/web-vitals.iife.min.js';"
     ></script>
-    <script src="js/site_content.js"></script>
-
-    <script>
-      const spanAno = document.getElementById("ano-atual");
-      if (spanAno) {
-        spanAno.textContent = new Date().getFullYear();
-      }
-    </script>
+    <script src="js/site_content.js?v=20260102-2154"></script>
   </body>
 </html>

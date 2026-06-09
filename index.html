@@ -13,8 +13,7 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#EC268F" />
-
-    <!-- JSON-LD (Schema.org) — Dados estruturados para SEO local -->
+<!-- JSON-LD (Schema.org) — Dados estruturados para SEO local -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -23,6 +22,8 @@
             "@type": "Organization",
             "@id": "https://charmecosmeticos.com/#org",
             "name": "Charme Cosméticos",
+            "legalName": "VIVIANE CANDIDA DE ALBUES SOUZA",
+            "taxID": "22.698.923/0001-00",
             "url": "https://charmecosmeticos.com/",
             "logo": "https://charmecosmeticos.com/img/logo-charme.png",
             "sameAs": [
@@ -187,12 +188,23 @@
     <link
       rel="stylesheet"
       href="css/vendor/shoelace/shoelace-light.css"
-      onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css';"
+      onerror="
+        this.onerror = null;
+        this.href =
+          'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css';
+      "
     />
     <script
       type="module"
       src="js/vendor/shoelace/shoelace.js"
-      onerror="this.onerror=null;var s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js';document.head.appendChild(s);"
+      onerror="
+        this.onerror = null;
+        var s = document.createElement('script');
+        s.type = 'module';
+        s.src =
+          'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js';
+        document.head.appendChild(s);
+      "
     ></script>
 
     <!-- CSS base + home + promoções -->
@@ -201,7 +213,6 @@
     <link rel="stylesheet" href="css/home.css?v=202601310123" />
     <link rel="stylesheet" href="css/vitrine.css?v=20260202-0001" />
     <link rel="stylesheet" href="css/promocoes.css?v=202601310123" />
-    <link rel="stylesheet" href="css/quemsomos.css?v=202601310123" />
 
     <!-- Font Awesome (ícones Whats/Instagram) -->
     <link
@@ -211,7 +222,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-  </head>
+</head>
 
   <body>
     <!-- =======================================================
@@ -228,7 +239,11 @@
           <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
 
-        <a class="topbar-mobile__logo" href="#inicio" aria-label="Ir para o início">
+        <a
+          class="topbar-mobile__logo"
+          href="#inicio"
+          aria-label="Ir para o início"
+        >
           <img
             src="img/logo-charme.png"
             alt="Charme Cosméticos"
@@ -250,7 +265,12 @@
       </div>
     </header>
 
-    <sl-drawer class="mobile-drawer" id="mobile-drawer" placement="start" label="Menu">
+    <sl-drawer
+      class="mobile-drawer"
+      id="mobile-drawer"
+      placement="start"
+      label="Menu"
+    >
       <nav class="mobile-menu" aria-label="Menu mobile">
         <a href="#inicio" data-drawer-close>Início</a>
         <a href="#lojas" data-drawer-close>Lojas</a>
@@ -782,9 +802,22 @@
       <footer class="footer footer--bottom">
         <div class="container footer__inner">
           <span class="footer__brand" id="footer-brand">Charme Cosméticos</span>
+
+          <div
+            class="footer__tiny"
+            id="footer-legal"
+            aria-label="Dados legais da Charme Cosméticos"
+          >
+            <strong>Charme Cosméticos</strong><br />
+            Razão social: VIVIANE CANDIDA DE ALBUES SOUZA<br />
+            CNPJ: 22.698.923/0001-00<br />
+            Lucas do Rio Verde - MT
+          </div>
+
           <span class="footer__copy" id="footer-copy">
-            © 2025 – Todos os direitos reservados.
+            © 2026 – Todos os direitos reservados.
           </span>
+
           <span class="footer__tiny" id="footer-tiny">
             Site em desenvolvimento contínuo pelo time Charme + Geo 😄
           </span>
@@ -797,10 +830,14 @@
          ======================================================= -->
     <script
       src="js/vendor/web-vitals/web-vitals.iife.min.js"
-      onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/web-vitals@3.5.0/dist/web-vitals.iife.min.js';"
+      onerror="
+        this.onerror = null;
+        this.src =
+          'https://cdn.jsdelivr.net/npm/web-vitals@3.5.0/dist/web-vitals.iife.min.js';
+      "
     ></script>
     <script src="js/site_content.js?v=20260102-2154"></script>
     <script src="js/vitrine.js?v=20260202-0001"></script>
     <script src="js/promocoes.js?v=20260102-2154"></script>
-  </body>
+</body>
 </html>
