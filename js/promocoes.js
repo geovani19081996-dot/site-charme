@@ -1,4 +1,4 @@
-﻿// =======================================================
+// =======================================================
 //  PROMOÇÕES CHARME – PREMIUM
 //  - Carrega JSON, aplica filtros, paginação e timers
 // =======================================================
@@ -210,7 +210,14 @@
       return;
     }
 
-    ensureSwiperLoaded().catch(() => {});
+    const section = document.querySelector("#promocoes");
+    const sectionData = section && section.dataset ? section.dataset : {};
+    const carouselFlag = String(sectionData.carousel || "").trim().toLowerCase();
+    const useCarouselFromHtml = !["false", "0", "no", "nao", "não"].includes(carouselFlag);
+    const parsedPageSize = Number.parseInt(sectionData.pageSize || "", 10);
+    const pageSizeFromHtml = Number.isFinite(parsedPageSize) && parsedPageSize > 0 ? parsedPageSize : 4;
+
+    if (useCarouselFromHtml) ensureSwiperLoaded().catch(() => {});
     trackSectionView("promocoes", "view_promocoes");
 
     if (grid && !grid.dataset.analyticsBound) {
@@ -243,7 +250,7 @@
         sort: "urgency",
       },
       page: 1,
-      pageSize: 4, // quantos cards por página
+      pageSize: pageSizeFromHtml, // quantos cards por página
     };
 
     let timerStarted = false;
@@ -270,7 +277,7 @@
     // =====================================================
     //  CARROSSEL (Swiper)
     // =====================================================
-    const USE_CAROUSEL = true;
+    const USE_CAROUSEL = useCarouselFromHtml;
     let swiperInstance = null;
 
     const teardownSwiperStructure = (gridEl) => {
