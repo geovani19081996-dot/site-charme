@@ -10,7 +10,6 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#EC268F" />
-    <link rel="manifest" href="/manifest.webmanifest" />
 
     <!-- Favicon / Ícone da aba -->
     <link rel="icon" type="image/png" href="img/logo-charme-icon.png" />
@@ -688,12 +687,7 @@
         spanAno.textContent = new Date().getFullYear();
       }
     </script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/sw.js").catch(() => {});
-        });
-      }
-    </script>
   </body>
 </html>
+
+

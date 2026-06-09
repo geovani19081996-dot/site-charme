@@ -107,7 +107,6 @@
   }
 
   let swiperInstance = null;
-  let slickInitialized = false;
 
   function teardownSwiperStructure(grid) {
     if (!grid) return;
@@ -145,17 +144,6 @@
       swiperInstance = null;
     }
     teardownSwiperStructure(grid);
-  }
-
-  function destroySlickIfAny(grid) {
-    if (!grid) return;
-    if (slickInitialized && window.jQuery && window.jQuery.fn?.slick) {
-      try {
-        window.jQuery(grid).slick("unslick");
-      } catch (_) {}
-    }
-    slickInitialized = false;
-    grid.removeAttribute("style");
   }
 
   function buildSwiperStructure(grid) {
@@ -238,66 +226,10 @@
       return false;
     }
   }
-
-  function loadSlickFallback(gridEl) {
-    if (!gridEl || gridEl.children.length < 2) return;
-    if (!(window.jQuery && window.jQuery.fn?.slick)) return;
-
-    try {
-      window.jQuery(gridEl).slick({
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        dots: true,
-        arrows: true,
-        infinite: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: { slidesToShow: 3, slidesToScroll: 3 },
-          },
-          {
-            breakpoint: 768,
-            settings: { slidesToShow: 2, slidesToScroll: 2 },
-          },
-          {
-            breakpoint: 360,
-            settings: { slidesToShow: 1, slidesToScroll: 1 },
-          },
-        ],
-      });
-      slickInitialized = true;
-    } catch (_) {
-      slickInitialized = false;
-    }
-  }
-
-  function ensureSlickLoaded() {
-    if (window.jQuery && window.jQuery.fn?.slick) return Promise.resolve(true);
-    if (!window.jQuery) return Promise.resolve(false);
-
-    loadCssOnce("css/vendor/slick.css");
-    loadCssOnce("css/vendor/slick-theme.css");
-    return loadScriptOnce("js/vendor/slick.min.js")
-      .then(() => Boolean(window.jQuery && window.jQuery.fn?.slick))
-      .catch(() => false);
-  }
-
   function maybeStartCarousel(gridEl) {
     ensureSwiperLoaded()
-      .then(() => {
-        const ok = initSwiper(gridEl);
-        if (!ok) {
-          return ensureSlickLoaded().then((ready) => {
-            if (ready) loadSlickFallback(gridEl);
-          });
-        }
-        return null;
-      })
-      .catch(() => {
-        ensureSlickLoaded().then((ready) => {
-          if (ready) loadSlickFallback(gridEl);
-        });
-      });
+      .then(() => initSwiper(gridEl))
+      .catch(() => {});
   }
 
   // ======== HELPERS ========
@@ -361,7 +293,6 @@
 
     // Se já estava como carrossel, desmonta antes de re-renderizar
     destroySwiperIfAny(grid);
-    destroySlickIfAny(grid);
 
     // Normaliza lista
     const list = Array.isArray(products) ? products : [];
@@ -508,3 +439,4 @@
     boot();
   }
 })();
+

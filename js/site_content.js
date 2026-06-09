@@ -125,9 +125,6 @@ function initClickTracking() {
     if (href.includes("wa.me") || href.includes("api.whatsapp.com")) {
       track("click_whatsapp", { section: "link" });
     }
-    if (href.includes("orcamento/index.html")) {
-      track("click_orcamento", { section: "orcamento" });
-    }
   });
 }
 
@@ -512,3 +509,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 })();
+
