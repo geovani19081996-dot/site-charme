@@ -47,8 +47,8 @@
           },
           {
             "@type": "AboutPage",
-            "@id": "https://charmecosmeticos.com/sobre.html#about",
-            "url": "https://charmecosmeticos.com/sobre.html",
+            "@id": "https://charmecosmeticos.com/sobre#about",
+            "url": "https://charmecosmeticos.com/sobre",
             "name": "Quem somos | Charme Cosméticos",
             "isPartOf": {
               "@type": "WebSite",
@@ -78,12 +78,23 @@
     <link
       rel="stylesheet"
       href="css/vendor/shoelace/shoelace-light.css"
-      onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css';"
+      onerror="
+        this.onerror = null;
+        this.href =
+          'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css';
+      "
     />
     <script
       type="module"
       src="js/vendor/shoelace/shoelace.js"
-      onerror="this.onerror=null;var s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js';document.head.appendChild(s);"
+      onerror="
+        this.onerror = null;
+        var s = document.createElement('script');
+        s.type = 'module';
+        s.src =
+          'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js';
+        document.head.appendChild(s);
+      "
     ></script>
 
     <!-- CSS base + específico da página Sobre -->
@@ -116,7 +127,7 @@
 
         <a
           class="topbar-mobile__logo"
-          href="index.html"
+          href="/"
           aria-label="Voltar para a página inicial"
         >
           <img
@@ -140,24 +151,25 @@
       </div>
     </header>
 
-    <sl-drawer class="mobile-drawer" id="mobile-drawer" placement="start" label="Menu">
+    <sl-drawer
+      class="mobile-drawer"
+      id="mobile-drawer"
+      placement="start"
+      label="Menu"
+    >
       <nav class="mobile-menu" aria-label="Menu mobile">
-        <a href="index.html#inicio" data-drawer-close>Início</a>
-        <a href="index.html#lojas" data-drawer-close>Lojas</a>
-        <a href="index.html#produtos" data-drawer-close>Produtos</a>
-        <a href="promocoes.html" data-drawer-close>Promoções</a>
-        <a href="sobre.html#historia" data-drawer-close>Quem somos</a>
-        <a href="index.html#contato" data-drawer-close>Contato</a>
+        <a href="/#inicio" data-drawer-close>Início</a>
+        <a href="/#lojas" data-drawer-close>Lojas</a>
+        <a href="/#produtos" data-drawer-close>Produtos</a>
+        <a href="/promocoes" data-drawer-close>Promoções</a>
+        <a href="/sobre#historia" data-drawer-close>Quem somos</a>
+        <a href="/#contato" data-drawer-close>Contato</a>
       </nav>
     </sl-drawer>
 
     <header class="topbar topbar--desktop">
       <div class="container topbar__inner">
-        <a
-          class="logo"
-          href="index.html"
-          aria-label="Voltar para a página inicial"
-        >
+        <a class="logo" href="/" aria-label="Voltar para a página inicial">
           <img
             src="img/logo-charme.png"
             alt="Charme Cosméticos"
@@ -169,14 +181,12 @@
         </a>
 
         <nav class="nav" aria-label="Menu principal">
-          <a href="index.html" id="nav-inicio">Início</a>
-          <a href="index.html#lojas" id="nav-lojas">Lojas</a>
-          <a href="index.html#produtos" id="nav-produtos">Produtos</a>
-          <a href="promocoes.html" id="nav-promocoes">Promoções</a>
-          <a href="sobre.html#historia" id="nav-quem" class="active"
-            >Quem somos</a
-          >
-          <a href="index.html#contato" id="nav-contato">Contato</a>
+          <a href="/" id="nav-inicio">Início</a>
+          <a href="/#lojas" id="nav-lojas">Lojas</a>
+          <a href="/#produtos" id="nav-produtos">Produtos</a>
+          <a href="/promocoes" id="nav-promocoes">Promoções</a>
+          <a href="/sobre#historia" id="nav-quem" class="active">Quem somos</a>
+          <a href="/#contato" id="nav-contato">Contato</a>
         </nav>
       </div>
     </header>
@@ -201,18 +211,10 @@
           </p>
 
           <div class="hero__actions hero__actions--interno">
-            <a
-              href="promocoes.html"
-              class="btn btn--primary"
-              id="sobre-cta-promos"
-            >
+            <a href="/promocoes" class="btn btn--primary" id="sobre-cta-promos">
               Ver promoções e ofertas
             </a>
-            <a
-              href="index.html#lojas"
-              class="btn btn--outline"
-              id="sobre-cta-lojas"
-            >
+            <a href="/#lojas" class="btn btn--outline" id="sobre-cta-lojas">
               Ver endereços das lojas
             </a>
           </div>
@@ -398,8 +400,8 @@
           </h2>
           <p class="section__subtitle" id="sobre-para-subtitle">
             A Charme foi pensada para a rotina real de Lucas do Rio Verde: gente
-            que trabalha muito, quer se cuidar, precisa de preço justo e valoriza
-            atendimento sincero.
+            que trabalha muito, quer se cuidar, precisa de preço justo e
+            valoriza atendimento sincero.
           </p>
 
           <div class="grid grid--2cols sobre__grid">
@@ -413,9 +415,9 @@
               <p id="sobre-para-text-1">
                 Atendemos clientes que buscam produtos para cabelo, maquiagem,
                 unhas, pele, perfumaria e linha profissional, sem perder tempo e
-                sem comprar no escuro. A ideia é simples: orientar com honestidade,
-                indicar o que faz sentido e manter a loja próxima da vida de quem
-                compra aqui.
+                sem comprar no escuro. A ideia é simples: orientar com
+                honestidade, indicar o que faz sentido e manter a loja próxima
+                da vida de quem compra aqui.
               </p>
             </div>
 
@@ -510,11 +512,11 @@
                   Compras e mix de produtos
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-1-text">
-                  Viviane conversa com representantes, avalia o que entra na loja,
-                  ajuda no estoque e acompanha o dia a dia de perto. É a coragem
-                  por trás da primeira porta aberta da Charme e o olhar atento
-                  para manter o mix equilibrado entre desejo das clientes e
-                  realidade do bolso.
+                  Viviane conversa com representantes, avalia o que entra na
+                  loja, ajuda no estoque e acompanha o dia a dia de perto. É a
+                  coragem por trás da primeira porta aberta da Charme e o olhar
+                  atento para manter o mix equilibrado entre desejo das clientes
+                  e realidade do bolso.
                 </p>
               </div>
             </article>
@@ -530,12 +532,14 @@
                 <h3 class="equipe__nome" id="sobre-equipe-2-nome">
                   Aparecido Francisco de Souza
                 </h3>
-                <p class="equipe__papel" id="sobre-equipe-2-papel">Financeiro, estrutura e manutenção</p>
+                <p class="equipe__papel" id="sobre-equipe-2-papel">
+                  Financeiro, estrutura e manutenção
+                </p>
                 <p class="equipe__texto" id="sobre-equipe-2-text">
                   Aparecido cuida das contas, do prédio, das reformas e da
                   estrutura que mantém a casa de pé. Puxa o time para a economia
-                  e lembra que número também é cuidado: uma loja saudável protege
-                  a família, a equipe e o futuro da Charme.
+                  e lembra que número também é cuidado: uma loja saudável
+                  protege a família, a equipe e o futuro da Charme.
                 </p>
               </div>
             </article>
@@ -555,11 +559,11 @@
                   Tecnologia, organização digital e futuro da marca
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-3-text">
-                  Geovani atua na organização digital da Charme: sistemas, dados,
-                  site, processos e visão de futuro. É a ponte entre a rotina da
-                  loja e a tecnologia, estudando e ajustando ferramentas para que
-                  o trabalho da família renda melhor e a operação fique mais
-                  profissional.
+                  Geovani atua na organização digital da Charme: sistemas,
+                  dados, site, processos e visão de futuro. É a ponte entre a
+                  rotina da loja e a tecnologia, estudando e ajustando
+                  ferramentas para que o trabalho da família renda melhor e a
+                  operação fique mais profissional.
                 </p>
               </div>
             </article>
@@ -580,10 +584,10 @@
                 </p>
                 <p class="equipe__texto" id="sobre-equipe-4-text">
                   Tamiris faz parte da história da família e da rotina que cerca
-                  a Charme. Já acompanhou diferentes fases da loja, ajudou quando
-                  foi preciso e representa esse lado de família que aparece nos
-                  bastidores: opinião, presença, apoio e aquele empurrão discreto
-                  que também faz diferença.
+                  a Charme. Já acompanhou diferentes fases da loja, ajudou
+                  quando foi preciso e representa esse lado de família que
+                  aparece nos bastidores: opinião, presença, apoio e aquele
+                  empurrão discreto que também faz diferença.
                 </p>
               </div>
             </article>
@@ -596,9 +600,7 @@
                 id="sobre-equipe-5-foto"
               />
               <div class="equipe__info">
-                <h3 class="equipe__nome" id="sobre-equipe-5-nome">
-                  Samantha
-                </h3>
+                <h3 class="equipe__nome" id="sobre-equipe-5-nome">Samantha</h3>
                 <p class="equipe__papel" id="sobre-equipe-5-papel">
                   Motivo e futuro da Charme
                 </p>
@@ -606,7 +608,8 @@
                   Samantha representa o futuro e o motivo por trás de muito do
                   esforço da família. Ela lembra que cada prateleira organizada,
                   cada boleto pago e cada melhoria feita na loja também carrega
-                  uma vontade simples: construir algo melhor para quem vem depois.
+                  uma vontade simples: construir algo melhor para quem vem
+                  depois.
                 </p>
               </div>
             </article>
@@ -681,7 +684,11 @@
 
     <script
       src="js/vendor/web-vitals/web-vitals.iife.min.js"
-      onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/web-vitals@3.5.0/dist/web-vitals.iife.min.js';"
+      onerror="
+        this.onerror = null;
+        this.src =
+          'https://cdn.jsdelivr.net/npm/web-vitals@3.5.0/dist/web-vitals.iife.min.js';
+      "
     ></script>
     <script src="js/site_content.js?v=20260102-2154"></script>
   </body>
