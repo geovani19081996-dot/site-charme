@@ -1,13 +1,13 @@
 /*!
   Charme Cosméticos - Vitrine (ao vivo)
-  - Renderiza cards a partir do JSON do live-data
+  - Renderiza cards a partir do JSON local/publicado
   - Agora também pode virar carrossel (Swiper), como a Sephora
 */
 (function () {
   "use strict";
 
   // ======== CONFIG ========
-  const ENDPOINT = "/data/produtos.json"; // vindo do live-data
+  const ENDPOINT = "/data/produtos.json"; // gerado automaticamente no servidor
   const MAX_ITEMS = 12;
   const PLACEHOLDER_IMG = "/img/placeholder_produto.png";
   const IMG_BASE_PATH = "img/produtos/";
